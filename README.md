@@ -5,6 +5,15 @@
 <a href="https://www.npmjs.com/package/@solana-program/token"><img src="https://img.shields.io/npm/v/%40solana-program%2Ftoken?logo=npm&color=377CC0" /></a>
 <a href="https://crates.io/crates/spl-token-client"><img src="https://img.shields.io/crates/v/spl-token-client?logo=rust" /></a>
 
+
+<table>
+<tr><td style="background-color:#E7F3FF; border:1px solid #B3D4FC; padding:10px;">
+The Jupnet version of the SPL Token program is in the `jupnet` branch. The `main` branch contains the standard Solana version and it is used to sync upstream.
+</td></tr>
+</table>
+
+
+
 This template should help get you started developing Solana programs. Let's walk through this generated program repository and see what's included.
 
 ## Project setup
