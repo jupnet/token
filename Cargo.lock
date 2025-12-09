@@ -1466,6 +1466,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "ethnum"
+version = "1.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca81e6b4777c89fd810c25a4be2b1bd93ea034fbe58e6a75216a34c6b82c539b"
+
+[[package]]
 name = "event-listener"
 version = "2.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7311,6 +7317,7 @@ version = "2.0.0"
 dependencies = [
  "arrayref",
  "bytemuck",
+ "ethnum",
  "num-derive",
  "num-traits",
  "num_enum",
