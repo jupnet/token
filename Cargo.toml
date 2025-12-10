@@ -45,8 +45,10 @@ solana-pubkey = "3.0.0"
 solana-system-interface = { version = "2.0", features=["bincode"] }
 
 [patch.crates-io]
+agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-account = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-account-decoder = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-address = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-client-traits = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-clock = { git = "https://github.com/jupnet/jupnet-sdk" }
@@ -75,7 +77,7 @@ solana-svm-transaction = { git = "https://github.com/jupnet/jupnet-svm", branch 
 solana-system-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-sysvar-id = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-transaction-context = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk" }
-# solana-transaction-context = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-vote-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
