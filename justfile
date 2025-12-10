@@ -4,6 +4,7 @@
 set export := true
 
 # make sure we are using the jupnet build sbf
+# TODO: change it to use jupnet once ready
 _ensure-solana-sbf:
     @if [ -z "$SOLANA_HOME" ]; then \
       echo "Error: SOLANA_HOME is not set. Please set it to your Solana installation directory."; \
