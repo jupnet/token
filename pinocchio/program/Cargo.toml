@@ -40,8 +40,8 @@ solana-signer = { workspace = true }
 solana-transaction = { workspace = true }
 solana-transaction-error = { workspace = true }
 solana-system-interface = { workspace = true , features=["bincode"] }
-spl-token-interface = "2"
-spl-token-2022-interface = "2"
+spl-token-interface = { workspace = true }
+# spl-token-2022-interface = "2" NOTE: it was there upstream but it is not used afaik
 
 
 

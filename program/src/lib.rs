@@ -35,6 +35,7 @@ pub mod solana_program {
         pub use solana_pubkey::{Pubkey, PUBKEY_BYTES};
     }
 }
+use ethnum::U256;
 use solana_program_error::ProgramError;
 // Re-export spl_token_interface items
 pub use spl_token_interface::{check_id, check_program_account, id, ID};
@@ -53,7 +54,7 @@ pub fn amount_to_ui_amount(amount: u64, decimals: u8) -> f64 {
 
 /// Convert a raw amount to its UI representation (using the decimals field
 /// defined in its mint)
-pub fn amount_to_ui_amount_string(amount: u64, decimals: u8) -> String {
+pub fn amount_to_ui_amount_string(amount: U256, decimals: u8) -> String {
     let decimals = decimals as usize;
     if decimals > 0 {
         // Left-pad zeros to decimals + 1, so we at least have an integer zero
@@ -68,7 +69,7 @@ pub fn amount_to_ui_amount_string(amount: u64, decimals: u8) -> String {
 
 /// Convert a raw amount to its UI representation using the given decimals field
 /// Excess zeroes or unneeded decimal point are trimmed.
-pub fn amount_to_ui_amount_string_trimmed(amount: u64, decimals: u8) -> String {
+pub fn amount_to_ui_amount_string_trimmed(amount: U256, decimals: u8) -> String {
     let mut s = amount_to_ui_amount_string(amount, decimals);
     if decimals > 0 {
         let zeros_trimmed = s.trim_end_matches('0');

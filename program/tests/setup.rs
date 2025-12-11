@@ -1,4 +1,5 @@
 use {
+    ethnum::U256,
     solana_account::Account as SolanaAccount,
     solana_program_pack::Pack,
     solana_pubkey::Pubkey,
@@ -9,7 +10,7 @@ use {
 pub fn setup_mint_account(
     mint_authority: Option<&Pubkey>,
     freeze_authority: Option<&Pubkey>,
-    supply: u64,
+    supply: U256,
     decimals: u8,
 ) -> SolanaAccount {
     let data = {
@@ -36,7 +37,7 @@ pub fn setup_mint_account(
     }
 }
 
-pub fn setup_token_account(mint: &Pubkey, owner: &Pubkey, amount: u64) -> SolanaAccount {
+pub fn setup_token_account(mint: &Pubkey, owner: &Pubkey, amount: U256) -> SolanaAccount {
     let data = {
         let mut data = vec![0; Account::LEN];
         let state = Account {
@@ -46,7 +47,7 @@ pub fn setup_token_account(mint: &Pubkey, owner: &Pubkey, amount: u64) -> Solana
             delegate: None.into(),
             state: AccountState::Initialized,
             is_native: None.into(),
-            delegated_amount: 0,
+            delegated_amount: U256::new(0),
             close_authority: None.into(),
         };
         state.pack_into_slice(&mut data);

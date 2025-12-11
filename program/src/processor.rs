@@ -8,6 +8,7 @@ use {
         state::{Account, AccountState, Mint, Multisig},
         try_ui_amount_into_amount,
     },
+    ethnum::{AsU256, U256},
     solana_account_info::{next_account_info, AccountInfo},
     solana_cpi::set_return_data,
     solana_msg::msg,
@@ -121,7 +122,7 @@ impl Processor {
         account.owner = *owner;
         account.close_authority = COption::None;
         account.delegate = COption::None;
-        account.delegated_amount = 0;
+        account.delegated_amount = U256::new(0);
         account.state = AccountState::Initialized;
         if is_native_mint {
             let rent_exempt_reserve = rent.minimum_balance(new_account_info_data_len);
@@ -129,10 +130,11 @@ impl Processor {
             account.amount = new_account_info
                 .lamports()
                 .checked_sub(rent_exempt_reserve)
-                .ok_or(TokenError::Overflow)?;
+                .ok_or(TokenError::Overflow)?
+                .as_u256();
         } else {
             account.is_native = COption::None;
-            account.amount = 0;
+            account.amount = U256::new(0);
         };
 
         Account::pack(account, &mut new_account_info.data.borrow_mut())?;
@@ -227,7 +229,7 @@ impl Processor {
     pub fn process_transfer(
         program_id: &Pubkey,
         accounts: &[AccountInfo],
-        amount: u64,
+        amount: U256,
         expected_decimals: Option<u8>,
     ) -> ProgramResult {
         let account_info_iter = &mut accounts.iter();
@@ -322,13 +324,17 @@ impl Processor {
         if source_account.is_native() {
             let source_starting_lamports = source_account_info.lamports();
             **source_account_info.lamports.borrow_mut() = source_starting_lamports
+                .as_u256()
                 .checked_sub(amount)
-                .ok_or(TokenError::Overflow)?;
+                .ok_or(TokenError::Overflow)?
+                .as_u64(); // TODO: this doesn't look right as we are back to u64 from U256
 
             let destination_starting_lamports = destination_account_info.lamports();
             **destination_account_info.lamports.borrow_mut() = destination_starting_lamports
+                .as_u256()
                 .checked_add(amount)
-                .ok_or(TokenError::Overflow)?;
+                .ok_or(TokenError::Overflow)?
+                .as_u64(); // TODO: this doesn't look right as we are back to u64 from U256
         }
 
         Account::pack(source_account, &mut source_account_info.data.borrow_mut())?;
@@ -344,7 +350,7 @@ impl Processor {
     pub fn process_approve(
         program_id: &Pubkey,
         accounts: &[AccountInfo],
-        amount: u64,
+        amount: U256,
         expected_decimals: Option<u8>,
     ) -> ProgramResult {
         let account_info_iter = &mut accounts.iter();
@@ -412,7 +418,7 @@ impl Processor {
         )?;
 
         source_account.delegate = COption::None;
-        source_account.delegated_amount = 0;
+        source_account.delegated_amount = U256::new(0);
 
         Account::pack(source_account, &mut source_account_info.data.borrow_mut())?;
 
@@ -453,7 +459,7 @@ impl Processor {
                     }
 
                     account.delegate = COption::None;
-                    account.delegated_amount = 0;
+                    account.delegated_amount = U256::new(0);
 
                     if account.is_native() {
                         account.close_authority = COption::None;
@@ -521,7 +527,7 @@ impl Processor {
     pub fn process_mint_to(
         program_id: &Pubkey,
         accounts: &[AccountInfo],
-        amount: u64,
+        amount: U256,
         expected_decimals: Option<u8>,
     ) -> ProgramResult {
         let account_info_iter = &mut accounts.iter();
@@ -586,7 +592,7 @@ impl Processor {
     pub fn process_burn(
         program_id: &Pubkey,
         accounts: &[AccountInfo],
-        amount: u64,
+        amount: U256,
         expected_decimals: Option<u8>,
     ) -> ProgramResult {
         let account_info_iter = &mut accounts.iter();
@@ -765,7 +771,8 @@ impl Processor {
             let new_amount = native_account_info
                 .lamports()
                 .checked_sub(rent_exempt_reserve)
-                .ok_or(TokenError::Overflow)?;
+                .ok_or(TokenError::Overflow)?
+                .as_u256();
             if new_amount < native_account.amount {
                 return Err(TokenError::InvalidState.into());
             }
@@ -812,7 +819,7 @@ impl Processor {
     pub fn process_amount_to_ui_amount(
         program_id: &Pubkey,
         accounts: &[AccountInfo],
-        amount: u64,
+        amount: U256,
     ) -> ProgramResult {
         let account_info_iter = &mut accounts.iter();
         let mint_info = next_account_info(account_info_iter)?;
@@ -1082,7 +1089,7 @@ mod tests {
         // Mint
         let check = Mint {
             mint_authority: COption::Some(Pubkey::new_from_array([1; 32])),
-            supply: 42,
+            supply: U256::new(42),
             decimals: 7,
             is_initialized: true,
             freeze_authority: COption::Some(Pubkey::new_from_array([2; 32])),
@@ -1112,11 +1119,11 @@ mod tests {
         let check = Account {
             mint: Pubkey::new_from_array([1; 32]),
             owner: Pubkey::new_from_array([2; 32]),
-            amount: 3,
+            amount: U256::new(3),
             delegate: COption::Some(Pubkey::new_from_array([4; 32])),
             state: AccountState::Frozen,
             is_native: COption::Some(5),
-            delegated_amount: 6,
+            delegated_amount: U256::new(6),
             close_authority: COption::Some(Pubkey::new_from_array([7; 32])),
         };
         let mut packed = vec![0; Account::get_packed_len() + 1];

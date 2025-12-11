@@ -3862,8 +3862,7 @@ dependencies = [
  "solana-system-interface 3.0.0",
  "solana-transaction 3.0.2 (git+https://github.com/jupnet/jupnet-sdk)",
  "solana-transaction-error 3.0.0 (git+https://github.com/jupnet/jupnet-sdk)",
- "spl-token-2022-interface",
- "spl-token-interface 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-token-interface 2.0.0",
 ]
 
 [[package]]
@@ -8699,6 +8698,7 @@ version = "9.0.0"
 dependencies = [
  "arrayref",
  "bytemuck",
+ "ethnum",
  "lazy_static",
  "mollusk-svm",
  "mollusk-svm-fuzz-fixture",
@@ -8724,7 +8724,7 @@ dependencies = [
  "solana-sdk-ids 3.1.0 (git+https://github.com/jupnet/jupnet-sdk)",
  "solana-system-interface 3.0.0",
  "solana-sysvar 3.1.1 (git+https://github.com/jupnet/jupnet-sdk)",
- "spl-token-interface 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "spl-token-interface 2.0.0",
  "strum 0.27.2",
  "strum_macros 0.27.2",
  "thiserror 2.0.17",
