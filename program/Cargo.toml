@@ -12,41 +12,41 @@ no-entrypoint = []
 test-sbf = []
 
 [dependencies]
-arrayref = "0.3.9"
-bytemuck = "1.20.0"
-num-derive = "0.4"
+arrayref = { workspace = true } 
+bytemuck = { workspace = true } 
+num-derive = { workspace = true } 
 num-traits = { workspace = true }
-num_enum = "0.7.3"
-solana-account-info = "3.0.0"
-solana-cpi = "3.0.0"
+num_enum = { workspace = true }
+solana-account-info = { workspace = true }
+solana-cpi = { workspace = true }
 solana-instruction = { workspace = true }
-solana-msg = "3.0.0"
-solana-program-entrypoint = "3.0.0"
+solana-msg = { workspace = true }
+solana-program-entrypoint = { workspace = true }
 solana-program-error = { workspace = true }
-solana-program-memory = "3.0.0"
+solana-program-memory = { workspace = true }
 solana-program-option = { workspace = true }
 solana-program-pack = { workspace = true }
 solana-pubkey = { workspace = true, features = ["bytemuck"] }
-solana-rent = "3.0.0"
-solana-sdk-ids = "3.0.0"
-solana-sysvar = { version = "3.0.0", features = ["bincode"] }
+solana-rent = { workspace = true }
+solana-sdk-ids = { workspace = true }
+solana-sysvar = { workspace = true, features = ["bincode"] }
 spl-token-interface = { version = "2.0" }
-thiserror = "2.0"
+thiserror = { workspace = true }
 
 [dev-dependencies]
-lazy_static = "1.5.0"
+lazy_static = { workspace = true }
 mollusk-svm = { workspace = true }
 mollusk-svm-fuzz-fixture = { workspace = true }
-proptest = "1.5"
-serial_test = "3.2.0"
-solana-account = "3.0.0"
-solana-account-info = "3.0.0"
-solana-clock = "3.0.0"
-solana-native-token = "3.0.0"
-solana-rent = { version = "3.0.0", features = ["sysvar"] }
-solana-system-interface = { version = "2.0", features=["bincode"] }
-strum = "0.24"
-strum_macros = "0.24"
+proptest = { workspace = true }
+serial_test = { workspace = true }
+solana-account = { workspace = true }
+solana-account-info = { workspace = true }
+solana-clock = { workspace = true }
+solana-native-token = { workspace = true }
+solana-rent = { workspace = true, features = ["sysvar"] }
+solana-system-interface = { workspace = true, features=["bincode"] }
+strum = { workspace = true }
+strum_macros = { workspace = true }
 
 [lib]
 crate-type = ["cdylib", "lib"]

@@ -10,24 +10,24 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-arrayref = "0.3.9"
-bytemuck = "1.20.0"
-num-derive = "0.4"
-num_enum = "0.7.4"
-num-traits = "0.2"
-solana-instruction = "3.0.0"
-solana-program-error = "3.0.0"
-solana-program-option = "3.0.0"
-solana-program-pack = "3.0.0"
-solana-pubkey = { version = "4.0.0", features = ["bytemuck"] }
-solana-sdk-ids = "3.1.0"
-thiserror = "2.0"
-ethnum = "1.5.2"
+arrayref = { workspace = true }
+bytemuck = { workspace = true }
+num-derive = { workspace = true }
+num_enum = { workspace = true }
+num-traits = { workspace = true }
+solana-instruction = { workspace = true }
+solana-program-error = { workspace = true }
+solana-program-option = { workspace = true }
+solana-program-pack = { workspace = true }
+solana-pubkey = { workspace = true }
+solana-sdk-ids = { workspace = true }
+thiserror = { workspace = true }
+ethnum = { workspace = true }
 
 [dev-dependencies]
-proptest = "1.5"
-strum = "0.24"
-strum_macros = "0.24"
+proptest = { workspace = true } 
+strum = { workspace = true } 
+strum_macros = { workspace = true } 
 
 [lib]
 crate-type = ["lib"]
