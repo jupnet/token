@@ -2,7 +2,7 @@ name: Main
 
 on:
   push:
-    branches: [main, jupnet]
+    branches: [main, jupnet, jupnet-fix-tests]
   pull_request:
 
 jobs:
