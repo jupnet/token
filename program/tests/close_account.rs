@@ -1,6 +1,7 @@
 mod setup;
 
 use {
+    ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     solana_account::{Account as SolanaAccount, ReadableAccount},
     solana_program_error::ProgramError,
@@ -22,8 +23,8 @@ fn success_init_after_close_account() {
     let decimals = 9;
 
     let owner_account = SolanaAccount::new(1_000_000_000, 0, &system_program::id());
-    let mint_account = setup::setup_mint_account(None, None, 0, decimals);
-    let token_account = setup::setup_token_account(&mint, &owner, 0);
+    let mint_account = setup::setup_mint_account(None, None, U256::new(0), decimals);
+    let token_account = setup::setup_token_account(&mint, &owner, U256::new(0));
 
     let expected_destination_lamports = token_account.lamports();
 
@@ -62,7 +63,7 @@ fn success_init_after_close_account() {
                     Check::success(),
                     // Account successfully re-initialized.
                     Check::account(&account)
-                        .data(setup::setup_token_account(&mint, &owner, 0).data())
+                        .data(setup::setup_token_account(&mint, &owner, U256::new(0)).data())
                         .owner(&spl_token_interface::id())
                         .build(),
                     // The destination should have the lamports from the closed account.
@@ -93,8 +94,8 @@ fn fail_init_after_close_account() {
     let decimals = 9;
 
     let owner_account = SolanaAccount::new(1_000_000_000, 0, &system_program::id());
-    let mint_account = setup::setup_mint_account(None, None, 0, decimals);
-    let token_account = setup::setup_token_account(&mint, &owner, 0);
+    let mint_account = setup::setup_mint_account(None, None, U256::new(0), decimals);
+    let token_account = setup::setup_token_account(&mint, &owner, U256::new(0));
 
     let expected_destination_lamports = token_account.lamports();
 
