@@ -2,7 +2,7 @@ name: Main
 
 on:
   push:
-    branches: [main, jupnet]
+    branches: [main, jupnet, jupnet-fix-tests]
   pull_request:
 
 jobs:
@@ -30,11 +30,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           clippy: true
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Format Client Rust
         run: pnpm clients:rust:format
@@ -49,11 +58,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           clippy: true
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Format
         run: pnpm programs:format
@@ -68,11 +86,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           clippy: true
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Format
         run: pnpm p-interface:format
@@ -87,11 +114,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           clippy: true
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Format
         run: pnpm p-token:format
@@ -106,11 +142,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           clippy: true
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Format
         run: pnpm interface:format
@@ -118,7 +163,7 @@ jobs:
       - name: Lint
         run: pnpm interface:lint
 
-      - name: Lint
+      - name: Test
         run: pnpm interface:test
 
   audit_rust:
@@ -128,10 +173,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-audit
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Install cargo-audit
         uses: taiki-e/install-action@v2
@@ -148,10 +202,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-spellcheck
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Install cargo-spellcheck
         uses: taiki-e/install-action@v2
@@ -168,10 +231,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           rustfmt: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Generate Clients
         run: pnpm generate:clients
@@ -189,11 +261,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-build-program
           solana: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Build
         run: pnpm programs:build
@@ -219,11 +300,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-build-program
           solana: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Build
         run: pnpm p-token:build
@@ -272,11 +362,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-rust-client
           solana: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Test Client Rust
         run: pnpm clients:rust:test
@@ -289,10 +388,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-test-program
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Restore Program Builds
         uses: actions/cache/restore@v4
@@ -311,12 +419,21 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-test-ptoken
           solana: true
           purge: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Restore Program Builds
         uses: actions/cache/restore@v4
@@ -335,11 +452,20 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          owner: jupnet
+
       - name: Setup Environment
         uses: ./.github/actions/setup
         with:
           cargo-cache-key: cargo-fixtures-ptoken
           solana: true
+          github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Restore Program Builds
         uses: actions/cache/restore@v4

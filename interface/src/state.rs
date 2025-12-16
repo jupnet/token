@@ -1,9 +1,9 @@
 //! State transition types
 
 use {
-    ethnum::U256,
     crate::instruction::MAX_SIGNERS,
     arrayref::{array_mut_ref, array_ref, array_refs, mut_array_refs},
+    ethnum::U256,
     num_enum::TryFromPrimitive,
     solana_program_error::ProgramError,
     solana_program_option::COption,
@@ -130,7 +130,7 @@ impl IsInitialized for Account {
     }
 }
 impl Pack for Account {
-    const LEN: usize = 165;
+    const LEN: usize = 213;
     fn unpack_from_slice(src: &[u8]) -> Result<Self, ProgramError> {
         let src = array_ref![src, 0, 213];
         let (mint, owner, amount, delegate, state, is_native, delegated_amount, close_authority) =

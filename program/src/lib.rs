@@ -35,10 +35,9 @@ pub mod solana_program {
         pub use solana_pubkey::{Pubkey, PUBKEY_BYTES};
     }
 }
-use ethnum::U256;
-use solana_program_error::ProgramError;
 // Re-export spl_token_interface items
 pub use spl_token_interface::{check_id, check_program_account, id, ID};
+use {ethnum::U256, solana_program_error::ProgramError};
 
 /// Convert the UI representation of a token amount (using the decimals field
 /// defined in its mint) to the raw amount

@@ -22,10 +22,39 @@ inputs:
   solana:
     description: Install Solana if `true`. Defaults to `false`.
     required: false
+  github-token:
+    description: GitHub token for accessing private repos. Required for jupnet dependencies.
+    required: false
 
 runs:
   using: 'composite'
   steps:
+    - name: Configure Git for Private Repos
+      if: ${{ inputs.github-token }}
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        # Use HTTP extraheader for authentication (most reliable method)
+        AUTH_HEADER=$(echo -n "x-access-token:${GH_TOKEN}" | base64)
+        git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic ${AUTH_HEADER}"
+
+        # Also set up URL rewriting as backup
+        git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+        git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "git@github.com:"
+
+        # Disable terminal prompts for non-interactive CI
+        git config --global credential.helper ""
+        git config --global --add credential.helper "!f() { echo username=x-access-token; echo password=${GH_TOKEN}; }; f"
+
+    - name: Configure Cargo to use Git CLI
+      if: ${{ inputs.github-token }}
+      shell: bash
+      run: |
+        mkdir -p ~/.cargo
+        echo '[net]' >> ~/.cargo/config.toml
+        echo 'git-fetch-with-cli = true' >> ~/.cargo/config.toml
+
     - name: Setup pnpm
       uses: pnpm/action-setup@v3
 
