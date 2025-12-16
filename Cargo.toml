@@ -12,7 +12,7 @@ edition = "2021"
 level = "warn"
 check-cfg = [
     'cfg(target_os, values("solana"))',
-    'cfg(feature, values("custom-alloc", "custom-panic", "frozen-abi", "no-entrypoint"))',
+    'cfg(feature, values("custom-alloc", "custom-heap", "custom-panic", "frozen-abi", "no-entrypoint"))',
 ]
 
 [workspace.metadata.cli]
@@ -56,7 +56,7 @@ mollusk-svm = "0.8.0"
 mollusk-svm-fuzz-fixture = "0.8.0"
 pinocchio = "0.9.2"
 pinocchio-pubkey = "0.3"
-pinocchio-log = { version = "0.5.1" }
+pinocchio-log = { version = "0.5.1", default-features = false }
 
 # sdk + svm
 agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
@@ -122,7 +122,7 @@ solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", features = ["bytemuck"] }
+solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-rent = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-sanitize = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk" }

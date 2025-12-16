@@ -177,11 +177,11 @@ fn test_initialize_mint() {
             Check::success(),
             // freeze authority is set
             Check::account(&mint2_key)
-                .data_slice(46, &[1, 0, 0, 0])
+                .data_slice(70, &[1, 0, 0, 0])
                 .build(),
             // freeze authority matches owner
             Check::account(&mint2_key)
-                .data_slice(50, owner_key.as_ref())
+                .data_slice(74, owner_key.as_ref())
                 .build(),
         ],
     )
@@ -238,11 +238,11 @@ fn test_initialize_mint2() {
             Check::success(),
             // freeze authority is set
             Check::account(&mint2_key)
-                .data_slice(46, &[1, 0, 0, 0])
+                .data_slice(70, &[1, 0, 0, 0])
                 .build(),
             // freeze authority matches owner
             Check::account(&mint2_key)
-                .data_slice(50, owner_key.as_ref())
+                .data_slice(74, owner_key.as_ref())
                 .build(),
         ],
     )
@@ -1383,7 +1383,7 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build()
             ],
         )
@@ -1417,7 +1417,7 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build()
             ],
         )
@@ -1672,10 +1672,10 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build(),
                 Check::account(&account_key)
-                    .data_slice(121, &100u64.to_le_bytes())
+                    .data_slice(145, &U256::new(100).to_le_bytes())
                     .build(),
             ],
         )
@@ -1710,10 +1710,10 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build(),
                 Check::account(&account_key)
-                    .data_slice(121, &100u64.to_le_bytes())
+                    .data_slice(145, &U256::new(100).to_le_bytes())
                     .build(),
             ],
         )
@@ -1794,7 +1794,7 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build(),
             ],
         )
@@ -1828,7 +1828,7 @@ fn test_self_transfer() {
             &[
                 Check::success(),
                 Check::account(account_info.key)
-                    .data_slice(64, &1000u64.to_le_bytes())
+                    .data_slice(64, &U256::new(1000).to_le_bytes())
                     .build(),
             ],
         )
@@ -1905,7 +1905,7 @@ fn test_mintable_token_with_zero_supply() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(64, &42u64.to_le_bytes())
+                .data_slice(64, &U256::new(42).to_le_bytes())
                 .build(),
         ],
     )
@@ -1932,7 +1932,7 @@ fn test_mintable_token_with_zero_supply() {
             &[
                 Check::err(TokenError::MintDecimalsMismatch.into()),
                 Check::account(&account_key)
-                    .data_slice(64, &42u64.to_le_bytes())
+                    .data_slice(64, &U256::new(42).to_le_bytes())
                     .build(),
             ],
         )
@@ -1958,7 +1958,7 @@ fn test_mintable_token_with_zero_supply() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(64, &84u64.to_le_bytes())
+                .data_slice(64, &U256::new(84).to_le_bytes())
                 .build(),
         ],
     )
@@ -2732,7 +2732,7 @@ fn test_set_authority() {
                 .build(),
             // delegated amount
             Check::account(&account_key)
-                .data_slice(165, &U256::MAX.to_le_bytes())
+                .data_slice(145, &U256::MAX.to_le_bytes())
                 .build(),
         ],
     )
@@ -2757,11 +2757,11 @@ fn test_set_authority() {
             Check::success(),
             // delegate not set
             Check::account(&account_key)
-                .data_slice(72, &[0, 0, 0, 0])
+                .data_slice(96, &[0, 0, 0, 0])
                 .build(),
             // delegated amount
             Check::account(&account_key)
-                .data_slice(121, &0u64.to_le_bytes())
+                .data_slice(145, &U256::new(0).to_le_bytes())
                 .build(),
         ],
     )
@@ -3216,10 +3216,10 @@ fn test_mint_to() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(36, &42u64.to_le_bytes())
+                .data_slice(36, &U256::new(42).to_le_bytes())
                 .build(),
             Check::account(&account_key)
-                .data_slice(64, &42u64.to_le_bytes())
+                .data_slice(64, &U256::new(42).to_le_bytes())
                 .build(),
         ],
     )
@@ -3245,10 +3245,10 @@ fn test_mint_to() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(36, &84u64.to_le_bytes())
+                .data_slice(36, &U256::new(84).to_le_bytes())
                 .build(),
             Check::account(&account2_key)
-                .data_slice(64, &42u64.to_le_bytes())
+                .data_slice(64, &U256::new(42).to_le_bytes())
                 .build(),
         ],
     )
@@ -3965,7 +3965,7 @@ fn test_burn() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(33, &(U256::new(2000) - U256::new(42)).to_le_bytes())
+                .data_slice(36, &(U256::new(2000) - U256::new(42)).to_le_bytes())
                 .build(),
             Check::account(&account_key)
                 .data_slice(64, &(U256::new(1000) - U256::new(42)).to_le_bytes())
@@ -4077,7 +4077,7 @@ fn test_burn() {
             Check::success(),
             Check::account(&mint_key)
                 .data_slice(
-                    33,
+                    36,
                     &(U256::new(2000) - U256::new(42) - U256::new(84)).to_le_bytes(),
                 )
                 .build(),
@@ -5062,7 +5062,7 @@ fn test_close_account() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(64, &42u64.to_le_bytes())
+                .data_slice(64, &U256::new(42).to_le_bytes())
                 .build(),
         ],
     )
@@ -5088,10 +5088,10 @@ fn test_close_account() {
         &[
             Check::success(),
             Check::account(&account2_key)
-                .data_slice(109, &[1, 0, 0, 0])
+                .data_slice(133, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account2_key)
-                .data_slice(64, &42u64.to_le_bytes())
+                .data_slice(64, &U256::new(42).to_le_bytes())
                 .build(),
         ],
     )
@@ -5317,10 +5317,10 @@ fn test_native_token() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(109, &[1, 0, 0, 0])
+                .data_slice(133, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account_key)
-                .data_slice(64, &40u64.to_le_bytes())
+                .data_slice(64, &U256::new(40).to_le_bytes())
                 .build(),
         ],
     )
@@ -5347,10 +5347,10 @@ fn test_native_token() {
         &[
             Check::success(),
             Check::account(&account2_key)
-                .data_slice(109, &[1, 0, 0, 0])
+                .data_slice(133, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account2_key)
-                .data_slice(64, &0u64.to_le_bytes())
+                .data_slice(64, &U256::new(0).to_le_bytes())
                 .build(),
         ],
     )
@@ -5453,19 +5453,19 @@ fn test_native_token() {
                 .lamports(account_minimum_balance())
                 .build(),
             Check::account(&account_key)
-                .data_slice(109, &[1, 0, 0, 0])
+                .data_slice(133, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account_key)
-                .data_slice(64, &0u64.to_le_bytes())
+                .data_slice(64, &U256::new(0).to_le_bytes())
                 .build(),
             Check::account(&account2_key)
                 .lamports(account_minimum_balance() + 40)
                 .build(),
             Check::account(&account_key)
-                .data_slice(109, &[1, 0, 0, 0])
+                .data_slice(133, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account2_key)
-                .data_slice(64, &40u64.to_le_bytes())
+                .data_slice(64, &U256::new(40).to_le_bytes())
                 .build(),
         ],
     )
@@ -5494,10 +5494,10 @@ fn test_native_token() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(129, &[1, 0, 0, 0])
+                .data_slice(177, &[1, 0, 0, 0])
                 .build(),
             Check::account(&account_key)
-                .data_slice(133, owner3_key.as_ref())
+                .data_slice(181, owner3_key.as_ref())
                 .build(),
         ],
     )
@@ -5520,7 +5520,7 @@ fn test_native_token() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(129, &[0, 0, 0, 0])
+                .data_slice(177, &[0, 0, 0, 0])
                 .build(),
         ],
     )
@@ -6127,7 +6127,7 @@ fn test_freeze_account() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(108, &[AccountState::Frozen as u8])
+                .data_slice(132, &[AccountState::Frozen as u8])
                 .build(),
         ],
     )
@@ -6162,7 +6162,7 @@ fn test_freeze_account() {
         &[
             Check::success(),
             Check::account(&account_key)
-                .data_slice(108, &[AccountState::Initialized as u8])
+                .data_slice(132, &[AccountState::Initialized as u8])
                 .build(),
         ],
     )
@@ -6280,10 +6280,10 @@ fn test_sync_native() {
         &[
             Check::success(),
             Check::account(&non_native_account_key)
-                .data_slice(109, &[0, 0, 0, 0])
+                .data_slice(133, &[0, 0, 0, 0])
                 .build(),
             Check::account(&non_native_account_key)
-                .data_slice(64, &0u64.to_le_bytes())
+                .data_slice(64, &U256::new(0).to_le_bytes())
                 .build(),
         ],
     )
@@ -6343,10 +6343,10 @@ fn test_sync_native() {
             &[
                 Check::err(ProgramError::IncorrectProgramId),
                 Check::account(&native_account_key)
-                    .data_slice(109, &[1, 0, 0, 0])
+                    .data_slice(133, &[1, 0, 0, 0])
                     .build(),
                 Check::account(&native_account_key)
-                    .data_slice(64, &lamports.to_le_bytes())
+                    .data_slice(64, &U256::from(lamports).to_le_bytes())
                     .build()
             ],
         )
