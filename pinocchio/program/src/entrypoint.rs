@@ -41,40 +41,40 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
     const ACCOUNT1_HEADER_OFFSET: usize = 0x0008;
 
     /// Offset for the first account data length. This is
-    /// expected to be a token account (165 bytes).
+    /// expected to be a token account (213 bytes with U256 amounts).
     const ACCOUNT1_DATA_LEN: usize = 0x0058;
 
     /// Offset for the second account.
-    const ACCOUNT2_HEADER_OFFSET: usize = 0x2910;
+    const ACCOUNT2_HEADER_OFFSET: usize = 0x2940;
 
     /// Offset for the second account data length. This is
-    /// expected to be a token account for `transfer` (165 bytes)
-    /// or a mint account for `transfer_checked` (82 bytes).
-    const ACCOUNT2_DATA_LEN: usize = 0x2960;
+    /// expected to be a token account for `transfer` (213 bytes)
+    /// or a mint account for `transfer_checked` (106 bytes).
+    const ACCOUNT2_DATA_LEN: usize = 0x2990;
 
     // Constants that apply to `transfer_checked` (instruction 12).
 
     /// Offset for the third account.
-    const IX12_ACCOUNT3_HEADER_OFFSET: usize = 0x51c8;
+    const IX12_ACCOUNT3_HEADER_OFFSET: usize = 0x5210;
 
     /// Offset for the third account data length. This is
-    /// expected to be a token account (165 bytes).
-    const IX12_ACCOUNT3_DATA_LEN: usize = 0x5218;
+    /// expected to be a token account (213 bytes with U256 amounts).
+    const IX12_ACCOUNT3_DATA_LEN: usize = 0x5260;
 
     /// Offset for the fourth account.
-    const IX12_ACCOUNT4_HEADER_OFFSET: usize = 0x7ad0;
+    const IX12_ACCOUNT4_HEADER_OFFSET: usize = 0x7b48;
 
     /// Offset for the fourth account data length.
     ///
     /// This is expected to be an account with variable data
     /// length.
-    const IX12_ACCOUNT4_DATA_LEN: usize = 0x7b20;
+    const IX12_ACCOUNT4_DATA_LEN: usize = 0x7b98;
 
     /// Expected offset for the instruction data in the case the
     /// fourth (authority) account has zero data.
     ///
     /// This value is adjusted before it is used.
-    const IX12_EXPECTED_INSTRUCTION_DATA_LEN_OFFSET: usize = 0xa330;
+    const IX12_EXPECTED_INSTRUCTION_DATA_LEN_OFFSET: usize = 0xa3a8;
 
     // Constants that apply to `transfer` (instruction 3).
 
@@ -83,19 +83,19 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
     /// Note that this assumes that both first and second accounts
     /// have zero data, which is being validated before the offset
     /// is used.
-    const IX3_ACCOUNT3_HEADER_OFFSET: usize = 0x5218;
+    const IX3_ACCOUNT3_HEADER_OFFSET: usize = 0x5278;
 
     /// Offset for the third account data length.
     ///
     /// This is expected to be an account with variable data
     /// length.
-    const IX3_ACCOUNT3_DATA_LEN: usize = 0x5268;
+    const IX3_ACCOUNT3_DATA_LEN: usize = 0x52c8;
 
     /// Expected offset for the instruction data in the case the
     /// third (authority) account has zero data.
     ///
     /// This value is adjusted before it is used.
-    const IX3_INSTRUCTION_DATA_LEN_OFFSET: usize = 0x7a78;
+    const IX3_INSTRUCTION_DATA_LEN_OFFSET: usize = 0x7ad8;
 
     /// Align an address to the next multiple of 8.
     #[inline(always)]
@@ -128,14 +128,14 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
 
         // Check that we have enough instruction data.
         //
-        // Expected: instruction discriminator (u8) + amount (u64) + decimals (u8)
-        if input.add(offset).cast::<u64>().read() >= 10 {
+        // Expected: instruction discriminator (u8) + amount (U256) + decimals (u8)
+        if input.add(offset).cast::<u64>().read() >= 34 {
             let discriminator = input.add(offset + size_of::<u64>()).cast::<u8>().read();
 
             // Check for transfer discriminator.
             if likely(discriminator == TokenInstruction::TransferChecked as u8) {
                 // instruction data length (u64) + discriminator (u8)
-                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 9) };
+                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 33) };
 
                 let accounts = unsafe {
                     [
@@ -180,13 +180,14 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
         let offset = IX3_INSTRUCTION_DATA_LEN_OFFSET + account_3_data_len_aligned;
 
         // Check that we have enough instruction data.
-        if likely(input.add(offset).cast::<u64>().read() >= 9) {
+        // Expected: instruction discriminator (u8) + amount (U256)
+        if likely(input.add(offset).cast::<u64>().read() >= 33) {
             let discriminator = input.add(offset + size_of::<u64>()).cast::<u8>().read();
 
             // Check for transfer discriminator.
             if likely(discriminator == TokenInstruction::Transfer as u8) {
                 let instruction_data =
-                    unsafe { from_raw_parts(input.add(offset + 9), size_of::<u64>()) };
+                    unsafe { from_raw_parts(input.add(offset + 9), 32) };
 
                 let accounts = unsafe {
                     [
