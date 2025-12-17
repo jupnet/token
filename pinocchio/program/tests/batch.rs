@@ -3,6 +3,7 @@ mod setup;
 use {
     crate::setup::TOKEN_PROGRAM_ID,
     agave_feature_set::FeatureSet,
+    ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     pinocchio_token_interface::{
         native_mint,
@@ -19,7 +20,6 @@ use {
     solana_program_test::{tokio, ProgramTest},
     solana_pubkey::Pubkey,
     solana_rent::Rent,
-    solana_sdk_ids::bpf_loader_upgradeable,
     solana_signer::Signer,
     solana_system_interface::instruction::create_account,
     solana_transaction::Transaction,
@@ -146,7 +146,7 @@ async fn batch_initialize_mint_transfer_close() {
         &owner_a_ta_a.pubkey(),
         &mint_authority.pubkey(),
         &[],
-        1_000_000,
+        U256::from(1_000_000u64),
     )
     .unwrap();
 
@@ -157,7 +157,7 @@ async fn batch_initialize_mint_transfer_close() {
         &owner_b_ta_a.pubkey(),
         &owner_a.pubkey(),
         &[],
-        1_000_000,
+        U256::from(1_000_000u64),
     )
     .unwrap();
 
@@ -314,11 +314,7 @@ fn mollusk() -> Mollusk {
         feature_set,
         ..Default::default()
     };
-    mollusk.add_program(
-        &TOKEN_PROGRAM_ID,
-        "pinocchio_token_program",
-        &bpf_loader_upgradeable::id(),
-    );
+    mollusk.add_program(&TOKEN_PROGRAM_ID, "pinocchio_token_program");
     mollusk
 }
 
@@ -356,7 +352,7 @@ async fn batch_transfer() {
         &destination_account_key,
         &authority_key,
         &[],
-        500_000_000,
+        U256::from(500_000_000u64),
     )
     .unwrap()])
     .unwrap();
@@ -414,7 +410,7 @@ async fn batch_fail_transfer_with_invalid_program_owner() {
         &destination_account_key,
         &authority_key,
         &[],
-        500_000_000,
+        U256::from(500_000_000u64),
     )
     .unwrap()])
     .unwrap();
@@ -481,7 +477,7 @@ async fn batch_fail_transfer_checked_with_invalid_program_owner() {
         &destination_account_key,
         &authority_key,
         &[],
-        500_000_000,
+        U256::from(500_000_000u64),
         9,
     )
     .unwrap()])
@@ -561,7 +557,7 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            300,
+            U256::from(300u64),
         )
         .unwrap(),
         spl_token_interface::instruction::transfer(
@@ -570,7 +566,7 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            300,
+            U256::from(300u64),
         )
         .unwrap(),
     ])
@@ -632,7 +628,7 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
         spl_token_interface::instruction::mint_to(
@@ -641,7 +637,7 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
     ])
@@ -709,7 +705,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
         spl_token_interface::instruction::mint_to(
@@ -718,7 +714,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
         spl_token_interface::instruction::burn(
@@ -727,7 +723,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &mint_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
         spl_token_interface::instruction::burn(
@@ -736,7 +732,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &mint_key,
             &authority_key,
             &[],
-            1_000_000_000,
+            U256::from(1_000_000_000u64),
         )
         .unwrap(),
     ])

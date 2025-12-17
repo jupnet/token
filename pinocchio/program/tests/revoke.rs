@@ -1,6 +1,7 @@
 mod setup;
 
 use {
+    ethnum::U256,
     setup::{account, mint, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
@@ -42,7 +43,7 @@ async fn revoke() {
         &mint,
         &account,
         &mint_authority,
-        100,
+        U256::from(100u64),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -57,7 +58,7 @@ async fn revoke() {
         &account,
         &delegate,
         &owner,
-        50,
+        U256::from(50u64),
         &TOKEN_PROGRAM_ID,
     )
     .await;

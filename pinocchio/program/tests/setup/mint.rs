@@ -1,4 +1,5 @@
 use {
+    ethnum::U256,
     pinocchio_token_interface::state::mint::Mint,
     solana_keypair::Keypair,
     solana_program_error::ProgramError,
@@ -72,7 +73,7 @@ pub async fn mint(
     mint: &Pubkey,
     account: &Pubkey,
     mint_authority: &Keypair,
-    amount: u64,
+    amount: U256,
     program_id: &Pubkey,
 ) -> Result<(), BanksClientError> {
     let mut mint_ix = spl_token_interface::instruction::mint_to(

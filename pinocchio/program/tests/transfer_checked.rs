@@ -1,6 +1,7 @@
 mod setup;
 
 use {
+    ethnum::U256,
     setup::{account, mint, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
@@ -42,7 +43,7 @@ async fn transfer_checked() {
         &mint,
         &account,
         &mint_authority,
-        100,
+        U256::from(100u64),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -62,7 +63,7 @@ async fn transfer_checked() {
         &destination_account,
         &owner.pubkey(),
         &[],
-        100,
+        U256::from(100u64),
         4,
     )
     .unwrap();
@@ -84,5 +85,5 @@ async fn transfer_checked() {
     let account = account.unwrap();
     let account = spl_token_interface::state::Account::unpack(&account.data).unwrap();
 
-    assert!(account.amount == 0);
+    assert!(account.amount == U256::from(0u64));
 }

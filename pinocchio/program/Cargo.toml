@@ -22,6 +22,7 @@ pinocchio-token-interface = { version = "^0", path = "../interface" }
 [dev-dependencies]
 agave-feature-set = { workspace = true }
 assert_matches = "1.5.0"
+ethnum = { workspace = true }
 mollusk-svm = { workspace = true }
 mollusk-svm-fuzz-fixture = { workspace = true }
 num-traits = { workspace = true }
@@ -41,7 +42,7 @@ solana-transaction = { workspace = true }
 solana-transaction-error = { workspace = true }
 solana-system-interface = { workspace = true , features=["bincode"] }
 spl-token-interface = { workspace = true }
-# spl-token-2022-interface = "2" NOTE: it was there upstream but it is not used afaik
+spl-token-2022-interface = { workspace = true }
 
 
 

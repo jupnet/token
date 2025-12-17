@@ -1,6 +1,7 @@
 mod setup;
 
 use {
+    ethnum::U256,
     mollusk_svm::result::Check,
     setup::{
         mint,
@@ -36,7 +37,7 @@ async fn amount_to_ui_amount() {
     let amount_to_ui_amount_ix = spl_token_interface::instruction::amount_to_ui_amount(
         &spl_token_interface::ID,
         &mint,
-        1000,
+        U256::from(1000u64),
     )
     .unwrap();
 
@@ -74,7 +75,7 @@ fn amount_to_ui_amount_with_maximum_decimals() {
     //  succeed and return the correct UI amount.
 
     let instruction =
-        spl_token_interface::instruction::amount_to_ui_amount(&spl_token_interface::ID, &mint, 20)
+        spl_token_interface::instruction::amount_to_ui_amount(&spl_token_interface::ID, &mint, U256::from(20u64))
             .unwrap();
 
     // The expected UI amount is "0.000....002" without the trailing zeros.
@@ -110,7 +111,7 @@ fn amount_to_ui_amount_with_u64_max() {
     let instruction = spl_token_interface::instruction::amount_to_ui_amount(
         &spl_token_interface::ID,
         &mint,
-        u64::MAX,
+        U256::from(u64::MAX),
     )
     .unwrap();
 
