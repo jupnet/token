@@ -32,9 +32,13 @@
               "kind": "structFieldTypeNode",
               "name": "supply",
               "type": {
-                "kind": "numberTypeNode",
-                "format": "u64",
-                "endian": "le"
+                "kind": "arrayTypeNode",
+                "item": {
+                  "kind": "numberTypeNode",
+                  "format": "u8",
+                  "endian": "le"
+                },
+                "count": { "kind": "fixedCountNode", "value": 32 }
               },
               "docs": ["Total supply of tokens."]
             },
@@ -83,12 +87,12 @@
         "discriminators": [
           {
             "kind": "sizeDiscriminatorNode",
-            "size": 82
+            "size": 106
           }
         ],
         "name": "mint",
         "docs": [],
-        "size": 82
+        "size": 106
       },
       {
         "kind": "accountNode",
@@ -111,9 +115,13 @@
               "kind": "structFieldTypeNode",
               "name": "amount",
               "type": {
-                "kind": "numberTypeNode",
-                "format": "u64",
-                "endian": "le"
+                "kind": "arrayTypeNode",
+                "item": {
+                  "kind": "numberTypeNode",
+                  "format": "u8",
+                  "endian": "le"
+                },
+                "count": { "kind": "fixedCountNode", "value": 32 }
               },
               "docs": ["The amount of tokens this account holds."]
             },
@@ -169,9 +177,13 @@
               "kind": "structFieldTypeNode",
               "name": "delegatedAmount",
               "type": {
-                "kind": "numberTypeNode",
-                "format": "u64",
-                "endian": "le"
+                "kind": "arrayTypeNode",
+                "item": {
+                  "kind": "numberTypeNode",
+                  "format": "u8",
+                  "endian": "le"
+                },
+                "count": { "kind": "fixedCountNode", "value": 32 }
               },
               "docs": ["The amount delegated."]
             },
@@ -195,12 +207,12 @@
         "discriminators": [
           {
             "kind": "sizeDiscriminatorNode",
-            "size": 165
+            "size": 213
           }
         ],
         "name": "token",
         "docs": [],
-        "size": 165
+        "size": 213
       },
       {
         "kind": "accountNode",
@@ -561,9 +573,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens to transfer."]
           }
@@ -639,9 +655,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens the delegate is approved for."]
           }
@@ -853,9 +873,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of new tokens to mint."]
           }
@@ -932,9 +956,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": []
           }
@@ -1219,9 +1247,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens to transfer."]
           },
@@ -1321,9 +1353,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens the delegate is approved for."]
           },
@@ -1416,9 +1452,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of new tokens to mint."]
           },
@@ -1511,9 +1551,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens to burn."]
           },
@@ -1979,9 +2023,13 @@
             "kind": "instructionArgumentNode",
             "name": "amount",
             "type": {
-              "kind": "numberTypeNode",
-              "format": "u64",
-              "endian": "le"
+              "kind": "arrayTypeNode",
+              "item": {
+                "kind": "numberTypeNode",
+                "format": "u8",
+                "endian": "le"
+              },
+              "count": { "kind": "fixedCountNode", "value": 32 }
             },
             "docs": ["The amount of tokens to reformat."]
           }
