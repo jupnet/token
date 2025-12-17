@@ -74,7 +74,7 @@ solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
+solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2", features = ["agave-unstable-api"] }
 solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", features = ["bytemuck"] }
 solana-rent = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk" }
@@ -85,6 +85,7 @@ solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
 solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk" }
 spl-token-interface = { path = "interface", version = "2.0.0" }
+spl-token-2022-interface = { git = "https://github.com/jupnet/token-2022", branch = "jupnet" }
 
 
 [patch.crates-io]
@@ -167,3 +168,26 @@ solana-svm-transaction = { git = "https://github.com/jupnet/jupnet-svm", branch 
 solana-svm-type-overrides = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-transaction-context = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-system-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
+solana-vote-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-client-traits = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-seed-derivable = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-presigner = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-genesis-config = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-derivation-path = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-commitment-config = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-cluster-type = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-epoch-info = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-quic-definitions = { git = "https://github.com/jupnet/jupnet-sdk" }
+jupnet-crypto = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-compute-budget-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-loader-v2-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-loader-v3-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-loader-v4-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-feature-gate-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-offchain-message = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-system-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-inflation = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-hard-forks = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-poh-config = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-time-utils = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-shred-version = { git = "https://github.com/jupnet/jupnet-sdk" }
