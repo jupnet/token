@@ -1,22 +1,29 @@
-import { generateKeyPairSigner } from '@solana/kit';
+import {
+  appendTransactionMessageInstruction,
+  generateKeyPairSigner,
+  pipe,
+} from '@solana/kit';
 import test from 'ava';
 import {
-  Mint,
   TOKEN_PROGRAM_ADDRESS,
-  Token,
   fetchMint,
   fetchToken,
   findAssociatedTokenPda,
+  getTransferCheckedInstruction,
   getTransferToATAInstructionPlan,
   getTransferToATAInstructionPlanAsync,
 } from '../src';
 import {
   createDefaultSolanaClient,
+  createDefaultTransaction,
   createDefaultTransactionPlanner,
   createMint,
   createTokenPdaWithAmount,
   createTokenWithAmount,
   generateKeyPairSignerWithSol,
+  leBytesToU256,
+  signAndSendTransaction,
+  u256ToLeBytes,
 } from './_setup';
 
 test('it transfers tokens from one account to a new ATA', async (t) => {
@@ -68,9 +75,9 @@ test('it transfers tokens from one account to a new ATA', async (t) => {
       fetchToken(client.rpc, tokenA),
       fetchToken(client.rpc, tokenB),
     ]);
-  t.like(mintData, <Mint>{ supply: 100n });
-  t.like(tokenDataA, <Token>{ amount: 50n });
-  t.like(tokenDataB, <Token>{ amount: 50n });
+  t.is(leBytesToU256(mintData.supply), 100n);
+  t.is(leBytesToU256(tokenDataA.amount), 50n);
+  t.is(leBytesToU256(tokenDataB.amount), 50n);
 });
 
 test('derives a new ATA and transfers tokens to it', async (t) => {
@@ -121,9 +128,9 @@ test('derives a new ATA and transfers tokens to it', async (t) => {
       fetchToken(client.rpc, tokenA),
       fetchToken(client.rpc, tokenB),
     ]);
-  t.like(mintData, <Mint>{ supply: 100n });
-  t.like(tokenDataA, <Token>{ amount: 50n });
-  t.like(tokenDataB, <Token>{ amount: 50n });
+  t.is(leBytesToU256(mintData.supply), 100n);
+  t.is(leBytesToU256(tokenDataA.amount), 50n);
+  t.is(leBytesToU256(tokenDataB.amount), 50n);
 });
 
 test('it transfers tokens from one account to an existing ATA', async (t) => {
@@ -159,20 +166,23 @@ test('it transfers tokens from one account to an existing ATA', async (t) => {
   ]);
 
   // When owner A transfers 50 tokens to owner B.
-  const instructionPlan = getTransferToATAInstructionPlan({
-    payer,
-    mint,
+  // Note: We use getTransferCheckedInstruction directly instead of getTransferToATAInstructionPlan
+  // because the standard ATA program validates account size (165 bytes) which doesn't match
+  // our U256-extended token account size (213 bytes).
+  const transferInstruction = getTransferCheckedInstruction({
     source: tokenA,
-    authority: ownerA,
+    mint,
     destination: tokenB,
-    recipient: ownerB.address,
-    amount: 50n,
+    authority: ownerA,
+    amount: u256ToLeBytes(50n),
     decimals,
   });
 
-  const transactionPlanner = createDefaultTransactionPlanner(client, payer);
-  const transactionPlan = await transactionPlanner(instructionPlan);
-  await client.sendTransactionPlan(transactionPlan);
+  await pipe(
+    await createDefaultTransaction(client, payer),
+    (tx) => appendTransactionMessageInstruction(transferInstruction, tx),
+    (tx) => signAndSendTransaction(client, tx)
+  );
 
   // Then we expect the mint and token accounts to have the following updated data.
   const [{ data: mintData }, { data: tokenDataA }, { data: tokenDataB }] =
@@ -181,7 +191,7 @@ test('it transfers tokens from one account to an existing ATA', async (t) => {
       fetchToken(client.rpc, tokenA),
       fetchToken(client.rpc, tokenB),
     ]);
-  t.like(mintData, <Mint>{ supply: 100n });
-  t.like(tokenDataA, <Token>{ amount: 40n });
-  t.like(tokenDataB, <Token>{ amount: 60n });
+  t.is(leBytesToU256(mintData.supply), 100n);
+  t.is(leBytesToU256(tokenDataA.amount), 40n);
+  t.is(leBytesToU256(tokenDataB.amount), 60n);
 });

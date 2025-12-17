@@ -1,10 +1,11 @@
-import { generateKeyPairSigner, Account, some, none } from '@solana/kit';
+import { generateKeyPairSigner, some, none } from '@solana/kit';
 import test from 'ava';
-import { fetchMint, Mint, getCreateMintInstructionPlan } from '../src';
+import { fetchMint, getCreateMintInstructionPlan } from '../src';
 import {
   createDefaultSolanaClient,
   generateKeyPairSignerWithSol,
   createDefaultTransactionPlanner,
+  leBytesToU256,
 } from './_setup';
 
 test('it creates and initializes a new mint account', async (t) => {
@@ -27,16 +28,12 @@ test('it creates and initializes a new mint account', async (t) => {
 
   // Then we expect the mint account to exist and have the following data.
   const mintAccount = await fetchMint(client.rpc, mint.address);
-  t.like(mintAccount, <Account<Mint>>{
-    address: mint.address,
-    data: {
-      mintAuthority: some(authority.address),
-      supply: 0n,
-      decimals: 2,
-      isInitialized: true,
-      freezeAuthority: none(),
-    },
-  });
+  t.is(mintAccount.address, mint.address);
+  t.deepEqual(mintAccount.data.mintAuthority, some(authority.address));
+  t.is(leBytesToU256(mintAccount.data.supply), 0n);
+  t.is(mintAccount.data.decimals, 2);
+  t.is(mintAccount.data.isInitialized, true);
+  t.deepEqual(mintAccount.data.freezeAuthority, none());
 });
 
 test('it creates a new mint account with a freeze authority', async (t) => {
@@ -64,11 +61,7 @@ test('it creates a new mint account with a freeze authority', async (t) => {
 
   // Then we expect the mint account to exist and have the following data.
   const mintAccount = await fetchMint(client.rpc, mint.address);
-  t.like(mintAccount, <Account<Mint>>{
-    address: mint.address,
-    data: {
-      mintAuthority: some(mintAuthority.address),
-      freezeAuthority: some(freezeAuthority.address),
-    },
-  });
+  t.is(mintAccount.address, mint.address);
+  t.deepEqual(mintAccount.data.mintAuthority, some(mintAuthority.address));
+  t.deepEqual(mintAccount.data.freezeAuthority, some(freezeAuthority.address));
 });

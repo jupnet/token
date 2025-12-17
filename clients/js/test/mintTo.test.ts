@@ -18,6 +18,8 @@ import {
   createToken,
   generateKeyPairSignerWithSol,
   signAndSendTransaction,
+  u256ToLeBytes,
+  leBytesToU256,
 } from './_setup';
 
 test('it mints tokens to a token account', async (t) => {
@@ -36,7 +38,7 @@ test('it mints tokens to a token account', async (t) => {
     mint,
     token,
     mintAuthority,
-    amount: 100n,
+    amount: u256ToLeBytes(100n),
   });
   await pipe(
     await createDefaultTransaction(client, payer),
@@ -49,6 +51,6 @@ test('it mints tokens to a token account', async (t) => {
     fetchMint(client.rpc, mint),
     fetchToken(client.rpc, token),
   ]);
-  t.like(mintData, <Mint>{ supply: 100n });
-  t.like(tokenData, <Token>{ amount: 100n });
+  t.is(leBytesToU256(mintData.supply), 100n);
+  t.is(leBytesToU256(tokenData.amount), 100n);
 });

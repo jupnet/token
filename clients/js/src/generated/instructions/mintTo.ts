@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,19 +66,19 @@ export type MintToInstruction<
 export type MintToInstructionData = {
   discriminator: number;
   /** The amount of new tokens to mint. */
-  amount: bigint;
+  amount: Array<number>;
 };
 
 export type MintToInstructionDataArgs = {
   /** The amount of new tokens to mint. */
-  amount: number | bigint;
+  amount: Array<number>;
 };
 
 export function getMintToInstructionDataEncoder(): FixedSizeEncoder<MintToInstructionDataArgs> {
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ]),
     (value) => ({ ...value, discriminator: MINT_TO_DISCRIMINATOR })
   );
@@ -87,7 +87,7 @@ export function getMintToInstructionDataEncoder(): FixedSizeEncoder<MintToInstru
 export function getMintToInstructionDataDecoder(): FixedSizeDecoder<MintToInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
   ]);
 }
 

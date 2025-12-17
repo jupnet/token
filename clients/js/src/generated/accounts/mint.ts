@@ -15,6 +15,8 @@ import {
   fetchEncodedAccounts,
   getAddressDecoder,
   getAddressEncoder,
+  getArrayDecoder,
+  getArrayEncoder,
   getBooleanDecoder,
   getBooleanEncoder,
   getOptionDecoder,
@@ -23,8 +25,6 @@ import {
   getStructEncoder,
   getU32Decoder,
   getU32Encoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   type Account,
@@ -49,7 +49,7 @@ export type Mint = {
    */
   mintAuthority: Option<Address>;
   /** Total supply of tokens. */
-  supply: bigint;
+  supply: Array<number>;
   /** Number of base 10 digits to the right of the decimal place. */
   decimals: number;
   /** Is `true` if this structure has been initialized. */
@@ -66,7 +66,7 @@ export type MintArgs = {
    */
   mintAuthority: OptionOrNullable<Address>;
   /** Total supply of tokens. */
-  supply: number | bigint;
+  supply: Array<number>;
   /** Number of base 10 digits to the right of the decimal place. */
   decimals: number;
   /** Is `true` if this structure has been initialized. */
@@ -84,7 +84,7 @@ export function getMintEncoder(): FixedSizeEncoder<MintArgs> {
         noneValue: 'zeroes',
       }),
     ],
-    ['supply', getU64Encoder()],
+    ['supply', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ['decimals', getU8Encoder()],
     ['isInitialized', getBooleanEncoder()],
     [
@@ -106,7 +106,7 @@ export function getMintDecoder(): FixedSizeDecoder<Mint> {
         noneValue: 'zeroes',
       }),
     ],
-    ['supply', getU64Decoder()],
+    ['supply', getArrayDecoder(getU8Decoder(), { size: 32 })],
     ['decimals', getU8Decoder()],
     ['isInitialized', getBooleanDecoder()],
     [
@@ -177,5 +177,5 @@ export async function fetchAllMaybeMint(
 }
 
 export function getMintSize(): number {
-  return 82;
+  return 106;
 }

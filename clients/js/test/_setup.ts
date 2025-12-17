@@ -1,4 +1,8 @@
 import { getCreateAccountInstruction } from '@solana-program/system';
+
+// Re-export U256 helpers from the main package
+import { u256ToLeBytes, leBytesToU256 } from '../src';
+export { u256ToLeBytes, leBytesToU256 };
 import {
   Address,
   BaseTransactionMessage,
@@ -233,7 +237,7 @@ export const createTokenWithAmount = async (
       programAddress: TOKEN_PROGRAM_ADDRESS,
     }),
     getInitializeAccountInstruction({ account: token.address, mint, owner }),
-    getMintToInstruction({ mint, token: token.address, mintAuthority, amount }),
+    getMintToInstruction({ mint, token: token.address, mintAuthority, amount: u256ToLeBytes(amount) }),
   ];
   await pipe(
     transactionMessage,

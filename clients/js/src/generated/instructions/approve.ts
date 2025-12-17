@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,19 +66,19 @@ export type ApproveInstruction<
 export type ApproveInstructionData = {
   discriminator: number;
   /** The amount of tokens the delegate is approved for. */
-  amount: bigint;
+  amount: Array<number>;
 };
 
 export type ApproveInstructionDataArgs = {
   /** The amount of tokens the delegate is approved for. */
-  amount: number | bigint;
+  amount: Array<number>;
 };
 
 export function getApproveInstructionDataEncoder(): FixedSizeEncoder<ApproveInstructionDataArgs> {
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ]),
     (value) => ({ ...value, discriminator: APPROVE_DISCRIMINATOR })
   );
@@ -87,7 +87,7 @@ export function getApproveInstructionDataEncoder(): FixedSizeEncoder<ApproveInst
 export function getApproveInstructionDataDecoder(): FixedSizeDecoder<ApproveInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
   ]);
 }
 

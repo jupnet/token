@@ -10,6 +10,7 @@ import {
   getTransferCheckedInstruction,
   TOKEN_PROGRAM_ADDRESS,
 } from './generated';
+import { u256ToLeBytes } from './u256';
 
 type TransferToATAInstructionPlanInput = {
   /** Funding account (must be a system account). */
@@ -65,7 +66,7 @@ export function getTransferToATAInstructionPlan(
         mint: input.mint,
         destination: input.destination,
         authority: input.authority,
-        amount: input.amount,
+        amount: u256ToLeBytes(input.amount),
         decimals: input.decimals,
         multiSigners: input.multiSigners,
       },

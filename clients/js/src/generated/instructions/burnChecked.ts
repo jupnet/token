@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,14 +66,14 @@ export type BurnCheckedInstruction<
 export type BurnCheckedInstructionData = {
   discriminator: number;
   /** The amount of tokens to burn. */
-  amount: bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
 
 export type BurnCheckedInstructionDataArgs = {
   /** The amount of tokens to burn. */
-  amount: number | bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
@@ -82,7 +82,7 @@ export function getBurnCheckedInstructionDataEncoder(): FixedSizeEncoder<BurnChe
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
       ['decimals', getU8Encoder()],
     ]),
     (value) => ({ ...value, discriminator: BURN_CHECKED_DISCRIMINATOR })
@@ -92,7 +92,7 @@ export function getBurnCheckedInstructionDataEncoder(): FixedSizeEncoder<BurnChe
 export function getBurnCheckedInstructionDataDecoder(): FixedSizeDecoder<BurnCheckedInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
     ['decimals', getU8Decoder()],
   ]);
 }

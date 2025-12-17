@@ -8,10 +8,10 @@
 
 import {
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -53,19 +53,19 @@ export type AmountToUiAmountInstruction<
 export type AmountToUiAmountInstructionData = {
   discriminator: number;
   /** The amount of tokens to reformat. */
-  amount: bigint;
+  amount: Array<number>;
 };
 
 export type AmountToUiAmountInstructionDataArgs = {
   /** The amount of tokens to reformat. */
-  amount: number | bigint;
+  amount: Array<number>;
 };
 
 export function getAmountToUiAmountInstructionDataEncoder(): FixedSizeEncoder<AmountToUiAmountInstructionDataArgs> {
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ]),
     (value) => ({ ...value, discriminator: AMOUNT_TO_UI_AMOUNT_DISCRIMINATOR })
   );
@@ -74,7 +74,7 @@ export function getAmountToUiAmountInstructionDataEncoder(): FixedSizeEncoder<Am
 export function getAmountToUiAmountInstructionDataDecoder(): FixedSizeDecoder<AmountToUiAmountInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
   ]);
 }
 

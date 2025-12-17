@@ -5,8 +5,6 @@ import {
 } from '@solana/kit';
 import test from 'ava';
 import {
-  Mint,
-  Token,
   fetchMint,
   fetchToken,
   getTransferInstruction,
@@ -19,6 +17,8 @@ import {
   createTokenWithAmount,
   generateKeyPairSignerWithSol,
   signAndSendTransaction,
+  u256ToLeBytes,
+  leBytesToU256,
 } from './_setup';
 
 test('it transfers tokens from one account to another', async (t) => {
@@ -49,7 +49,7 @@ test('it transfers tokens from one account to another', async (t) => {
     source: tokenA,
     destination: tokenB,
     authority: ownerA,
-    amount: 50n,
+    amount: u256ToLeBytes(50n),
   });
   await pipe(
     await createDefaultTransaction(client, payer),
@@ -64,7 +64,7 @@ test('it transfers tokens from one account to another', async (t) => {
       fetchToken(client.rpc, tokenA),
       fetchToken(client.rpc, tokenB),
     ]);
-  t.like(mintData, <Mint>{ supply: 100n });
-  t.like(tokenDataA, <Token>{ amount: 50n });
-  t.like(tokenDataB, <Token>{ amount: 50n });
+  t.is(leBytesToU256(mintData.supply), 100n);
+  t.is(leBytesToU256(tokenDataA.amount), 50n);
+  t.is(leBytesToU256(tokenDataB.amount), 50n);
 });

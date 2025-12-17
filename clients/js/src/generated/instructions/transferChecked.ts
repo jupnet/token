@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -70,14 +70,14 @@ export type TransferCheckedInstruction<
 export type TransferCheckedInstructionData = {
   discriminator: number;
   /** The amount of tokens to transfer. */
-  amount: bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
 
 export type TransferCheckedInstructionDataArgs = {
   /** The amount of tokens to transfer. */
-  amount: number | bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
@@ -86,7 +86,7 @@ export function getTransferCheckedInstructionDataEncoder(): FixedSizeEncoder<Tra
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
       ['decimals', getU8Encoder()],
     ]),
     (value) => ({ ...value, discriminator: TRANSFER_CHECKED_DISCRIMINATOR })
@@ -96,7 +96,7 @@ export function getTransferCheckedInstructionDataEncoder(): FixedSizeEncoder<Tra
 export function getTransferCheckedInstructionDataDecoder(): FixedSizeDecoder<TransferCheckedInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
     ['decimals', getU8Decoder()],
   ]);
 }

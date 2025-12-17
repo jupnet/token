@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,19 +66,19 @@ export type TransferInstruction<
 export type TransferInstructionData = {
   discriminator: number;
   /** The amount of tokens to transfer. */
-  amount: bigint;
+  amount: Array<number>;
 };
 
 export type TransferInstructionDataArgs = {
   /** The amount of tokens to transfer. */
-  amount: number | bigint;
+  amount: Array<number>;
 };
 
 export function getTransferInstructionDataEncoder(): FixedSizeEncoder<TransferInstructionDataArgs> {
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ]),
     (value) => ({ ...value, discriminator: TRANSFER_DISCRIMINATOR })
   );
@@ -87,7 +87,7 @@ export function getTransferInstructionDataEncoder(): FixedSizeEncoder<TransferIn
 export function getTransferInstructionDataDecoder(): FixedSizeDecoder<TransferInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
   ]);
 }
 

@@ -53,10 +53,10 @@ export function identifyTokenAccount(
   account: { data: ReadonlyUint8Array } | ReadonlyUint8Array
 ): TokenAccount {
   const data = 'data' in account ? account.data : account;
-  if (data.length === 82) {
+  if (data.length === 106) {
     return TokenAccount.Mint;
   }
-  if (data.length === 165) {
+  if (data.length === 213) {
     return TokenAccount.Token;
   }
   if (data.length === 355) {

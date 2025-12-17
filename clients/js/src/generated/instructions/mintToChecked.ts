@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,14 +66,14 @@ export type MintToCheckedInstruction<
 export type MintToCheckedInstructionData = {
   discriminator: number;
   /** The amount of new tokens to mint. */
-  amount: bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
 
 export type MintToCheckedInstructionDataArgs = {
   /** The amount of new tokens to mint. */
-  amount: number | bigint;
+  amount: Array<number>;
   /** Expected number of base 10 digits to the right of the decimal place. */
   decimals: number;
 };
@@ -82,7 +82,7 @@ export function getMintToCheckedInstructionDataEncoder(): FixedSizeEncoder<MintT
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
       ['decimals', getU8Encoder()],
     ]),
     (value) => ({ ...value, discriminator: MINT_TO_CHECKED_DISCRIMINATOR })
@@ -92,7 +92,7 @@ export function getMintToCheckedInstructionDataEncoder(): FixedSizeEncoder<MintT
 export function getMintToCheckedInstructionDataDecoder(): FixedSizeDecoder<MintToCheckedInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
     ['decimals', getU8Decoder()],
   ]);
 }

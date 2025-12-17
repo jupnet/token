@@ -9,10 +9,10 @@
 import {
   AccountRole,
   combineCodec,
+  getArrayDecoder,
+  getArrayEncoder,
   getStructDecoder,
   getStructEncoder,
-  getU64Decoder,
-  getU64Encoder,
   getU8Decoder,
   getU8Encoder,
   transformEncoder,
@@ -66,16 +66,16 @@ export type BurnInstruction<
 export type BurnInstructionData = {
   /** The amount of tokens to burn. */
   discriminator: number;
-  amount: bigint;
+  amount: Array<number>;
 };
 
-export type BurnInstructionDataArgs = { amount: number | bigint };
+export type BurnInstructionDataArgs = { amount: Array<number> };
 
 export function getBurnInstructionDataEncoder(): FixedSizeEncoder<BurnInstructionDataArgs> {
   return transformEncoder(
     getStructEncoder([
       ['discriminator', getU8Encoder()],
-      ['amount', getU64Encoder()],
+      ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     ]),
     (value) => ({ ...value, discriminator: BURN_DISCRIMINATOR })
   );
@@ -84,7 +84,7 @@ export function getBurnInstructionDataEncoder(): FixedSizeEncoder<BurnInstructio
 export function getBurnInstructionDataDecoder(): FixedSizeDecoder<BurnInstructionData> {
   return getStructDecoder([
     ['discriminator', getU8Decoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
   ]);
 }
 

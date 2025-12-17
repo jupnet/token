@@ -10,6 +10,7 @@ import {
   getMintToCheckedInstruction,
   TOKEN_PROGRAM_ADDRESS,
 } from './generated';
+import { u256ToLeBytes } from './u256';
 
 type MintToATAInstructionPlanInput = {
   /** Funding account (must be a system account). */
@@ -63,7 +64,7 @@ export function getMintToATAInstructionPlan(
         mint: input.mint,
         token: input.ata,
         mintAuthority: input.mintAuthority,
-        amount: input.amount,
+        amount: u256ToLeBytes(input.amount),
         decimals: input.decimals,
         multiSigners: input.multiSigners,
       },

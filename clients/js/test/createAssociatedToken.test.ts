@@ -1,5 +1,4 @@
 import {
-  Account,
   appendTransactionMessageInstruction,
   generateKeyPairSigner,
   none,
@@ -9,7 +8,6 @@ import test from 'ava';
 import {
   AccountState,
   TOKEN_PROGRAM_ADDRESS,
-  Token,
   fetchToken,
   findAssociatedTokenPda,
   getCreateAssociatedTokenInstructionAsync,
@@ -20,6 +18,7 @@ import {
   createMint,
   generateKeyPairSignerWithSol,
   signAndSendTransaction,
+  leBytesToU256,
 } from './_setup';
 
 test('it creates a new associated token account', async (t) => {
@@ -51,17 +50,14 @@ test('it creates a new associated token account', async (t) => {
     owner: owner.address,
     tokenProgram: TOKEN_PROGRAM_ADDRESS,
   });
-  t.like(await fetchToken(client.rpc, ata), <Account<Token>>{
-    address: ata,
-    data: {
-      mint,
-      owner: owner.address,
-      amount: 0n,
-      delegate: none(),
-      state: AccountState.Initialized,
-      isNative: none(),
-      delegatedAmount: 0n,
-      closeAuthority: none(),
-    },
-  });
+  const tokenAccount = await fetchToken(client.rpc, ata);
+  t.is(tokenAccount.address, ata);
+  t.is(tokenAccount.data.mint, mint);
+  t.is(tokenAccount.data.owner, owner.address);
+  t.is(leBytesToU256(tokenAccount.data.amount), 0n);
+  t.deepEqual(tokenAccount.data.delegate, none());
+  t.is(tokenAccount.data.state, AccountState.Initialized);
+  t.deepEqual(tokenAccount.data.isNative, none());
+  t.is(leBytesToU256(tokenAccount.data.delegatedAmount), 0n);
+  t.deepEqual(tokenAccount.data.closeAuthority, none());
 });

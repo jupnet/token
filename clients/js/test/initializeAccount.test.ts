@@ -1,6 +1,5 @@
 import { getCreateAccountInstruction } from '@solana-program/system';
 import {
-  Account,
   appendTransactionMessageInstructions,
   generateKeyPairSigner,
   none,
@@ -10,7 +9,6 @@ import test from 'ava';
 import {
   AccountState,
   TOKEN_PROGRAM_ADDRESS,
-  Token,
   fetchToken,
   getInitializeAccountInstruction,
   getTokenSize,
@@ -21,6 +19,7 @@ import {
   createMint,
   generateKeyPairSignerWithSol,
   signAndSendTransaction,
+  leBytesToU256,
 } from './_setup';
 
 test('it creates and initializes a new token account', async (t) => {
@@ -60,17 +59,13 @@ test('it creates and initializes a new token account', async (t) => {
 
   // Then we expect the token account to exist and have the following data.
   const tokenAccount = await fetchToken(client.rpc, token.address);
-  t.like(tokenAccount, <Account<Token>>{
-    address: token.address,
-    data: {
-      mint,
-      owner: owner.address,
-      amount: 0n,
-      delegate: none(),
-      state: AccountState.Initialized,
-      isNative: none(),
-      delegatedAmount: 0n,
-      closeAuthority: none(),
-    },
-  });
+  t.is(tokenAccount.address, token.address);
+  t.is(tokenAccount.data.mint, mint);
+  t.is(tokenAccount.data.owner, owner.address);
+  t.is(leBytesToU256(tokenAccount.data.amount), 0n);
+  t.deepEqual(tokenAccount.data.delegate, none());
+  t.is(tokenAccount.data.state, AccountState.Initialized);
+  t.deepEqual(tokenAccount.data.isNative, none());
+  t.is(leBytesToU256(tokenAccount.data.delegatedAmount), 0n);
+  t.deepEqual(tokenAccount.data.closeAuthority, none());
 });

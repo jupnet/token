@@ -12,9 +12,9 @@ import {
   TOKEN_PROGRAM_ADDRESS,
 } from './generated';
 
-// RPC `getMinimumBalanceForRentExemption` for 82 bytes, which is token mint size
+// RPC `getMinimumBalanceForRentExemption` for 106 bytes, which is token mint size
 // Hardcoded to avoid requiring an RPC request each time
-const MINIMUM_BALANCE_FOR_MINT = 1461600;
+const MINIMUM_BALANCE_FOR_MINT = 1628640;
 
 export type CreateMintInstructionPlanInput = {
   /** Funding account (must be a system account). */

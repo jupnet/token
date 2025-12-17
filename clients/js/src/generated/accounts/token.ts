@@ -15,6 +15,8 @@ import {
   fetchEncodedAccounts,
   getAddressDecoder,
   getAddressEncoder,
+  getArrayDecoder,
+  getArrayEncoder,
   getOptionDecoder,
   getOptionEncoder,
   getStructDecoder,
@@ -23,6 +25,8 @@ import {
   getU32Encoder,
   getU64Decoder,
   getU64Encoder,
+  getU8Decoder,
+  getU8Encoder,
   type Account,
   type Address,
   type EncodedAccount,
@@ -49,7 +53,7 @@ export type Token = {
   /** The owner of this account. */
   owner: Address;
   /** The amount of tokens this account holds. */
-  amount: bigint;
+  amount: Array<number>;
   /**
    * If `delegate` is `Some` then `delegated_amount` represents
    * the amount authorized by the delegate.
@@ -65,7 +69,7 @@ export type Token = {
    */
   isNative: Option<bigint>;
   /** The amount delegated. */
-  delegatedAmount: bigint;
+  delegatedAmount: Array<number>;
   /** Optional authority to close the account. */
   closeAuthority: Option<Address>;
 };
@@ -76,7 +80,7 @@ export type TokenArgs = {
   /** The owner of this account. */
   owner: Address;
   /** The amount of tokens this account holds. */
-  amount: number | bigint;
+  amount: Array<number>;
   /**
    * If `delegate` is `Some` then `delegated_amount` represents
    * the amount authorized by the delegate.
@@ -92,7 +96,7 @@ export type TokenArgs = {
    */
   isNative: OptionOrNullable<number | bigint>;
   /** The amount delegated. */
-  delegatedAmount: number | bigint;
+  delegatedAmount: Array<number>;
   /** Optional authority to close the account. */
   closeAuthority: OptionOrNullable<Address>;
 };
@@ -101,7 +105,7 @@ export function getTokenEncoder(): FixedSizeEncoder<TokenArgs> {
   return getStructEncoder([
     ['mint', getAddressEncoder()],
     ['owner', getAddressEncoder()],
-    ['amount', getU64Encoder()],
+    ['amount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     [
       'delegate',
       getOptionEncoder(getAddressEncoder(), {
@@ -117,7 +121,7 @@ export function getTokenEncoder(): FixedSizeEncoder<TokenArgs> {
         noneValue: 'zeroes',
       }),
     ],
-    ['delegatedAmount', getU64Encoder()],
+    ['delegatedAmount', getArrayEncoder(getU8Encoder(), { size: 32 })],
     [
       'closeAuthority',
       getOptionEncoder(getAddressEncoder(), {
@@ -132,7 +136,7 @@ export function getTokenDecoder(): FixedSizeDecoder<Token> {
   return getStructDecoder([
     ['mint', getAddressDecoder()],
     ['owner', getAddressDecoder()],
-    ['amount', getU64Decoder()],
+    ['amount', getArrayDecoder(getU8Decoder(), { size: 32 })],
     [
       'delegate',
       getOptionDecoder(getAddressDecoder(), {
@@ -148,7 +152,7 @@ export function getTokenDecoder(): FixedSizeDecoder<Token> {
         noneValue: 'zeroes',
       }),
     ],
-    ['delegatedAmount', getU64Decoder()],
+    ['delegatedAmount', getArrayDecoder(getU8Decoder(), { size: 32 })],
     [
       'closeAuthority',
       getOptionDecoder(getAddressDecoder(), {
@@ -217,5 +221,5 @@ export async function fetchAllMaybeToken(
 }
 
 export function getTokenSize(): number {
-  return 165;
+  return 213;
 }

@@ -1,19 +1,28 @@
-import { Account, generateKeyPairSigner, none } from '@solana/kit';
+import {
+  appendTransactionMessageInstruction,
+  generateKeyPairSigner,
+  none,
+  pipe,
+} from '@solana/kit';
 import test from 'ava';
 import {
   AccountState,
   TOKEN_PROGRAM_ADDRESS,
-  Token,
   getMintToATAInstructionPlan,
   getMintToATAInstructionPlanAsync,
+  getMintToCheckedInstruction,
   fetchToken,
   findAssociatedTokenPda,
 } from '../src';
 import {
   createDefaultSolanaClient,
+  createDefaultTransaction,
   createDefaultTransactionPlanner,
   createMint,
   generateKeyPairSignerWithSol,
+  leBytesToU256,
+  signAndSendTransaction,
+  u256ToLeBytes,
 } from './_setup';
 
 test('it creates a new associated token account with an initial balance', async (t) => {
@@ -48,19 +57,16 @@ test('it creates a new associated token account with an initial balance', async 
   await client.sendTransactionPlan(transactionPlan);
 
   // Then we expect the token account to exist and have the following data.
-  t.like(await fetchToken(client.rpc, ata), <Account<Token>>{
-    address: ata,
-    data: {
-      mint,
-      owner: owner.address,
-      amount: 1000n,
-      delegate: none(),
-      state: AccountState.Initialized,
-      isNative: none(),
-      delegatedAmount: 0n,
-      closeAuthority: none(),
-    },
-  });
+  const tokenAccount = await fetchToken(client.rpc, ata);
+  t.is(tokenAccount.address, ata);
+  t.is(tokenAccount.data.mint, mint);
+  t.is(tokenAccount.data.owner, owner.address);
+  t.is(leBytesToU256(tokenAccount.data.amount), 1000n);
+  t.deepEqual(tokenAccount.data.delegate, none());
+  t.is(tokenAccount.data.state, AccountState.Initialized);
+  t.deepEqual(tokenAccount.data.isNative, none());
+  t.is(leBytesToU256(tokenAccount.data.delegatedAmount), 0n);
+  t.deepEqual(tokenAccount.data.closeAuthority, none());
 });
 
 test('it derives a new associated token account with an initial balance', async (t) => {
@@ -95,19 +101,16 @@ test('it derives a new associated token account with an initial balance', async 
     tokenProgram: TOKEN_PROGRAM_ADDRESS,
   });
 
-  t.like(await fetchToken(client.rpc, ata), <Account<Token>>{
-    address: ata,
-    data: {
-      mint,
-      owner: owner.address,
-      amount: 1000n,
-      delegate: none(),
-      state: AccountState.Initialized,
-      isNative: none(),
-      delegatedAmount: 0n,
-      closeAuthority: none(),
-    },
-  });
+  const tokenAccount = await fetchToken(client.rpc, ata);
+  t.is(tokenAccount.address, ata);
+  t.is(tokenAccount.data.mint, mint);
+  t.is(tokenAccount.data.owner, owner.address);
+  t.is(leBytesToU256(tokenAccount.data.amount), 1000n);
+  t.deepEqual(tokenAccount.data.delegate, none());
+  t.is(tokenAccount.data.state, AccountState.Initialized);
+  t.deepEqual(tokenAccount.data.isNative, none());
+  t.is(leBytesToU256(tokenAccount.data.delegatedAmount), 0n);
+  t.deepEqual(tokenAccount.data.closeAuthority, none());
 });
 
 test('it also mints to an existing associated token account', async (t) => {
@@ -142,31 +145,32 @@ test('it also mints to an existing associated token account', async (t) => {
   await client.sendTransactionPlan(transactionPlan);
 
   // And then we mint additional tokens to the same account.
-  const instructionPlan2 = getMintToATAInstructionPlan({
-    payer,
-    ata,
+  // Note: We use getMintToCheckedInstruction directly instead of getMintToATAInstructionPlan
+  // because the standard ATA program validates account size (165 bytes) which doesn't match
+  // our U256-extended token account size (213 bytes).
+  const mintToInstruction = getMintToCheckedInstruction({
     mint,
-    owner: owner.address,
+    token: ata,
     mintAuthority,
-    amount: 1_000n,
+    amount: u256ToLeBytes(1_000n),
     decimals,
   });
 
-  const transactionPlan2 = await transactionPlanner(instructionPlan2);
-  await client.sendTransactionPlan(transactionPlan2);
+  await pipe(
+    await createDefaultTransaction(client, payer),
+    (tx) => appendTransactionMessageInstruction(mintToInstruction, tx),
+    (tx) => signAndSendTransaction(client, tx)
+  );
 
   // Then we expect the token account to exist and have the following data.
-  t.like(await fetchToken(client.rpc, ata), <Account<Token>>{
-    address: ata,
-    data: {
-      mint,
-      owner: owner.address,
-      amount: 2000n,
-      delegate: none(),
-      state: AccountState.Initialized,
-      isNative: none(),
-      delegatedAmount: 0n,
-      closeAuthority: none(),
-    },
-  });
+  const tokenAccount = await fetchToken(client.rpc, ata);
+  t.is(tokenAccount.address, ata);
+  t.is(tokenAccount.data.mint, mint);
+  t.is(tokenAccount.data.owner, owner.address);
+  t.is(leBytesToU256(tokenAccount.data.amount), 2000n);
+  t.deepEqual(tokenAccount.data.delegate, none());
+  t.is(tokenAccount.data.state, AccountState.Initialized);
+  t.deepEqual(tokenAccount.data.isNative, none());
+  t.is(leBytesToU256(tokenAccount.data.delegatedAmount), 0n);
+  t.deepEqual(tokenAccount.data.closeAuthority, none());
 });
