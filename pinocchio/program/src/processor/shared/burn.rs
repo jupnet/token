@@ -1,5 +1,6 @@
 use {
     crate::processor::{check_account_owner, validate_owner},
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo, hint::likely, program_error::ProgramError, pubkey::pubkey_eq,
         ProgramResult,
@@ -14,7 +15,7 @@ use {
 #[allow(clippy::arithmetic_side_effects)]
 pub fn process_burn(
     accounts: &[AccountInfo],
-    amount: u64,
+    amount: U256,
     expected_decimals: Option<u8>,
 ) -> ProgramResult {
     let [source_account_info, mint_info, authority_info, remaining @ ..] = accounts else {
@@ -67,7 +68,7 @@ pub fn process_burn(
                     .ok_or(TokenError::InsufficientFunds)?;
                 source_account.set_delegated_amount(delegated_amount);
 
-                if delegated_amount == 0 {
+                if delegated_amount == U256::ZERO {
                     source_account.clear_delegate();
                 }
             }
@@ -80,13 +81,13 @@ pub fn process_burn(
 
     // Updates the source account and mint supply.
 
-    if amount == 0 {
+    if amount == U256::ZERO {
         check_account_owner(source_account_info)?;
         check_account_owner(mint_info)?;
     } else {
         source_account.set_amount(updated_source_amount);
         // Note: The amount of a token account is always within the range of the
-        // mint supply (`u64`).
+        // mint supply.
         mint.set_supply(mint.supply() - amount);
     }
 

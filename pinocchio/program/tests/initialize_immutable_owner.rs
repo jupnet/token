@@ -21,7 +21,7 @@ async fn initialize_immutable_owner() {
 
     let account = Keypair::new();
 
-    let account_size = 165;
+    let account_size = spl_token_interface::state::Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
     // When we execute the initialize_immutable_owner instruction.

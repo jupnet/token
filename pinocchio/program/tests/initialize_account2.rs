@@ -36,7 +36,7 @@ async fn initialize_account2() {
     let owner = Pubkey::new_unique();
     let account = Keypair::new();
 
-    let account_size = 165;
+    let account_size = spl_token_interface::state::Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
     let initialize_ix = spl_token_interface::instruction::initialize_account2(

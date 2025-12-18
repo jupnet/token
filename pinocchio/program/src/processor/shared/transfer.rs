@@ -1,5 +1,6 @@
 use {
     crate::processor::{check_account_owner, validate_owner},
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo, hint::unlikely, program_error::ProgramError, pubkey::pubkey_eq,
         ProgramResult,
@@ -14,7 +15,7 @@ use {
 #[allow(clippy::arithmetic_side_effects)]
 pub fn process_transfer(
     accounts: &[AccountInfo],
-    amount: u64,
+    amount: U256,
     expected_decimals: Option<u8>,
 ) -> ProgramResult {
     // Accounts expected depend on whether we have the mint `decimals` or not; when
@@ -141,7 +142,7 @@ pub fn process_transfer(
         if !self_transfer {
             source_account.set_delegated_amount(delegated_amount);
 
-            if delegated_amount == 0 {
+            if delegated_amount == U256::ZERO {
                 source_account.clear_delegate();
             }
         }
@@ -150,7 +151,7 @@ pub fn process_transfer(
         unsafe { validate_owner(&source_account.owner, authority_info, remaining)? };
     }
 
-    if self_transfer || amount == 0 {
+    if self_transfer || amount == U256::ZERO {
         // Validates the token accounts owner since we are not writing
         // to these account.
         check_account_owner(source_account_info)?;
@@ -168,15 +169,17 @@ pub fn process_transfer(
             load_mut_unchecked::<Account>(destination_account_info.borrow_mut_data_unchecked())?
         };
         // Note: The amount of a token account is always within the range of the
-        // mint supply (`u64`).
+        // mint supply.
         destination_account.set_amount(destination_account.amount() + amount);
 
         if source_account.is_native() {
+            // For native transfers, amount must fit in u64 (lamports are u64).
+            let lamport_amount = amount.as_u64();
             // SAFETY: single mutable borrow to `source_account_info` lamports.
             let source_lamports = unsafe { source_account_info.borrow_mut_lamports_unchecked() };
             // Note: The amount of a source token account is already validated and the
             // `lamports` on the account is always greater than `amount`.
-            *source_lamports -= amount;
+            *source_lamports -= lamport_amount;
 
             // SAFETY: single mutable borrow to `destination_account_info` lamports; the
             // account is already validated to be different from
@@ -184,7 +187,7 @@ pub fn process_transfer(
             let destination_lamports =
                 unsafe { destination_account_info.borrow_mut_lamports_unchecked() };
             // Note: The total lamports supply is bound to `u64::MAX`.
-            *destination_lamports += amount;
+            *destination_lamports += lamport_amount;
         }
     }
 

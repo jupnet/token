@@ -1,5 +1,6 @@
 use {
     super::validate_owner,
+    ethnum::U256,
     pinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
     pinocchio_token_interface::{
         error::TokenError,
@@ -32,7 +33,7 @@ pub fn process_revoke(accounts: &[AccountInfo]) -> ProgramResult {
     unsafe { validate_owner(&source_account.owner, owner_info, remaining)? }
 
     source_account.clear_delegate();
-    source_account.set_delegated_amount(0);
+    source_account.set_delegated_amount(U256::ZERO);
 
     Ok(())
 }

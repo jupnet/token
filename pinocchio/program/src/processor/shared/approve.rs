@@ -1,5 +1,6 @@
 use {
     crate::processor::validate_owner,
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo, hint::unlikely, program_error::ProgramError, pubkey::pubkey_eq,
         ProgramResult,
@@ -13,7 +14,7 @@ use {
 #[inline(always)]
 pub fn process_approve(
     accounts: &[AccountInfo],
-    amount: u64,
+    amount: U256,
     expected_decimals: Option<u8>,
 ) -> ProgramResult {
     // Accounts expected depend on whether we have the mint `decimals` or not; when

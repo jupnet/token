@@ -1,5 +1,6 @@
 use {
     crate::processor::check_account_owner,
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo,
         program_error::ProgramError,
@@ -89,7 +90,7 @@ pub fn process_initialize_account(
         account.set_native_amount(minimum_balance);
         // `new_account_info` lamports are already checked to be greater than or equal
         // to the minimum balance.
-        account.set_amount(new_account_info.lamports() - minimum_balance);
+        account.set_amount(U256::from(new_account_info.lamports() - minimum_balance));
     }
 
     Ok(())

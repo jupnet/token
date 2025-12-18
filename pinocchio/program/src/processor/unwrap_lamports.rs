@@ -1,6 +1,7 @@
 use {
     super::validate_owner,
     crate::processor::{check_account_owner, unpack_amount},
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo,
         hint::{likely, unlikely},
@@ -15,7 +16,7 @@ use {
 
 #[allow(clippy::arithmetic_side_effects)]
 pub fn process_unwrap_lamports(accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult {
-    // instruction data: expected u8 (1) + optional u64 (8)
+    // instruction data: expected u8 (1) + optional U256 (32)
     let [has_amount, maybe_amount @ ..] = instruction_data else {
         return Err(TokenError::InvalidInstruction.into());
     };
@@ -48,19 +49,25 @@ pub fn process_unwrap_lamports(accounts: &[AccountInfo], instruction_data: &[u8]
 
     // If we have an amount, we need to validate whether there are enough lamports
     // to unwrap or not; otherwise we just use the full amount.
-    let (amount, remaining_amount) = if let Some(amount) = maybe_amount {
+    // Note: For native token unwrap operations, the amount must fit in u64 since lamports are u64.
+    let (lamport_amount, remaining_amount) = if let Some(amount) = maybe_amount {
+        // Convert U256 to u64 for lamport operations.
+        let lamport_amount = amount.as_u64();
         (
-            amount,
+            lamport_amount,
             source_account
                 .amount()
                 .checked_sub(amount)
                 .ok_or(TokenError::InsufficientFunds)?,
         )
     } else {
-        (source_account.amount(), 0)
+        // Convert U256 amount back to u64 for lamport operations
+        let current_amount = source_account.amount();
+        let lamport_amount = current_amount.as_u64();
+        (lamport_amount, U256::ZERO)
     };
 
-    if unlikely(amount == 0) {
+    if unlikely(lamport_amount == 0) {
         // Validates the token account owner since we are not writing
         // to the account.
         check_account_owner(source_account_info)
@@ -74,15 +81,15 @@ pub fn process_unwrap_lamports(accounts: &[AccountInfo], instruction_data: &[u8]
             // SAFETY: single mutable borrow to `source_account_info` lamports.
             let source_lamports = unsafe { source_account_info.borrow_mut_lamports_unchecked() };
             // Note: The amount of a source token account is already validated and the
-            // `lamports` on the account is always greater than `amount`.
-            *source_lamports -= amount;
+            // `lamports` on the account is always greater than `lamport_amount`.
+            *source_lamports -= lamport_amount;
 
             // SAFETY: single mutable borrow to `destination_account_info` lamports; the
             // account is already validated to be different from `source_account_info`.
             let destination_lamports =
                 unsafe { destination_account_info.borrow_mut_lamports_unchecked() };
             // Note: The total lamports supply is bound to `u64::MAX`.
-            *destination_lamports += amount;
+            *destination_lamports += lamport_amount;
         }
 
         Ok(())

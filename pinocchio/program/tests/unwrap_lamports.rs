@@ -2,6 +2,7 @@ mod setup;
 
 use {
     crate::setup::TOKEN_PROGRAM_ID,
+    ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     pinocchio_token_interface::{
         error::TokenError,
@@ -34,7 +35,7 @@ fn create_token_account(
     token.set_account_state(AccountState::Initialized);
     token.mint = *mint.as_array();
     token.owner = *owner.as_array();
-    token.set_amount(amount);
+    token.set_amount(U256::from(amount));
     token.set_native(is_native);
 
     if is_native {
@@ -51,7 +52,7 @@ fn create_token_account(
     }
 }
 
-/// Creates a Mollusk instance with the default feature set.
+/// Creates a Mollusk instance for testing the token program.
 fn mollusk() -> Mollusk {
     let mut mollusk = Mollusk::default();
     mollusk.add_program(&TOKEN_PROGRAM_ID, "pinocchio_token_program");
@@ -62,7 +63,7 @@ fn unwrap_lamports_instruction(
     source: &Pubkey,
     destination: &Pubkey,
     authority: &Pubkey,
-    amount: Option<u64>,
+    amount: Option<U256>,
 ) -> Result<Instruction, ProgramError> {
     let accounts = vec![
         AccountMeta::new(*source, false),
@@ -70,7 +71,7 @@ fn unwrap_lamports_instruction(
         AccountMeta::new_readonly(*authority, true),
     ];
 
-    // Start with the batch discriminator
+    // Start with the instruction discriminator
     let mut data: Vec<u8> = vec![TokenInstruction::UnwrapLamports as u8];
 
     if let Some(amount) = amount {
@@ -163,7 +164,7 @@ fn unwrap_lamports_with_amount() {
         &source_account_key,
         &destination_account_key,
         &authority_key,
-        Some(2_000_000_000),
+        Some(U256::from(2_000_000_000u64)),
     )
     .unwrap();
 
@@ -218,7 +219,7 @@ fn fail_unwrap_lamports_with_insufficient_funds() {
         &source_account_key,
         &destination_account_key,
         &authority_key,
-        Some(2_000_000_000),
+        Some(U256::from(2_000_000_000u64)),
     )
     .unwrap();
 
@@ -259,7 +260,7 @@ fn unwrap_lamports_with_parial_amount() {
         &source_account_key,
         &destination_account_key,
         &authority_key,
-        Some(1_000_000_000),
+        Some(U256::from(1_000_000_000u64)),
     )
     .unwrap();
 
@@ -317,7 +318,7 @@ fn fail_unwrap_lamports_with_invalid_authority() {
         &source_account_key,
         &destination_account_key,
         &fake_authority_key, // <-- wrong authority
-        Some(2_000_000_000),
+        Some(U256::from(2_000_000_000u64)),
     )
     .unwrap();
 
@@ -359,7 +360,7 @@ fn fail_unwrap_lamports_with_non_native_account() {
         &source_account_key,
         &destination_account_key,
         &authority_key,
-        Some(1_000_000_000),
+        Some(U256::from(1_000_000_000u64)),
     )
     .unwrap();
 
@@ -399,7 +400,7 @@ fn unwrap_lamports_with_self_transfer() {
         &source_account_key,
         &source_account_key, // <-- destination same as source
         &authority_key,
-        Some(1_000_000_000),
+        Some(U256::from(1_000_000_000u64)),
     )
     .unwrap();
 
@@ -454,7 +455,7 @@ fn fail_unwrap_lamports_with_invalid_native_account() {
         &source_account_key,
         &destination_account_key,
         &authority_key,
-        Some(1_000_000_000),
+        Some(U256::from(1_000_000_000u64)),
     )
     .unwrap();
 

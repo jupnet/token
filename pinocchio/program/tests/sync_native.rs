@@ -2,6 +2,7 @@ mod setup;
 
 use {
     crate::setup::TOKEN_PROGRAM_ID,
+    ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     pinocchio_token_interface::{
         native_mint,
@@ -31,7 +32,7 @@ fn create_token_account(
     token.set_account_state(AccountState::Initialized);
     token.mint = *mint.as_array();
     token.owner = *owner.as_array();
-    token.set_amount(amount);
+    token.set_amount(U256::from(amount));
     token.set_native(is_native);
 
     if is_native {
@@ -48,8 +49,7 @@ fn create_token_account(
     }
 }
 
-/// Creates a Mollusk instance with the default feature set, excluding the
-/// `bpf_account_data_direct_mapping` feature.
+/// Creates a Mollusk instance for testing the token program.
 fn mollusk() -> Mollusk {
     let mut mollusk = Mollusk::default();
     mollusk.add_program(&TOKEN_PROGRAM_ID, "pinocchio_token_program");

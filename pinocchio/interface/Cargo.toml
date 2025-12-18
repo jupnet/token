@@ -12,6 +12,7 @@ readme = "./README.md"
 crate-type = ["rlib"]
 
 [dependencies]
+ethnum = { workspace = true }
 pinocchio = { workspace = true }
 pinocchio-pubkey = { workspace = true }
 

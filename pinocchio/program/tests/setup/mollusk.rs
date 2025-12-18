@@ -34,7 +34,7 @@ pub fn create_mint_account(
     }
 }
 
-/// Creates a Mollusk instance with the default feature set.
+/// Creates a Mollusk instance for testing the token program.
 pub fn mollusk() -> Mollusk {
     let mut mollusk = Mollusk::default();
     mollusk.add_program(&TOKEN_PROGRAM_ID, "pinocchio_token_program");

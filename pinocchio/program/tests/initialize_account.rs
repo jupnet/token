@@ -1,10 +1,10 @@
 mod setup;
 
 use {
-    setup::{mint, TOKEN_PROGRAM_ID},
+    setup::{mint, program_test, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
-    solana_program_test::{tokio, ProgramTest},
+    solana_program_test::tokio,
     solana_pubkey::Pubkey,
     solana_signer::Signer,
     solana_system_interface::instruction::create_account,
@@ -13,9 +13,7 @@ use {
 
 #[tokio::test]
 async fn initialize_account() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
-        .start_with_context()
-        .await;
+    let mut context = program_test().start_with_context().await;
 
     // Given a mint account.
 
@@ -36,7 +34,7 @@ async fn initialize_account() {
     let owner = Pubkey::new_unique();
     let account = Keypair::new();
 
-    let account_size = 165;
+    let account_size = spl_token_interface::state::Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
     let initialize_ix = spl_token_interface::instruction::initialize_account(

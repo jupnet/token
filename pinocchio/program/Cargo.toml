@@ -15,6 +15,7 @@ crate-type = ["cdylib"]
 logging = []
 
 [dependencies]
+ethnum = { workspace = true }
 pinocchio = { workspace = true }
 pinocchio-log = { workspace = true, default-features = false }
 pinocchio-token-interface = { version = "^0", path = "../interface" }

@@ -1,5 +1,6 @@
 use {
     crate::processor::{check_account_owner, validate_owner},
+    ethnum::U256,
     pinocchio::{
         account_info::AccountInfo, program_error::ProgramError, pubkey::pubkey_eq, ProgramResult,
     },
@@ -13,7 +14,7 @@ use {
 #[allow(clippy::arithmetic_side_effects)]
 pub fn process_mint_to(
     accounts: &[AccountInfo],
-    amount: u64,
+    amount: U256,
     expected_decimals: Option<u8>,
 ) -> ProgramResult {
     let [mint_info, destination_account_info, owner_info, remaining @ ..] = accounts else {
@@ -55,7 +56,7 @@ pub fn process_mint_to(
         None => return Err(TokenError::FixedSupply.into()),
     }
 
-    if amount == 0 {
+    if amount == U256::ZERO {
         // Validates the accounts' owner since we are not writing
         // to these account.
         check_account_owner(mint_info)?;

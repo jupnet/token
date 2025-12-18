@@ -1,5 +1,6 @@
 use {
     super::check_account_owner,
+    ethnum::U256,
     pinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
     pinocchio_token_interface::{
         error::TokenError,
@@ -24,10 +25,10 @@ pub fn process_sync_native(accounts: &[AccountInfo]) -> ProgramResult {
             .checked_sub(rent_exempt_reserve)
             .ok_or(TokenError::Overflow)?;
 
-        if new_amount < native_account.amount() {
+        if U256::from(new_amount) < native_account.amount() {
             return Err(TokenError::InvalidState.into());
         }
-        native_account.set_amount(new_amount);
+        native_account.set_amount(U256::from(new_amount));
     } else {
         return Err(TokenError::NonNativeNotSupported.into());
     }

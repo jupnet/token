@@ -2,10 +2,10 @@ mod setup;
 
 use {
     ethnum::U256,
-    setup::{account, mint, TOKEN_PROGRAM_ID},
+    setup::{account, mint, program_test, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
-    solana_program_test::{tokio, ProgramTest},
+    solana_program_test::tokio,
     solana_pubkey::Pubkey,
     solana_signer::Signer,
     solana_transaction::Transaction,
@@ -13,9 +13,7 @@ use {
 
 #[tokio::test]
 async fn approve() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
-        .start_with_context()
-        .await;
+    let mut context = program_test().start_with_context().await;
 
     // Given a mint account.
 
