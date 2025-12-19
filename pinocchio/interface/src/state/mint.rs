@@ -1,7 +1,7 @@
 use {
     super::{COption, Initializable, Transmutable},
     ethnum::U256,
-    pinocchio::{program_error::ProgramError, pubkey::Pubkey},
+    jinocchio::{program_error::ProgramError, pubkey::Pubkey},
 };
 
 /// Internal representation of a mint data.

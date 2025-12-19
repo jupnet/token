@@ -1,6 +1,6 @@
 //! Error types
 
-use pinocchio::program_error::{ProgramError, ToStr};
+use jinocchio::program_error::{ProgramError, ToStr};
 
 /// Errors that may be returned by the Token program.
 #[derive(Clone, Debug, Eq, PartialEq)]

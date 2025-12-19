@@ -1,4 +1,4 @@
-use pinocchio::program_error::ProgramError;
+use jinocchio::program_error::ProgramError;
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq)]

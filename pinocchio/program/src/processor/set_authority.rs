@@ -1,7 +1,7 @@
 use {
     super::validate_owner,
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo, hint::likely, program_error::ProgramError, pubkey::Pubkey,
         ProgramResult,
     },

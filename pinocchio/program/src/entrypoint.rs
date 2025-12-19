@@ -4,7 +4,7 @@ use {
         mem::{size_of, transmute, MaybeUninit},
         slice::from_raw_parts,
     },
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         entrypoint::{deserialize, NON_DUP_MARKER},
         hint::likely,
@@ -147,7 +147,7 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
                 };
 
                 #[cfg(feature = "logging")]
-                pinocchio::msg!("Instruction: TransferChecked");
+                jinocchio::msg!("Instruction: TransferChecked");
 
                 return match process_transfer_checked(&accounts, instruction_data) {
                     Ok(()) => SUCCESS,
@@ -198,7 +198,7 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
                 };
 
                 #[cfg(feature = "logging")]
-                pinocchio::msg!("Instruction: Transfer");
+                jinocchio::msg!("Instruction: Transfer");
 
                 return match process_transfer(&accounts, instruction_data) {
                     Ok(()) => SUCCESS,
@@ -249,7 +249,7 @@ pub fn process_instruction(accounts: &[AccountInfo], instruction_data: &[u8]) ->
     let result = if *discriminator == 255 {
         // 255 - Batch
         #[cfg(feature = "logging")]
-        pinocchio::msg!("Instruction: Batch");
+        jinocchio::msg!("Instruction: Batch");
 
         process_batch(accounts, remaining)
     } else {
@@ -292,84 +292,84 @@ pub(crate) fn inner_process_instruction(
         // 0 - InitializeMint
         0 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMint");
+            jinocchio::msg!("Instruction: InitializeMint");
 
             process_initialize_mint(accounts, instruction_data)
         }
         // 1 - InitializeAccount
         1 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount");
+            jinocchio::msg!("Instruction: InitializeAccount");
 
             process_initialize_account(accounts)
         }
         // 3 - Transfer
         3 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Transfer");
+            jinocchio::msg!("Instruction: Transfer");
 
             process_transfer(accounts, instruction_data)
         }
         // 7 - MintTo
         7 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: MintTo");
+            jinocchio::msg!("Instruction: MintTo");
 
             process_mint_to(accounts, instruction_data)
         }
         // 8 - Burn
         8 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Burn");
+            jinocchio::msg!("Instruction: Burn");
 
             process_burn(accounts, instruction_data)
         }
         // 9 - CloseAccount
         9 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: CloseAccount");
+            jinocchio::msg!("Instruction: CloseAccount");
 
             process_close_account(accounts)
         }
         // 12 - TransferChecked
         12 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: TransferChecked");
+            jinocchio::msg!("Instruction: TransferChecked");
 
             process_transfer_checked(accounts, instruction_data)
         }
         // 15 - BurnChecked
         15 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: BurnChecked");
+            jinocchio::msg!("Instruction: BurnChecked");
 
             process_burn_checked(accounts, instruction_data)
         }
         // 17 - SyncNative
         17 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: SyncNative");
+            jinocchio::msg!("Instruction: SyncNative");
 
             process_sync_native(accounts)
         }
         // 18 - InitializeAccount3
         18 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount3");
+            jinocchio::msg!("Instruction: InitializeAccount3");
 
             process_initialize_account3(accounts, instruction_data)
         }
         // 20 - InitializeMint2
         20 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMint2");
+            jinocchio::msg!("Instruction: InitializeMint2");
 
             process_initialize_mint2(accounts, instruction_data)
         }
         // 22 - InitializeImmutableOwner
         22 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeImmutableOwner");
+            jinocchio::msg!("Instruction: InitializeImmutableOwner");
 
             process_initialize_immutable_owner(accounts)
         }
@@ -392,105 +392,105 @@ fn inner_process_remaining_instruction(
         // 2 - InitializeMultisig
         2 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMultisig");
+            jinocchio::msg!("Instruction: InitializeMultisig");
 
             process_initialize_multisig(accounts, instruction_data)
         }
         // 4 - Approve
         4 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Approve");
+            jinocchio::msg!("Instruction: Approve");
 
             process_approve(accounts, instruction_data)
         }
         // 5 - Revoke
         5 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Revoke");
+            jinocchio::msg!("Instruction: Revoke");
 
             process_revoke(accounts)
         }
         // 6 - SetAuthority
         6 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: SetAuthority");
+            jinocchio::msg!("Instruction: SetAuthority");
 
             process_set_authority(accounts, instruction_data)
         }
         // 10 - FreezeAccount
         10 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: FreezeAccount");
+            jinocchio::msg!("Instruction: FreezeAccount");
 
             process_freeze_account(accounts)
         }
         // 11 - ThawAccount
         11 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: ThawAccount");
+            jinocchio::msg!("Instruction: ThawAccount");
 
             process_thaw_account(accounts)
         }
         // 13 - ApproveChecked
         13 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: ApproveChecked");
+            jinocchio::msg!("Instruction: ApproveChecked");
 
             process_approve_checked(accounts, instruction_data)
         }
         // 14 - MintToChecked
         14 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: MintToChecked");
+            jinocchio::msg!("Instruction: MintToChecked");
 
             process_mint_to_checked(accounts, instruction_data)
         }
         // 16 - InitializeAccount2
         16 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount2");
+            jinocchio::msg!("Instruction: InitializeAccount2");
 
             process_initialize_account2(accounts, instruction_data)
         }
         // 19 - InitializeMultisig2
         19 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMultisig2");
+            jinocchio::msg!("Instruction: InitializeMultisig2");
 
             process_initialize_multisig2(accounts, instruction_data)
         }
         // 21 - GetAccountDataSize
         21 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: GetAccountDataSize");
+            jinocchio::msg!("Instruction: GetAccountDataSize");
 
             process_get_account_data_size(accounts)
         }
         // 23 - AmountToUiAmount
         23 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: AmountToUiAmount");
+            jinocchio::msg!("Instruction: AmountToUiAmount");
 
             process_amount_to_ui_amount(accounts, instruction_data)
         }
         // 24 - UiAmountToAmount
         24 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: UiAmountToAmount");
+            jinocchio::msg!("Instruction: UiAmountToAmount");
 
             process_ui_amount_to_amount(accounts, instruction_data)
         }
         // 38 - WithdrawExcessLamports
         38 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: WithdrawExcessLamports");
+            jinocchio::msg!("Instruction: WithdrawExcessLamports");
 
             process_withdraw_excess_lamports(accounts)
         }
         // 45 - UnwrapLamports
         45 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: UnwrapLamports");
+            jinocchio::msg!("Instruction: UnwrapLamports");
 
             process_unwrap_lamports(accounts, instruction_data)
         }

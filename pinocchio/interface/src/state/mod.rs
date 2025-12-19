@@ -1,4 +1,4 @@
-use pinocchio::program_error::ProgramError;
+use jinocchio::program_error::ProgramError;
 
 pub mod account;
 pub mod account_state;

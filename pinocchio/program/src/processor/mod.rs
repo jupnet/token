@@ -1,7 +1,7 @@
 use {
     core::{slice::from_raw_parts, str::from_utf8_unchecked},
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         hint::{likely, unlikely},
         program_error::ProgramError,

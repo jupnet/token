@@ -1,6 +1,6 @@
 use {
     super::shared::initialize_mint::process_initialize_mint,
-    pinocchio::{account_info::AccountInfo, ProgramResult},
+    jinocchio::{account_info::AccountInfo, ProgramResult},
 };
 
 #[inline(always)]

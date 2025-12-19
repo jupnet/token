@@ -1,6 +1,6 @@
 use {
     super::validate_owner,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         program_error::ProgramError,
         sysvars::{rent::Rent, Sysvar},

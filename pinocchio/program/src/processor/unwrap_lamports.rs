@@ -2,7 +2,7 @@ use {
     super::validate_owner,
     crate::processor::{check_account_owner, unpack_amount},
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         hint::{likely, unlikely},
         program_error::ProgramError,

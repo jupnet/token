@@ -1,6 +1,6 @@
 use {
     crate::{entrypoint::inner_process_instruction, processor::check_account_owner},
-    pinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
+    jinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
     pinocchio_token_interface::error::TokenError,
 };
 

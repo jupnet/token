@@ -1,6 +1,6 @@
 use {
     super::shared::toggle_account_state::process_toggle_account_state,
-    pinocchio::{account_info::AccountInfo, ProgramResult},
+    jinocchio::{account_info::AccountInfo, ProgramResult},
 };
 
 #[inline(always)]

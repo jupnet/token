@@ -1,6 +1,6 @@
 use {
     super::{shared, unpack_amount},
-    pinocchio::{account_info::AccountInfo, ProgramResult},
+    jinocchio::{account_info::AccountInfo, ProgramResult},
 };
 
 #[inline(always)]

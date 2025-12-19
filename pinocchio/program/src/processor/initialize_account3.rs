@@ -1,6 +1,6 @@
 use {
     super::shared,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         pubkey::{Pubkey, PUBKEY_BYTES},
         ProgramResult,

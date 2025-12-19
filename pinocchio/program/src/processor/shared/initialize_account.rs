@@ -1,7 +1,7 @@
 use {
     crate::processor::check_account_owner,
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         program_error::ProgramError,
         pubkey::Pubkey,

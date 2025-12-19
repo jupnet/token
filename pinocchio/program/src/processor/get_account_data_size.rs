@@ -1,6 +1,6 @@
 use {
     super::check_account_owner,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo, program::set_return_data, program_error::ProgramError,
         ProgramResult,
     },

@@ -1,6 +1,6 @@
 use {
     crate::processor::validate_owner,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo, program_error::ProgramError, pubkey::pubkey_eq, ProgramResult,
     },
     pinocchio_token_interface::{

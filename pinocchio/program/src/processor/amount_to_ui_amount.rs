@@ -2,7 +2,7 @@ use {
     super::{check_account_owner, unpack_amount, MAX_FORMATTED_DIGITS},
     core::str::from_utf8_unchecked,
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo, program::set_return_data, program_error::ProgramError,
         ProgramResult,
     },

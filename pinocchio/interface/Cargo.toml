@@ -13,8 +13,8 @@ crate-type = ["rlib"]
 
 [dependencies]
 ethnum = { workspace = true }
-pinocchio = { workspace = true }
-pinocchio-pubkey = { workspace = true }
+jinocchio = { workspace = true }
+jinocchio-pubkey = { workspace = true }
 
 [dev-dependencies]
 strum = { workspace = true }

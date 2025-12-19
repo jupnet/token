@@ -1,7 +1,7 @@
 use {
     super::{check_account_owner, try_ui_amount_into_amount},
     core::str::from_utf8,
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo, program::set_return_data, program_error::ProgramError,
         ProgramResult,
     },

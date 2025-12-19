@@ -1,7 +1,7 @@
 use {
     super::{account_state::AccountState, COption, Initializable, Transmutable},
     ethnum::U256,
-    pinocchio::{
+    jinocchio::{
         hint::likely,
         program_error::ProgramError,
         pubkey::{pubkey_eq, Pubkey},
@@ -10,10 +10,10 @@ use {
 
 /// Incinerator address.
 pub const INCINERATOR_ID: Pubkey =
-    pinocchio_pubkey::pubkey!("1nc1nerator11111111111111111111111111111111");
+    jinocchio_pubkey::pubkey!("1nc1nerator11111111111111111111111111111111");
 
 /// System program id.
-const SYSTEM_PROGRAM_ID: Pubkey = pinocchio_pubkey::pubkey!("11111111111111111111111111111111");
+const SYSTEM_PROGRAM_ID: Pubkey = jinocchio_pubkey::pubkey!("11111111111111111111111111111111");
 
 /// Internal representation of a token account data.
 #[repr(C)]
