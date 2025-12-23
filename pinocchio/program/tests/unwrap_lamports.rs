@@ -71,12 +71,13 @@ fn unwrap_lamports_instruction(
         AccountMeta::new_readonly(*authority, true),
     ];
 
-    // Start with the batch discriminator
+    // Start with the instruction discriminator
     let mut data: Vec<u8> = vec![TokenInstruction::UnwrapLamports as u8];
 
     if let Some(amount) = amount {
         data.push(1);
-        data.extend_from_slice(&amount.to_le_bytes());
+        // Amount must be U256 (32 bytes)
+        data.extend_from_slice(&U256::from(amount).to_le_bytes());
     } else {
         data.push(0);
     }
