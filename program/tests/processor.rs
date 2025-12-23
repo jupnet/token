@@ -1683,7 +1683,7 @@ fn test_self_transfer() {
     // no balance change...
     let account = Account::unpack_unchecked(&account_info.try_borrow_data().unwrap()).unwrap();
     assert_eq!(account.amount, U256::new(1000));
-    assert_eq!(account.delegated_amount, U256::new(100));
+    assert_eq!(account.delegated_amount, 100);
 
     // delegate transfer checked
     let instruction = transfer_checked(
@@ -1721,7 +1721,7 @@ fn test_self_transfer() {
     // no balance change...
     let account = Account::unpack_unchecked(&account_info.try_borrow_data().unwrap()).unwrap();
     assert_eq!(account.amount, U256::new(1000));
-    assert_eq!(account.delegated_amount, U256::new(100));
+    assert_eq!(account.delegated_amount, 100);
 
     // delegate insufficient funds
     let instruction = transfer(
@@ -2712,7 +2712,7 @@ fn test_set_authority() {
             &owner2_key,
             &owner_key,
             &[],
-            U256::MAX,
+            U256::from(u64::MAX),
         )
         .unwrap(),
         vec![
@@ -2732,14 +2732,14 @@ fn test_set_authority() {
                 .build(),
             // delegated amount
             Check::account(&account_key)
-                .data_slice(145, &U256::MAX.to_le_bytes())
+                .data_slice(145, &U256::from(u64::MAX).to_le_bytes())
                 .build(),
         ],
     )
     .unwrap();
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert_eq!(account.delegate, COption::Some(owner2_key));
-    assert_eq!(account.delegated_amount, U256::MAX);
+    assert_eq!(account.delegated_amount, U256::from(u64::MAX));
 
     // set owner
     do_process_instruction(
@@ -2770,7 +2770,7 @@ fn test_set_authority() {
     // check delegate cleared
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert_eq!(account.delegate, COption::None);
-    assert_eq!(account.delegated_amount, U256::new(0));
+    assert_eq!(account.delegated_amount, 0);
 
     // set owner without existing delegate
     do_process_instruction(
@@ -3216,7 +3216,7 @@ fn test_mint_to() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(36, &U256::new(42).to_le_bytes())
+                .data_slice(36, &42u64.to_le_bytes())
                 .build(),
             Check::account(&account_key)
                 .data_slice(64, &U256::new(42).to_le_bytes())
@@ -3226,7 +3226,7 @@ fn test_mint_to() {
     .unwrap();
 
     let mint = Mint::unpack_unchecked(&mint_account.data).unwrap();
-    assert_eq!(mint.supply, 42);
+    assert_eq!(mint.supply, U256::new(42));
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert_eq!(account.amount, U256::new(42));
 
@@ -3245,7 +3245,7 @@ fn test_mint_to() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(36, &U256::new(84).to_le_bytes())
+                .data_slice(36, &84u64.to_le_bytes())
                 .build(),
             Check::account(&account2_key)
                 .data_slice(64, &U256::new(42).to_le_bytes())
@@ -3255,7 +3255,7 @@ fn test_mint_to() {
     .unwrap();
 
     let mint = Mint::unpack_unchecked(&mint_account.data).unwrap();
-    assert_eq!(mint.supply, 84);
+    assert_eq!(mint.supply, U256::new(84));
     let account = Account::unpack_unchecked(&account2_account.data).unwrap();
     assert_eq!(account.amount, U256::new(42));
 
@@ -3965,19 +3965,19 @@ fn test_burn() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(36, &(U256::new(2000) - U256::new(42)).to_le_bytes())
+                .data_slice(36, &(2000u64 - 42).to_le_bytes())
                 .build(),
             Check::account(&account_key)
-                .data_slice(64, &(U256::new(1000) - U256::new(42)).to_le_bytes())
+                .data_slice(64, &U256::from(1000u64 - 42).to_le_bytes())
                 .build(),
         ],
     )
     .unwrap();
 
     let mint = Mint::unpack_unchecked(&mint_account.data).unwrap();
-    assert_eq!(mint.supply, U256::new(2000 - 42));
+    assert_eq!(mint.supply, U256::from((2000 - 42) as u64));
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
-    assert_eq!(account.amount, U256::new(1000 - 42));
+    assert_eq!(account.amount, 1000 - 42);
 
     // insufficient funds
     assert_eq!(
@@ -4076,16 +4076,10 @@ fn test_burn() {
         &[
             Check::success(),
             Check::account(&mint_key)
-                .data_slice(
-                    36,
-                    &(U256::new(2000) - U256::new(42) - U256::new(84)).to_le_bytes(),
-                )
+                .data_slice(36, &(2000u64 - 42 - 84).to_le_bytes())
                 .build(),
             Check::account(&account_key)
-                .data_slice(
-                    64,
-                    &(U256::new(1000) - U256::new(42) - U256::new(84)).to_le_bytes(),
-                )
+                .data_slice(64, &(1000u64 - 42 - 84).to_le_bytes())
                 .build(),
         ],
     )
@@ -4093,7 +4087,7 @@ fn test_burn() {
 
     // match
     let mint = Mint::unpack_unchecked(&mint_account.data).unwrap();
-    assert_eq!(mint.supply, 2000 - 42 - 84);
+    assert_eq!(mint.supply, U256::from((2000 - 42 - 84) as u64));
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert_eq!(account.amount, 1000 - 42 - 84);
 
@@ -5327,7 +5321,7 @@ fn test_native_token() {
     .unwrap();
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert!(account.is_native());
-    assert_eq!(account.amount, 40);
+    assert_eq!(account.amount, U256::new(40));
 
     // initialize native account
     do_process_instruction(
@@ -5357,7 +5351,7 @@ fn test_native_token() {
     .unwrap();
     let account = Account::unpack_unchecked(&account2_account.data).unwrap();
     assert!(account.is_native());
-    assert_eq!(account.amount, 0);
+    assert_eq!(account.amount, U256::new(0));
 
     // mint_to unsupported
     assert_eq!(
@@ -5473,11 +5467,11 @@ fn test_native_token() {
     assert_eq!(account_account.lamports, account_minimum_balance());
     let account = Account::unpack_unchecked(&account_account.data).unwrap();
     assert!(account.is_native());
-    assert_eq!(account.amount, 0);
+    assert_eq!(account.amount, U256::new(0));
     assert_eq!(account2_account.lamports, account_minimum_balance() + 40);
     let account = Account::unpack_unchecked(&account2_account.data).unwrap();
     assert!(account.is_native());
-    assert_eq!(account.amount, 40);
+    assert_eq!(account.amount, U256::new(40));
 
     // set close authority
     do_process_instruction(
@@ -6291,7 +6285,7 @@ fn test_sync_native() {
 
     let account = Account::unpack_unchecked(&non_native_account.data).unwrap();
     assert!(!account.is_native());
-    assert_eq!(account.amount, 0);
+    assert_eq!(account.amount, U256::new(0));
 
     // fail sync non-native
     assert_eq!(
@@ -6346,7 +6340,7 @@ fn test_sync_native() {
                     .data_slice(133, &[1, 0, 0, 0])
                     .build(),
                 Check::account(&native_account_key)
-                    .data_slice(64, &U256::from(lamports).to_le_bytes())
+                    .data_slice(64, &lamports.to_le_bytes())
                     .build()
             ],
         )
@@ -6364,7 +6358,7 @@ fn test_sync_native() {
         &[
             Check::success(),
             Check::account(&native_account_key)
-                .data_slice(64, &U256::from(lamports).to_le_bytes())
+                .data_slice(64, &lamports.to_le_bytes())
                 .build(),
         ],
     )
@@ -6383,7 +6377,7 @@ fn test_sync_native() {
         &[
             Check::success(),
             Check::account(&native_account_key)
-                .data_slice(64, &U256::from(new_lamports).to_le_bytes())
+                .data_slice(64, &new_lamports.to_le_bytes())
                 .build(),
         ],
     )
