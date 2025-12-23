@@ -130,7 +130,7 @@ impl IsInitialized for Account {
     }
 }
 impl Pack for Account {
-    const LEN: usize = 213;
+    const LEN: usize = 213; // 32+32+32+36+1+12+32+36
     fn unpack_from_slice(src: &[u8]) -> Result<Self, ProgramError> {
         let src = array_ref![src, 0, 213];
         let (mint, owner, amount, delegate, state, is_native, delegated_amount, close_authority) =
@@ -340,7 +340,7 @@ pub trait GenericTokenAccount {
 }
 
 /// The offset of state field in Account's C representation
-pub const ACCOUNT_INITIALIZED_INDEX: usize = 132;
+pub const ACCOUNT_INITIALIZED_INDEX: usize = 108;
 
 /// Check if the account data buffer represents an initialized account.
 /// This is checking the `state` (`AccountState`) field of an Account object.
