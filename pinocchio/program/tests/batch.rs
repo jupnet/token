@@ -1,8 +1,8 @@
 mod setup;
 
 use {
-    agave_feature_set::FeatureSet,
     crate::setup::TOKEN_PROGRAM_ID,
+    agave_feature_set::FeatureSet,
     ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     pinocchio_token_interface::{
@@ -146,7 +146,7 @@ async fn batch_initialize_mint_transfer_close() {
         &owner_a_ta_a.pubkey(),
         &mint_authority.pubkey(),
         &[],
-        U256::from(1_000_000u64),
+        U256::new(1_000_000),
     )
     .unwrap();
 
@@ -157,7 +157,7 @@ async fn batch_initialize_mint_transfer_close() {
         &owner_b_ta_a.pubkey(),
         &owner_a.pubkey(),
         &[],
-        U256::from(1_000_000u64),
+        U256::new(1_000_000),
     )
     .unwrap();
 
@@ -271,7 +271,7 @@ fn create_token_account(
     mint: &Pubkey,
     owner: &Pubkey,
     is_native: bool,
-    amount: u64,
+    amount: U256,
     program_owner: &Pubkey,
 ) -> Account {
     let space = size_of::<TokenAccount>();
@@ -282,12 +282,12 @@ fn create_token_account(
     token.set_account_state(AccountState::Initialized);
     token.mint = *mint.as_array();
     token.owner = *owner.as_array();
-    token.set_amount(U256::from(amount));
+    token.set_amount(amount);
     token.set_native(is_native);
-    token.set_native_amount(amount);
+    token.set_native_amount(amount.as_u64());
 
     if is_native {
-        lamports = lamports.saturating_add(amount);
+        lamports = lamports.saturating_add(amount.as_u64());
     }
 
     Account {
@@ -333,7 +333,7 @@ async fn batch_transfer() {
         &mint_key,
         &authority_key,
         false,
-        1_000_000_000,
+        U256::new(1_000_000_000),
         &TOKEN_PROGRAM_ID,
     );
 
@@ -343,8 +343,13 @@ async fn batch_transfer() {
     //   - is_native: false
     //   - program_id: TOKEN_PROGRAM_ID
     let destination_account_key = Pubkey::new_unique();
-    let destination_account =
-        create_token_account(&mint_key, &authority_key, false, 0, &TOKEN_PROGRAM_ID);
+    let destination_account = create_token_account(
+        &mint_key,
+        &authority_key,
+        false,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     let instruction = batch_instruction(vec![spl_token_interface::instruction::transfer(
         &TOKEN_PROGRAM_ID,
@@ -352,7 +357,7 @@ async fn batch_transfer() {
         &destination_account_key,
         &authority_key,
         &[],
-        U256::from(500_000_000u64),
+        U256::new(500_000_000),
     )
     .unwrap()])
     .unwrap();
@@ -391,7 +396,7 @@ async fn batch_fail_transfer_with_invalid_program_owner() {
         &native_mint,
         &authority_key,
         true,
-        1_000_000_000,
+        U256::new(1_000_000_000),
         &invalid_program_id,
     );
 
@@ -401,8 +406,13 @@ async fn batch_fail_transfer_with_invalid_program_owner() {
     //   - is_native: true
     //   - program_id: TOKEN_PROGRAM_ID
     let destination_account_key = Pubkey::new_unique();
-    let destination_account =
-        create_token_account(&native_mint, &authority_key, true, 0, &TOKEN_PROGRAM_ID);
+    let destination_account = create_token_account(
+        &native_mint,
+        &authority_key,
+        true,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     let instruction = batch_instruction(vec![spl_token_interface::instruction::transfer(
         &TOKEN_PROGRAM_ID,
@@ -410,7 +420,7 @@ async fn batch_fail_transfer_with_invalid_program_owner() {
         &destination_account_key,
         &authority_key,
         &[],
-        U256::from(500_000_000u64),
+        U256::new(500_000_000),
     )
     .unwrap()])
     .unwrap();
@@ -457,7 +467,7 @@ async fn batch_fail_transfer_checked_with_invalid_program_owner() {
         &native_mint_key,
         &authority_key,
         true,
-        1_000_000_000,
+        U256::new(1_000_000_000),
         &invalid_program_id,
     );
 
@@ -467,8 +477,13 @@ async fn batch_fail_transfer_checked_with_invalid_program_owner() {
     //   - is_native: true
     //   - program_id: TOKEN_PROGRAM_ID
     let destination_account_key = Pubkey::new_unique();
-    let destination_account =
-        create_token_account(&native_mint_key, &authority_key, true, 0, &TOKEN_PROGRAM_ID);
+    let destination_account = create_token_account(
+        &native_mint_key,
+        &authority_key,
+        true,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     let instruction = batch_instruction(vec![spl_token_interface::instruction::transfer_checked(
         &TOKEN_PROGRAM_ID,
@@ -477,7 +492,7 @@ async fn batch_fail_transfer_checked_with_invalid_program_owner() {
         &destination_account_key,
         &authority_key,
         &[],
-        U256::from(500_000_000u64),
+        U256::new(500_000_000),
         9,
     )
     .unwrap()])
@@ -524,7 +539,7 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
         &native_mint,
         &authority_key,
         false,
-        1_000,
+        U256::new(1_000),
         &invalid_program_id,
     );
 
@@ -534,7 +549,13 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
     //   - is_native: true
     //   - program_id: TOKEN_PROGRAM_ID
     let account_b_key = Pubkey::new_unique();
-    let account_b = create_token_account(&native_mint, &authority_key, true, 0, &TOKEN_PROGRAM_ID);
+    let account_b = create_token_account(
+        &native_mint,
+        &authority_key,
+        true,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     // Account C
     //   - amount: 0
@@ -542,8 +563,13 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
     //   - is_native: true
     //   - program_id: TOKEN_PROGRAM_ID
     let account_c_key = Pubkey::new_unique();
-    let account_c =
-        create_token_account(&native_mint, &authority_key, true, 1_000, &TOKEN_PROGRAM_ID);
+    let account_c = create_token_account(
+        &native_mint,
+        &authority_key,
+        true,
+        U256::new(1_000),
+        &TOKEN_PROGRAM_ID,
+    );
 
     // Batch instruction to swap tokens
     //   - transfer 300 from account A to account B
@@ -557,7 +583,7 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            U256::from(300u64),
+            U256::new(300),
         )
         .unwrap(),
         spl_token_interface::instruction::transfer(
@@ -566,7 +592,7 @@ async fn batch_fail_swap_tokens_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            U256::from(300u64),
+            U256::new(300),
         )
         .unwrap(),
     ])
@@ -611,7 +637,13 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
     //   - is_native: false
     //   - program_id: invalid_program_id
     let account_a_key = Pubkey::new_unique();
-    let account_a = create_token_account(&mint_key, &authority_key, false, 0, &invalid_program_id);
+    let account_a = create_token_account(
+        &mint_key,
+        &authority_key,
+        false,
+        U256::new(0),
+        &invalid_program_id,
+    );
 
     // account B
     //   - amount: 0
@@ -619,7 +651,13 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
     //   - is_native: false
     //   - program_id: TOKEN_PROGRAM_ID
     let account_b_key = Pubkey::new_unique();
-    let account_b = create_token_account(&mint_key, &authority_key, false, 0, &TOKEN_PROGRAM_ID);
+    let account_b = create_token_account(
+        &mint_key,
+        &authority_key,
+        false,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     let instruction = batch_instruction(vec![
         spl_token_interface::instruction::mint_to(
@@ -628,7 +666,7 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
         spl_token_interface::instruction::mint_to(
@@ -637,7 +675,7 @@ async fn batch_fail_mint_to_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
     ])
@@ -682,7 +720,13 @@ async fn batch_fail_burn_with_invalid_program_owner() {
     //   - is_native: false
     //   - program_id: TOKEN_PROGRAM_ID
     let account_a_key = Pubkey::new_unique();
-    let account_a = create_token_account(&mint_key, &authority_key, false, 0, &TOKEN_PROGRAM_ID);
+    let account_a = create_token_account(
+        &mint_key,
+        &authority_key,
+        false,
+        U256::new(0),
+        &TOKEN_PROGRAM_ID,
+    );
 
     // account B (invalid)
     //   - amount: 1_000_000_000
@@ -694,7 +738,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
         &mint_key,
         &authority_key,
         false,
-        1_000_000_000,
+        U256::new(1_000_000_000),
         &invalid_program_id,
     );
 
@@ -705,7 +749,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &account_a_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
         spl_token_interface::instruction::mint_to(
@@ -714,7 +758,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &account_b_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
         spl_token_interface::instruction::burn(
@@ -723,7 +767,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &mint_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
         spl_token_interface::instruction::burn(
@@ -732,7 +776,7 @@ async fn batch_fail_burn_with_invalid_program_owner() {
             &mint_key,
             &authority_key,
             &[],
-            U256::from(1_000_000_000u64),
+            U256::new(1_000_000_000),
         )
         .unwrap(),
     ])

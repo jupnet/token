@@ -2,10 +2,10 @@ mod setup;
 
 use {
     ethnum::U256,
-    setup::{account, mint, program_test, TOKEN_PROGRAM_ID},
+    setup::{account, mint, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
-    solana_program_test::tokio,
+    solana_program_test::{tokio, ProgramTest},
     solana_pubkey::Pubkey,
     solana_signer::Signer,
     solana_transaction::Transaction,
@@ -13,7 +13,9 @@ use {
 
 #[tokio::test]
 async fn approve() {
-    let mut context = program_test().start_with_context().await;
+    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+        .start_with_context()
+        .await;
 
     // Given a mint account.
 
@@ -41,7 +43,7 @@ async fn approve() {
         &mint,
         &account,
         &mint_authority,
-        U256::from(100u64),
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -57,7 +59,7 @@ async fn approve() {
         &delegate,
         &owner.pubkey(),
         &[],
-        U256::from(50u64),
+        U256::new(50),
     )
     .unwrap();
 
@@ -80,5 +82,5 @@ async fn approve() {
 
     assert!(account.delegate.is_some());
     assert!(account.delegate.unwrap() == delegate);
-    assert!(account.delegated_amount == 50);
+    assert!(account.delegated_amount == U256::new(50));
 }

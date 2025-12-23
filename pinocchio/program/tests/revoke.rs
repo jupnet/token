@@ -43,7 +43,7 @@ async fn revoke() {
         &mint,
         &account,
         &mint_authority,
-        U256::from(100u64),
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -58,7 +58,7 @@ async fn revoke() {
         &account,
         &delegate,
         &owner,
-        U256::from(50u64),
+        50u64,
         &TOKEN_PROGRAM_ID,
     )
     .await;

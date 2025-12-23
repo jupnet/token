@@ -46,7 +46,7 @@ async fn mint_to_checked() {
         &account,
         &mint_authority.pubkey(),
         &[],
-        U256::from(100u64),
+        U256::new(100),
         4,
     )
     .unwrap();
@@ -68,5 +68,5 @@ async fn mint_to_checked() {
     let account = account.unwrap();
     let account = spl_token_interface::state::Account::unpack(&account.data).unwrap();
 
-    assert!(account.amount == U256::from(100u64));
+    assert!(account.amount == U256::new(100));
 }

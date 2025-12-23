@@ -43,7 +43,7 @@ async fn transfer() {
         &mint,
         &account,
         &mint_authority,
-        U256::from(100u64),
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -62,7 +62,7 @@ async fn transfer() {
         &destination_account,
         &owner.pubkey(),
         &[],
-        U256::from(100u64),
+        U256::new(100),
     )
     .unwrap();
 
@@ -83,5 +83,5 @@ async fn transfer() {
     let account = account.unwrap();
     let account = spl_token_interface::state::Account::unpack(&account.data).unwrap();
 
-    assert!(account.amount == 0);
+    assert!(account.amount == U256::new(0));
 }

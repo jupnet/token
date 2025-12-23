@@ -49,7 +49,8 @@ fn create_token_account(
     }
 }
 
-/// Creates a Mollusk instance for testing the token program.
+/// Creates a Mollusk instance with the default feature set, excluding the
+/// `bpf_account_data_direct_mapping` feature.
 fn mollusk() -> Mollusk {
     let mut mollusk = Mollusk::default();
     mollusk.add_program(&TOKEN_PROGRAM_ID, "pinocchio_token_program");

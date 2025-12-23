@@ -43,7 +43,7 @@ async fn burn_checked() {
         &mint,
         &account,
         &mint_authority,
-        U256::from(100u64),
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -57,7 +57,7 @@ async fn burn_checked() {
         &mint,
         &owner.pubkey(),
         &[],
-        U256::from(50u64),
+        U256::new(50),
         4,
     )
     .unwrap();
@@ -79,5 +79,5 @@ async fn burn_checked() {
     let account = account.unwrap();
     let account = spl_token_interface::state::Account::unpack(&account.data).unwrap();
 
-    assert!(account.amount == 50);
+    assert!(account.amount == U256::new(50));
 }
