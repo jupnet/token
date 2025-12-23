@@ -1,10 +1,12 @@
 use {
     ethnum::U256,
-    pinocchio_token_interface::state::account::Account as TokenAccount,
-    solana_keypair::Keypair, solana_program_test::ProgramTestContext, solana_pubkey::Pubkey,
-    solana_signer::Signer, solana_system_interface::instruction::create_account,
+    pinocchio_token_interface::state::{account::Account, Transmutable},
+    solana_keypair::Keypair,
+    solana_program_test::ProgramTestContext,
+    solana_pubkey::Pubkey,
+    solana_signer::Signer,
+    solana_system_interface::instruction::create_account,
     solana_transaction::Transaction,
-    std::mem::size_of,
 };
 
 pub async fn initialize(
@@ -15,7 +17,7 @@ pub async fn initialize(
 ) -> Pubkey {
     let account = Keypair::new();
 
-    let account_size = size_of::<TokenAccount>();
+    let account_size = Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
     let mut initialize_ix = spl_token_interface::instruction::initialize_account(
@@ -54,7 +56,7 @@ pub async fn approve(
     account: &Pubkey,
     delegate: &Pubkey,
     owner: &Keypair,
-    amount: U256,
+    amount: u64,
     program_id: &Pubkey,
 ) {
     let mut approve_ix = spl_token_interface::instruction::approve(
@@ -63,7 +65,7 @@ pub async fn approve(
         delegate,
         &owner.pubkey(),
         &[],
-        amount,
+        U256::from(amount),
     )
     .unwrap();
     approve_ix.program_id = *program_id;
