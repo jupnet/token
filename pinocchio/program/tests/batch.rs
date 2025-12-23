@@ -1,8 +1,8 @@
 mod setup;
 
 use {
-    crate::setup::TOKEN_PROGRAM_ID,
     agave_feature_set::FeatureSet,
+    crate::setup::TOKEN_PROGRAM_ID,
     ethnum::U256,
     mollusk_svm::{result::Check, Mollusk},
     pinocchio_token_interface::{
