@@ -150,12 +150,8 @@ fn amount_to_ui_amount_with_large_u256() {
     let mint_authority = Pubkey::new_unique();
     let freeze_authority = Pubkey::new_unique();
 
-    let mint_account = create_mint_account(
-        mint_authority,
-        Some(freeze_authority),
-        6,
-        &TOKEN_PROGRAM_ID,
-    );
+    let mint_account =
+        create_mint_account(mint_authority, Some(freeze_authority), 6, &TOKEN_PROGRAM_ID);
 
     // Test u64::MAX first (should work)
     let u64_max_amount = U256::from(u64::MAX);
@@ -170,12 +166,12 @@ fn amount_to_ui_amount_with_large_u256() {
     eprintln!("amount = {}", u64_max_amount);
     eprintln!("instruction data = {:?}", instruction1.data);
 
-    let result1 = mollusk().process_instruction(
-        &instruction1,
-        &[(mint, mint_account.clone())],
-    );
+    let result1 = mollusk().process_instruction(&instruction1, &[(mint, mint_account.clone())]);
 
-    eprintln!("return_data = {:?}", std::str::from_utf8(&result1.return_data));
+    eprintln!(
+        "return_data = {:?}",
+        std::str::from_utf8(&result1.return_data)
+    );
 
     // Now test u64::MAX + 1
     let large_amount = U256::from(u64::MAX) + U256::new(1);
@@ -190,12 +186,12 @@ fn amount_to_ui_amount_with_large_u256() {
     eprintln!("amount = {}", large_amount);
     eprintln!("instruction data = {:?}", instruction2.data);
 
-    let result2 = mollusk().process_instruction(
-        &instruction2,
-        &[(mint, mint_account)],
-    );
+    let result2 = mollusk().process_instruction(&instruction2, &[(mint, mint_account)]);
 
-    eprintln!("return_data = {:?}", std::str::from_utf8(&result2.return_data));
+    eprintln!(
+        "return_data = {:?}",
+        std::str::from_utf8(&result2.return_data)
+    );
 
     // The expected UI amount is "18446744073709.551616"
     let ui_amount = b"18446744073709.551616";

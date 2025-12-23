@@ -38,7 +38,7 @@ fn u256_to_string(mut n: U256, buffer: &mut [u8]) -> usize {
         let remainder = n % ten;
         let digit = remainder.as_u64() as u8;
         buffer[pos] = b'0' + digit;
-        n = n / ten;
+        n /= ten;
     }
 
     // Move the result to the beginning of the buffer

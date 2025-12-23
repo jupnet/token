@@ -186,8 +186,7 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
 
             // Check for transfer discriminator.
             if likely(discriminator == TokenInstruction::Transfer as u8) {
-                let instruction_data =
-                    unsafe { from_raw_parts(input.add(offset + 9), 32) };
+                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 32) };
 
                 let accounts = unsafe {
                     [
