@@ -60,96 +60,98 @@ pinocchio-log = { version = "0.5.1", default-features = false }
 
 # sdk + svm
 agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-account = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-clock = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-cpi = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-instruction = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-keypair = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-msg = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-native-token = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-entrypoint = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-account = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-clock = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-cpi = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-instruction = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-keypair = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-msg = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-native-token = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-entrypoint = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2", features = ["agave-unstable-api"] }
-solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", features = ["bytemuck"] }
-solana-rent = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-signature = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-signer = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-system-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test", features = ["bytemuck"] }
+solana-rent = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-signature = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-signer = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-system-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 spl-token-interface = { path = "interface", version = "2.0.0" }
-spl-token-2022-interface = { git = "https://github.com/jupnet/token-2022", branch = "jupnet" }
+spl-token-2022-interface = { git = "https://github.com/jupnet/token-2022", branch = "fix/sdk-deps-test" }
 
 
 [patch.crates-io]
-jupnet-signature = { git = "https://github.com/jupnet/jupnet-sdk" }
-jupnet-signer = { git = "https://github.com/jupnet/jupnet-sdk" }
+jupnet-signature = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+jupnet-signer = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+# Patch mollusk to use jupnet fork
+mollusk-svm = { git = "https://github.com/jupnet/mollusk", branch = "fix/sdk-deps-test" }
 
 # Patch all solana crates to use jupnet-sdk versions to avoid version conflicts
 # with mollusk-svm and other crates.io dependencies
-solana-account = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-atomic-u64 = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-big-mod-exp = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-bincode = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-blake3-hasher = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-borsh = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-clock = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-cpi = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-define-syscall = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-epoch-rewards = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-epoch-schedule = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-fee-calculator = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-hash = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-instruction = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-instruction-error = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-instructions-sysvar = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-keccak-hasher = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-keypair = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-last-restart-slot = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-message = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-msg = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-native-token = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-entrypoint = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-rent = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sanitize = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sdk-macro = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-secp256k1-recover = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-seed-phrase = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-serde-varint = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-serialize-utils = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sha256-hasher = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-short-vec = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-signature = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-signer = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-slot-hashes = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-slot-history = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-stable-layout = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-system-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-sysvar-id = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-address = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-address-lookup-table-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-nonce = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-epoch-stake = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-example-mocks = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-packet = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-account = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-atomic-u64 = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-big-mod-exp = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-bincode = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-blake3-hasher = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-borsh = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-clock = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-cpi = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-define-syscall = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-epoch-rewards = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-epoch-schedule = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-fee-calculator = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-hash = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-instruction = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-instruction-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-instructions-sysvar = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-keccak-hasher = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-keypair = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-last-restart-slot = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-message = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-msg = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-native-token = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-entrypoint = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-rent = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sanitize = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sdk-macro = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-secp256k1-recover = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-seed-phrase = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-serde-varint = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-serialize-utils = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sha256-hasher = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-short-vec = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-signature = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-signer = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-slot-hashes = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-slot-history = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-stable-layout = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-system-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sysvar = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-sysvar-id = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-transaction = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-transaction-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-address = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-address-lookup-table-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-nonce = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-epoch-stake = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-example-mocks = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-packet = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 
 # Patch SVM crates to use jupnet-svm versions
 agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
@@ -168,26 +170,26 @@ solana-svm-transaction = { git = "https://github.com/jupnet/jupnet-svm", branch 
 solana-svm-type-overrides = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-transaction-context = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
 solana-system-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-vote-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-client-traits = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-seed-derivable = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-presigner = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-genesis-config = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-derivation-path = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-commitment-config = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-cluster-type = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-epoch-info = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-quic-definitions = { git = "https://github.com/jupnet/jupnet-sdk" }
-jupnet-crypto = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-compute-budget-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-loader-v2-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-loader-v3-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-loader-v4-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-feature-gate-interface = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-offchain-message = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-system-transaction = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-inflation = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-hard-forks = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-poh-config = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-time-utils = { git = "https://github.com/jupnet/jupnet-sdk" }
-solana-shred-version = { git = "https://github.com/jupnet/jupnet-sdk" }
+solana-vote-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-client-traits = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-seed-derivable = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-presigner = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-genesis-config = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-derivation-path = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-commitment-config = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-cluster-type = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-epoch-info = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-quic-definitions = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+jupnet-crypto = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-compute-budget-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-loader-v2-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-loader-v3-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-loader-v4-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-feature-gate-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-offchain-message = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-system-transaction = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-inflation = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-hard-forks = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-poh-config = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-time-utils = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
+solana-shred-version = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
