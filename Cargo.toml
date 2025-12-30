@@ -59,7 +59,7 @@ pinocchio-pubkey = "0.3"
 pinocchio-log = { version = "0.5.1", default-features = false }
 
 # sdk + svm
-agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
+agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
 solana-account = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-account-info = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-clock = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
@@ -74,7 +74,7 @@ solana-program-error = { git = "https://github.com/jupnet/jupnet-sdk", branch = 
 solana-program-memory = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-program-option = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-program-pack = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
-solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2", features = ["agave-unstable-api"] }
+solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test", features = ["agave-unstable-api"] }
 solana-pubkey = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test", features = ["bytemuck"] }
 solana-rent = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-sdk-ids = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
@@ -93,6 +93,7 @@ jupnet-signature = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix
 jupnet-signer = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 # Patch mollusk to use jupnet fork
 mollusk-svm = { git = "https://github.com/jupnet/mollusk", branch = "fix/sdk-deps-test" }
+mollusk-svm-fuzz-fixture = { git = "https://github.com/jupnet/mollusk", branch = "fix/sdk-deps-test" }
 
 # Patch all solana crates to use jupnet-sdk versions to avoid version conflicts
 # with mollusk-svm and other crates.io dependencies
@@ -154,22 +155,22 @@ solana-example-mocks = { git = "https://github.com/jupnet/jupnet-sdk", branch = 
 solana-packet = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 
 # Patch SVM crates to use jupnet-svm versions
-agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-agave-syscalls = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-bpf-loader-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-compute-budget = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-program-runtime = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-callback = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-log-collector = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-measure = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-timings = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-transaction = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-svm-type-overrides = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-transaction-context = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
-solana-system-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "v3.1.2" }
+agave-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+agave-syscalls = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-bpf-loader-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-compute-budget = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-program-runtime = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-program-test = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-callback = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-feature-set = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-log-collector = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-measure = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-timings = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-transaction = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-svm-type-overrides = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-transaction-context = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
+solana-system-program = { git = "https://github.com/jupnet/jupnet-svm", branch = "fix/sdk-deps-test" }
 solana-vote-interface = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-client-traits = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
 solana-seed-derivable = { git = "https://github.com/jupnet/jupnet-sdk", branch = "fix/sdk-deps-test" }
