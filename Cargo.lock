@@ -57,6 +57,19 @@ dependencies = [
 [[package]]
 name = "agave-feature-set"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "ahash 0.8.12",
+ "solana-epoch-schedule",
+ "solana-hash 4.0.1",
+ "solana-pubkey 4.0.0",
+ "solana-sha256-hasher",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+]
+
+[[package]]
+name = "agave-feature-set"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "ahash 0.8.12",
@@ -64,13 +77,13 @@ dependencies = [
  "solana-hash 4.0.1",
  "solana-pubkey 3.0.0",
  "solana-sha256-hasher",
- "solana-svm-feature-set",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
 name = "agave-fs"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "agave-io-uring",
  "io-uring",
@@ -83,13 +96,24 @@ dependencies = [
 [[package]]
 name = "agave-io-uring"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "io-uring",
  "libc",
  "log",
  "slab",
  "smallvec",
+]
+
+[[package]]
+name = "agave-logger"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "env_logger",
+ "libc",
+ "log",
+ "signal-hook",
 ]
 
 [[package]]
@@ -106,17 +130,17 @@ dependencies = [
 [[package]]
 name = "agave-reserved-account-keys"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
- "solana-pubkey 3.0.0",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
 ]
 
 [[package]]
 name = "agave-snapshots"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "agave-fs",
  "bincode",
@@ -145,6 +169,48 @@ dependencies = [
 [[package]]
 name = "agave-syscalls"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "bincode",
+ "libsecp256k1 0.6.0",
+ "num-traits",
+ "solana-account",
+ "solana-account-info",
+ "solana-big-mod-exp",
+ "solana-blake3-hasher",
+ "solana-bn254 3.1.2 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-clock",
+ "solana-cpi",
+ "solana-curve25519 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-hash 4.0.1",
+ "solana-instruction",
+ "solana-keccak-hasher",
+ "solana-loader-v3-interface",
+ "solana-poseidon 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-program-entrypoint",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
+ "solana-sbpf",
+ "solana-sdk-ids",
+ "solana-secp256k1-recover",
+ "solana-sha256-hasher",
+ "solana-stable-layout",
+ "solana-stake-interface",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-sysvar",
+ "solana-sysvar-id",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "agave-syscalls"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "bincode",
@@ -154,17 +220,17 @@ dependencies = [
  "solana-account-info",
  "solana-big-mod-exp",
  "solana-blake3-hasher",
- "solana-bn254",
+ "solana-bn254 3.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-clock",
  "solana-cpi",
- "solana-curve25519 3.1.2",
+ "solana-curve25519 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-hash 4.0.1",
  "solana-instruction",
  "solana-keccak-hasher",
  "solana-loader-v3-interface",
- "solana-poseidon",
+ "solana-poseidon 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-program-entrypoint",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-pubkey 3.0.0",
  "solana-sbpf",
  "solana-sdk-ids",
@@ -172,41 +238,41 @@ dependencies = [
  "solana-sha256-hasher",
  "solana-stable-layout",
  "solana-stake-interface",
- "solana-svm-callback",
- "solana-svm-feature-set",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-timings",
- "solana-svm-type-overrides",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-sysvar",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "thiserror 2.0.17",
 ]
 
 [[package]]
 name = "agave-transaction-view"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "jupnet-signature",
  "solana-hash 4.0.1",
  "solana-message",
  "solana-packet",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
  "solana-short-vec",
  "solana-signature",
- "solana-svm-transaction",
- "solana-transaction-context",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
 ]
 
 [[package]]
 name = "agave-votor-messages"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-logger",
+ "agave-logger 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "serde",
  "solana-bls-signatures",
  "solana-clock",
@@ -3213,51 +3279,49 @@ dependencies = [
 
 [[package]]
 name = "mollusk-svm"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a2698156e05139dc6fb55e9388e885ce35064e778457a38d20af4b6e984d6408"
+version = "0.8.1"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
- "agave-feature-set",
- "agave-syscalls",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "agave-logger 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "agave-syscalls 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "bincode",
  "mollusk-svm-error",
  "mollusk-svm-keys",
  "mollusk-svm-result",
  "solana-account",
- "solana-bpf-loader-program",
+ "solana-bpf-loader-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-clock",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
- "solana-hash 3.1.0",
+ "solana-hash 4.0.1",
  "solana-instruction",
  "solana-instruction-error",
  "solana-instructions-sysvar",
  "solana-loader-v3-interface",
  "solana-loader-v4-interface",
- "solana-logger",
- "solana-precompile-error",
+ "solana-precompile-error 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-program-error",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-sdk-ids",
  "solana-slot-hashes",
  "solana-stake-interface",
- "solana-svm-callback",
- "solana-svm-log-collector",
- "solana-svm-timings",
- "solana-system-program",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-system-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-sysvar",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
 name = "mollusk-svm-error"
 version = "0.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "602cd9544daaebe5c408925ce6b6a85575f30f177ddbf105638308c2061b3951"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
  "solana-pubkey 4.0.0",
  "thiserror 1.0.69",
@@ -3266,20 +3330,19 @@ dependencies = [
 [[package]]
 name = "mollusk-svm-fuzz-fixture"
 version = "0.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee434b8ceb4bff6c331a37a28a0827084192c68a759034bc4caeca09ef1d111a"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "mollusk-svm-fuzz-fs",
  "prost",
  "prost-build",
  "serde",
  "solana-account",
  "solana-clock",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
- "solana-hash 3.1.0",
+ "solana-hash 4.0.1",
  "solana-instruction",
  "solana-keccak-hasher",
  "solana-pubkey 4.0.0",
@@ -3292,8 +3355,7 @@ dependencies = [
 [[package]]
 name = "mollusk-svm-fuzz-fs"
 version = "0.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6fbfefd5c20435f96a05b2f5122f0fd560a57d9bc108cdea380eb14135281d9"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
  "bs58",
  "prost",
@@ -3305,21 +3367,19 @@ dependencies = [
 [[package]]
 name = "mollusk-svm-keys"
 version = "0.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0f96ad1a13cb40fa9edabc805b3ff126f560493036883ac763d77f080e085c0"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
  "mollusk-svm-error",
  "solana-account",
  "solana-instruction",
  "solana-pubkey 4.0.0",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
 name = "mollusk-svm-result"
 version = "0.8.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "47a1c9060b7ac9fa6a47f0714011e04771acec3e00afd8cb7727b05ec4ae25fd"
+source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#f29f100a2aff7d0fef6f10765728d80ba4aa8527"
 dependencies = [
  "solana-account",
  "solana-instruction",
@@ -3773,7 +3833,7 @@ dependencies = [
 name = "pinocchio-token-program"
 version = "0.0.0"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "assert_matches",
  "ethnum",
  "mollusk-svm",
@@ -5033,13 +5093,14 @@ dependencies = [
 [[package]]
 name = "solana-account-decoder"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "Inflector",
  "base64 0.22.1",
  "bincode",
  "bs58",
  "bv",
+ "ethnum",
  "serde",
  "serde_json",
  "solana-account",
@@ -5053,7 +5114,7 @@ dependencies = [
  "solana-nonce",
  "solana-program-option",
  "solana-program-pack",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-sdk-ids",
  "solana-slot-hashes",
@@ -5073,14 +5134,15 @@ dependencies = [
 [[package]]
 name = "solana-account-decoder-client-types"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "base64 0.22.1",
  "bs58",
+ "ethnum",
  "serde",
  "serde_json",
  "solana-account",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "zstd",
 ]
 
@@ -5099,7 +5161,7 @@ dependencies = [
 [[package]]
 name = "solana-accounts-db"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "agave-fs",
  "ahash 0.8.12",
@@ -5135,17 +5197,17 @@ dependencies = [
  "solana-message",
  "solana-metrics",
  "solana-nohash-hasher",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rayon-threadlimit",
  "solana-reward-info",
  "solana-sha256-hasher",
  "solana-slot-hashes",
- "solana-svm-transaction",
- "solana-system-interface 2.0.0",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
  "solana-sysvar",
  "solana-time-utils",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "spl-generic-token",
  "static_assertions",
@@ -5205,7 +5267,7 @@ dependencies = [
 [[package]]
 name = "solana-banks-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "borsh 1.6.0",
  "futures",
@@ -5216,12 +5278,12 @@ dependencies = [
  "solana-hash 4.0.1",
  "solana-message",
  "solana-program-pack",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-signature",
  "solana-sysvar",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "tarpc",
  "thiserror 2.0.17",
@@ -5232,7 +5294,7 @@ dependencies = [
 [[package]]
 name = "solana-banks-interface"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "serde",
  "solana-account",
@@ -5240,10 +5302,10 @@ dependencies = [
  "solana-commitment-config",
  "solana-hash 4.0.1",
  "solana-message",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-signature",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "tarpc",
 ]
@@ -5251,9 +5313,9 @@ dependencies = [
 [[package]]
 name = "solana-banks-server"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "bincode",
  "crossbeam-channel",
  "futures",
@@ -5264,13 +5326,13 @@ dependencies = [
  "solana-commitment-config",
  "solana-hash 4.0.1",
  "solana-message",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-runtime",
  "solana-runtime-transaction",
  "solana-send-transaction-service",
  "solana-signature",
  "solana-svm",
- "solana-svm-transaction",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction",
  "solana-transaction-error",
  "tarpc",
@@ -5348,6 +5410,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-bn254"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
+dependencies = [
+ "ark-bn254 0.5.0",
+ "ark-ec 0.5.0",
+ "ark-ff 0.5.0",
+ "ark-serialize 0.5.0",
+ "bytemuck",
+ "solana-define-syscall 4.0.1",
+ "thiserror 2.0.17",
+]
+
+[[package]]
 name = "solana-borsh"
 version = "3.0.0"
 source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
@@ -5358,9 +5434,9 @@ dependencies = [
 [[package]]
 name = "solana-bpf-loader-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-syscalls",
+ "agave-syscalls 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "bincode",
  "qualifier_attr",
  "solana-account",
@@ -5371,22 +5447,50 @@ dependencies = [
  "solana-loader-v4-interface",
  "solana-packet",
  "solana-program-entrypoint",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
+ "solana-sbpf",
+ "solana-sdk-ids",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+]
+
+[[package]]
+name = "solana-bpf-loader-program"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+dependencies = [
+ "agave-syscalls 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "bincode",
+ "qualifier_attr",
+ "solana-account",
+ "solana-bincode",
+ "solana-clock",
+ "solana-instruction",
+ "solana-loader-v3-interface",
+ "solana-loader-v4-interface",
+ "solana-packet",
+ "solana-program-entrypoint",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-pubkey 3.0.0",
  "solana-sbpf",
  "solana-sdk-ids",
- "solana-svm-feature-set",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-type-overrides",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-system-interface 2.0.0",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
 name = "solana-bucket-map"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "bv",
  "bytemuck",
@@ -5397,24 +5501,24 @@ dependencies = [
  "rand 0.8.5",
  "solana-clock",
  "solana-measure",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "tempfile",
 ]
 
 [[package]]
 name = "solana-builtins"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
- "solana-bpf-loader-program",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-bpf-loader-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-program",
  "solana-hash 4.0.1",
  "solana-loader-v4-program",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
- "solana-system-program",
+ "solana-system-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-vote-program",
  "solana-zk-elgamal-proof-program",
  "solana-zk-token-proof-program",
@@ -5423,24 +5527,24 @@ dependencies = [
 [[package]]
 name = "solana-builtins-default-costs"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "ahash 0.8.12",
  "log",
- "solana-bpf-loader-program",
+ "solana-bpf-loader-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-program",
  "solana-loader-v4-program",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
- "solana-system-program",
+ "solana-system-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-vote-program",
 ]
 
 [[package]]
 name = "solana-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "bincode",
@@ -5465,7 +5569,7 @@ dependencies = [
  "solana-measure",
  "solana-message",
  "solana-net-utils",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-pubsub-client",
  "solana-quic-client",
  "solana-quic-definitions",
@@ -5542,29 +5646,38 @@ dependencies = [
 [[package]]
 name = "solana-compute-budget"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+]
+
+[[package]]
+name = "solana-compute-budget"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
- "solana-fee-structure",
- "solana-program-runtime",
+ "solana-fee-structure 3.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
 name = "solana-compute-budget-instruction"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "agave-transaction-view",
  "log",
  "solana-borsh",
  "solana-builtins-default-costs",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-interface",
  "solana-instruction",
  "solana-packet",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
- "solana-svm-transaction",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "thiserror 2.0.17",
 ]
@@ -5582,9 +5695,9 @@ dependencies = [
 [[package]]
 name = "solana-compute-budget-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
 ]
 
 [[package]]
@@ -5607,7 +5720,7 @@ dependencies = [
 [[package]]
 name = "solana-connection-cache"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "bincode",
@@ -5629,26 +5742,26 @@ dependencies = [
 [[package]]
 name = "solana-cost-model"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "ahash 0.8.12",
  "log",
  "solana-bincode",
  "solana-borsh",
  "solana-builtins-default-costs",
  "solana-clock",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-instruction",
  "solana-compute-budget-interface",
- "solana-fee-structure",
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-metrics",
  "solana-packet",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-runtime-transaction",
  "solana-sdk-ids",
- "solana-svm-transaction",
- "solana-system-interface 2.0.0",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
  "solana-transaction-error",
  "solana-vote-program",
 ]
@@ -5664,6 +5777,19 @@ dependencies = [
  "solana-program-error",
  "solana-pubkey 4.0.0",
  "solana-stable-layout",
+]
+
+[[package]]
+name = "solana-curve25519"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "bytemuck",
+ "bytemuck_derive",
+ "curve25519-dalek",
+ "solana-define-syscall 4.0.1",
+ "subtle",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -5717,8 +5843,7 @@ dependencies = [
 [[package]]
 name = "solana-ed25519-program"
 version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e1419197f1c06abf760043f6d64ba9d79a03ad5a43f18c7586471937122094da"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "bytemuck",
  "bytemuck_derive",
@@ -5751,8 +5876,7 @@ dependencies = [
 [[package]]
 name = "solana-epoch-rewards-hasher"
 version = "3.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ee8beac9bff4db9225e57d532d169b0be5e447f1e6601a2f50f27a01bf5518f"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "siphasher 0.3.11",
  "solana-address 2.0.0",
@@ -5821,11 +5945,11 @@ dependencies = [
 [[package]]
 name = "solana-fee"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
- "solana-fee-structure",
- "solana-svm-transaction",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
 ]
 
 [[package]]
@@ -5843,6 +5967,11 @@ name = "solana-fee-structure"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e2abdb1223eea8ec64136f39cb1ffcf257e00f915c957c35c0dd9e3f4e700b0"
+
+[[package]]
+name = "solana-fee-structure"
+version = "3.0.0"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "serde",
  "serde_derive",
@@ -6002,7 +6131,7 @@ dependencies = [
 [[package]]
 name = "solana-lattice-hash"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "base64 0.22.1",
  "blake3",
@@ -6041,43 +6170,30 @@ dependencies = [
 [[package]]
 name = "solana-loader-v4-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "log",
  "solana-account",
  "solana-bincode",
- "solana-bpf-loader-program",
+ "solana-bpf-loader-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-instruction",
  "solana-loader-v3-interface",
  "solana-loader-v4-interface",
  "solana-packet",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-sbpf",
  "solana-sdk-ids",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-type-overrides",
- "solana-transaction-context",
-]
-
-[[package]]
-name = "solana-logger"
-version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ef7421d1092680d72065edbf5c7605856719b021bf5f173656c71febcdd5d003"
-dependencies = [
- "env_logger",
- "lazy_static",
- "libc",
- "log",
- "signal-hook",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
 ]
 
 [[package]]
 name = "solana-measure"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 
 [[package]]
 name = "solana-message"
@@ -6101,7 +6217,7 @@ dependencies = [
 [[package]]
 name = "solana-metrics"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "crossbeam-channel",
  "gethostname",
@@ -6129,7 +6245,7 @@ source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b
 [[package]]
 name = "solana-net-utils"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "anyhow",
  "bincode",
@@ -6143,7 +6259,7 @@ dependencies = [
  "serde",
  "socket2",
  "solana-serde",
- "solana-svm-type-overrides",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "tokio",
  "url",
 ]
@@ -6180,6 +6296,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-nonce-account"
+version = "3.0.0"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
+dependencies = [
+ "solana-account",
+ "solana-hash 4.0.1",
+ "solana-nonce",
+ "solana-sdk-ids",
+]
+
+[[package]]
 name = "solana-packet"
 version = "4.0.0"
 source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
@@ -6196,7 +6323,7 @@ dependencies = [
 [[package]]
 name = "solana-perf"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "ahash 0.8.12",
  "bincode",
@@ -6217,13 +6344,13 @@ dependencies = [
  "solana-message",
  "solana-metrics",
  "solana-packet",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rayon-threadlimit",
  "solana-sdk-ids",
  "solana-short-vec",
  "solana-signature",
  "solana-time-utils",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
 ]
 
 [[package]]
@@ -6233,6 +6360,19 @@ source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b
 dependencies = [
  "serde",
  "serde_derive",
+]
+
+[[package]]
+name = "solana-poseidon"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "ark-bn254 0.4.0",
+ "ark-bn254 0.5.0",
+ "light-poseidon 0.2.0",
+ "light-poseidon 0.4.0",
+ "solana-define-syscall 4.0.1",
+ "thiserror 2.0.17",
 ]
 
 [[package]]
@@ -6253,6 +6393,14 @@ name = "solana-precompile-error"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cafcd950de74c6c39d55dc8ca108bbb007799842ab370ef26cf45a34453c31e1"
+dependencies = [
+ "num-traits",
+]
+
+[[package]]
+name = "solana-precompile-error"
+version = "3.0.0"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "num-traits",
 ]
@@ -6316,13 +6464,13 @@ dependencies = [
 [[package]]
 name = "solana-program-binaries"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "bincode",
  "serde",
  "solana-account",
  "solana-loader-v3-interface",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-sdk-ids",
  "spl-generic-token",
@@ -6373,6 +6521,50 @@ dependencies = [
 [[package]]
 name = "solana-program-runtime"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "base64 0.22.1",
+ "bincode",
+ "itertools 0.12.1",
+ "log",
+ "percentage",
+ "rand 0.8.5",
+ "serde",
+ "solana-account",
+ "solana-account-info",
+ "solana-clock",
+ "solana-epoch-rewards",
+ "solana-epoch-schedule",
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-hash 4.0.1",
+ "solana-instruction",
+ "solana-last-restart-slot",
+ "solana-loader-v3-interface",
+ "solana-program-entrypoint",
+ "solana-pubkey 4.0.0",
+ "solana-rent",
+ "solana-sbpf",
+ "solana-sdk-ids",
+ "solana-slot-hashes",
+ "solana-stable-layout",
+ "solana-stake-interface",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
+ "solana-sysvar",
+ "solana-sysvar-id",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "solana-program-runtime"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "base64 0.22.1",
@@ -6387,7 +6579,7 @@ dependencies = [
  "solana-clock",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
- "solana-fee-structure",
+ "solana-fee-structure 3.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-hash 4.0.1",
  "solana-instruction",
  "solana-last-restart-slot",
@@ -6400,27 +6592,27 @@ dependencies = [
  "solana-slot-hashes",
  "solana-stable-layout",
  "solana-stake-interface",
- "solana-svm-callback",
- "solana-svm-feature-set",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-timings",
- "solana-svm-transaction",
- "solana-svm-type-overrides",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-system-interface 2.0.0",
  "solana-sysvar",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "thiserror 2.0.17",
 ]
 
 [[package]]
 name = "solana-program-test"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
- "agave-logger",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "agave-logger 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "assert_matches",
  "async-trait",
  "base64 0.22.1",
@@ -6438,7 +6630,7 @@ dependencies = [
  "solana-clock",
  "solana-cluster-type",
  "solana-commitment-config",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-epoch-rewards",
  "solana-epoch-schedule",
  "solana-fee-calculator",
@@ -6454,8 +6646,8 @@ dependencies = [
  "solana-program-binaries",
  "solana-program-entrypoint",
  "solana-program-error",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-runtime",
  "solana-sbpf",
@@ -6464,13 +6656,13 @@ dependencies = [
  "solana-stable-layout",
  "solana-stake-interface",
  "solana-svm",
- "solana-svm-log-collector",
- "solana-svm-timings",
- "solana-system-interface 2.0.0",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
  "solana-sysvar",
  "solana-sysvar-id",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "solana-vote-program",
  "spl-generic-token",
@@ -6484,7 +6676,6 @@ version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8909d399deb0851aa524420beeb5646b115fd253ef446e35fe4504c904da3941"
 dependencies = [
- "rand 0.8.5",
  "solana-address 1.1.0",
 ]
 
@@ -6493,13 +6684,14 @@ name = "solana-pubkey"
 version = "4.0.0"
 source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
+ "rand 0.8.5",
  "solana-address 2.0.0",
 ]
 
 [[package]]
 name = "solana-pubsub-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "crossbeam-channel",
  "futures-util",
@@ -6510,7 +6702,7 @@ dependencies = [
  "serde_json",
  "solana-account-decoder-client-types",
  "solana-clock",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rpc-client-types",
  "solana-signature",
  "thiserror 2.0.17",
@@ -6524,7 +6716,7 @@ dependencies = [
 [[package]]
 name = "solana-quic-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-lock",
  "async-trait",
@@ -6539,7 +6731,7 @@ dependencies = [
  "solana-measure",
  "solana-metrics",
  "solana-net-utils",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-quic-definitions",
  "solana-rpc-client-api",
  "solana-signer",
@@ -6561,7 +6753,7 @@ dependencies = [
 [[package]]
 name = "solana-rayon-threadlimit"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "log",
  "num_cpus",
@@ -6582,8 +6774,7 @@ dependencies = [
 [[package]]
 name = "solana-reward-info"
 version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "82be7946105c2ee6be9f9ee7bd18a068b558389221d29efa92b906476102bfcc"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "serde",
  "serde_derive",
@@ -6592,7 +6783,7 @@ dependencies = [
 [[package]]
 name = "solana-rpc-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
@@ -6617,7 +6808,7 @@ dependencies = [
  "solana-hash 4.0.1",
  "solana-instruction",
  "solana-message",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rpc-client-api",
  "solana-signature",
  "solana-transaction",
@@ -6631,7 +6822,7 @@ dependencies = [
 [[package]]
 name = "solana-rpc-client-api"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "anyhow",
  "jsonrpc-core",
@@ -6651,14 +6842,14 @@ dependencies = [
 [[package]]
 name = "solana-rpc-client-nonce-utils"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "solana-account",
  "solana-commitment-config",
  "solana-hash 4.0.1",
  "solana-message",
  "solana-nonce",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-rpc-client",
  "solana-sdk-ids",
  "thiserror 2.0.17",
@@ -6667,7 +6858,7 @@ dependencies = [
 [[package]]
 name = "solana-rpc-client-types"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "base64 0.22.1",
  "bs58",
@@ -6676,7 +6867,7 @@ dependencies = [
  "serde_json",
  "solana-account",
  "solana-account-decoder-client-types",
- "solana-address 1.1.0",
+ "solana-address 2.0.0",
  "solana-clock",
  "solana-commitment-config",
  "solana-fee-calculator",
@@ -6693,13 +6884,13 @@ dependencies = [
 [[package]]
 name = "solana-runtime"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "agave-fs",
  "agave-reserved-account-keys",
  "agave-snapshots",
- "agave-syscalls",
+ "agave-syscalls 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "agave-votor-messages",
  "ahash 0.8.12",
  "aquamarine",
@@ -6742,14 +6933,14 @@ dependencies = [
  "solana-account-info",
  "solana-accounts-db",
  "solana-bls-signatures",
- "solana-bpf-loader-program",
+ "solana-bpf-loader-program 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-bucket-map",
  "solana-builtins",
  "solana-client-traits",
  "solana-clock",
  "solana-cluster-type",
  "solana-commitment-config",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-instruction",
  "solana-compute-budget-interface",
  "solana-config-interface",
@@ -6762,7 +6953,7 @@ dependencies = [
  "solana-feature-gate-interface",
  "solana-fee",
  "solana-fee-calculator",
- "solana-fee-structure",
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-genesis-config",
  "solana-hard-forks",
  "solana-hash 4.0.1",
@@ -6778,13 +6969,13 @@ dependencies = [
  "solana-native-token",
  "solana-nohash-hasher",
  "solana-nonce",
- "solana-nonce-account",
+ "solana-nonce-account 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-packet",
  "solana-perf",
  "solana-poh-config",
- "solana-precompile-error",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-precompile-error 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-rayon-threadlimit",
  "solana-rent",
  "solana-reward-info",
@@ -6800,16 +6991,16 @@ dependencies = [
  "solana-slot-history",
  "solana-stake-interface",
  "solana-svm",
- "solana-svm-callback",
- "solana-svm-timings",
- "solana-svm-transaction",
- "solana-system-interface 2.0.0",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
  "solana-system-transaction",
  "solana-sysvar",
  "solana-sysvar-id",
  "solana-time-utils",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "solana-transaction-status-client-types",
  "solana-unified-scheduler-logic",
@@ -6829,21 +7020,21 @@ dependencies = [
 [[package]]
 name = "solana-runtime-transaction"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "agave-transaction-view",
  "jupnet-signature",
  "log",
- "solana-compute-budget",
+ "solana-compute-budget 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-compute-budget-instruction",
  "solana-hash 4.0.1",
  "solana-message",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
  "solana-signature",
- "solana-svm-transaction",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "thiserror 2.0.17",
 ]
@@ -6892,8 +7083,7 @@ dependencies = [
 [[package]]
 name = "solana-secp256k1-program"
 version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8efa767b0188f577edae7080e8bf080e5db9458e2b6ee5beaa73e2e6bb54e99d"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "digest 0.10.7",
  "k256",
@@ -6932,7 +7122,7 @@ dependencies = [
 [[package]]
 name = "solana-send-transaction-service"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "crossbeam-channel",
@@ -6945,8 +7135,8 @@ dependencies = [
  "solana-keypair",
  "solana-measure",
  "solana-metrics",
- "solana-nonce-account",
- "solana-pubkey 3.0.0",
+ "solana-nonce-account 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-quic-definitions",
  "solana-runtime",
  "solana-signature",
@@ -6959,8 +7149,7 @@ dependencies = [
 [[package]]
 name = "solana-serde"
 version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "709a93cab694c70f40b279d497639788fc2ccbcf9b4aa32273d4b361322c02dd"
+source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b8d44ab1a0949f786b8a65f6e79be57243b14f9"
 dependencies = [
  "serde",
 ]
@@ -7090,7 +7279,7 @@ dependencies = [
 [[package]]
 name = "solana-streamer"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "arc-swap",
  "bytes",
@@ -7120,7 +7309,7 @@ dependencies = [
  "solana-net-utils",
  "solana-packet",
  "solana-perf",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-quic-definitions",
  "solana-signature",
  "solana-signer",
@@ -7137,7 +7326,7 @@ dependencies = [
 [[package]]
 name = "solana-svm"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "ahash 0.8.12",
  "log",
@@ -7145,7 +7334,7 @@ dependencies = [
  "serde",
  "solana-account",
  "solana-clock",
- "solana-fee-structure",
+ "solana-fee-structure 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-hash 4.0.1",
  "solana-instruction",
  "solana-instructions-sysvar",
@@ -7154,26 +7343,37 @@ dependencies = [
  "solana-loader-v4-program",
  "solana-message",
  "solana-nonce",
- "solana-nonce-account",
+ "solana-nonce-account 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
  "solana-program-entrypoint",
  "solana-program-pack",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-sdk-ids",
- "solana-svm-callback",
- "solana-svm-feature-set",
- "solana-svm-log-collector",
- "solana-svm-measure",
- "solana-svm-timings",
- "solana-svm-transaction",
- "solana-svm-type-overrides",
- "solana-system-interface 2.0.0",
+ "solana-svm-callback 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-measure 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-timings 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
  "solana-sysvar-id",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "spl-generic-token",
  "thiserror 2.0.17",
+]
+
+[[package]]
+name = "solana-svm-callback"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "solana-account",
+ "solana-clock",
+ "solana-precompile-error 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
 ]
 
 [[package]]
@@ -7183,14 +7383,27 @@ source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed2
 dependencies = [
  "solana-account",
  "solana-clock",
- "solana-precompile-error",
+ "solana-precompile-error 3.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-pubkey 3.0.0",
 ]
 
 [[package]]
 name = "solana-svm-feature-set"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+
+[[package]]
+name = "solana-svm-feature-set"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+
+[[package]]
+name = "solana-svm-log-collector"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "log",
+]
 
 [[package]]
 name = "solana-svm-log-collector"
@@ -7203,7 +7416,22 @@ dependencies = [
 [[package]]
 name = "solana-svm-measure"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+
+[[package]]
+name = "solana-svm-measure"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+
+[[package]]
+name = "solana-svm-timings"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "eager",
+ "enum-iterator",
+ "solana-pubkey 4.0.0",
+]
 
 [[package]]
 name = "solana-svm-timings"
@@ -7218,6 +7446,20 @@ dependencies = [
 [[package]]
 name = "solana-svm-transaction"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "jupnet-signature",
+ "solana-hash 4.0.1",
+ "solana-message",
+ "solana-pubkey 4.0.0",
+ "solana-sdk-ids",
+ "solana-signature",
+ "solana-transaction",
+]
+
+[[package]]
+name = "solana-svm-transaction"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "jupnet-signature",
@@ -7227,6 +7469,14 @@ dependencies = [
  "solana-sdk-ids",
  "solana-signature",
  "solana-transaction",
+]
+
+[[package]]
+name = "solana-svm-type-overrides"
+version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "rand 0.8.5",
 ]
 
 [[package]]
@@ -7269,6 +7519,31 @@ dependencies = [
 [[package]]
 name = "solana-system-program"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "bincode",
+ "log",
+ "serde",
+ "solana-account",
+ "solana-bincode",
+ "solana-fee-calculator",
+ "solana-instruction",
+ "solana-nonce",
+ "solana-nonce-account 3.0.0 (git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test)",
+ "solana-packet",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
+ "solana-sdk-ids",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-system-interface 3.0.0",
+ "solana-sysvar",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+]
+
+[[package]]
+name = "solana-system-program"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "bincode",
@@ -7279,16 +7554,16 @@ dependencies = [
  "solana-fee-calculator",
  "solana-instruction",
  "solana-nonce",
- "solana-nonce-account",
+ "solana-nonce-account 3.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "solana-packet",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-pubkey 3.0.0",
  "solana-sdk-ids",
- "solana-svm-log-collector",
- "solana-svm-type-overrides",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
+ "solana-svm-type-overrides 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-system-interface 2.0.0",
  "solana-sysvar",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
 ]
 
 [[package]]
@@ -7356,11 +7631,11 @@ source = "git+https://github.com/jupnet/jupnet-sdk?branch=fix%2Fsdk-deps-test#9b
 [[package]]
 name = "solana-tls-utils"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "rustls",
  "solana-keypair",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-signer",
  "x509-parser",
 ]
@@ -7368,7 +7643,7 @@ dependencies = [
 [[package]]
 name = "solana-tpu-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "bincode",
@@ -7386,7 +7661,7 @@ dependencies = [
  "solana-measure",
  "solana-message",
  "solana-net-utils",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-pubsub-client",
  "solana-quic-definitions",
  "solana-rpc-client",
@@ -7402,7 +7677,7 @@ dependencies = [
 [[package]]
 name = "solana-tpu-client-next"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "log",
@@ -7450,6 +7725,22 @@ dependencies = [
 [[package]]
 name = "solana-transaction-context"
 version = "3.1.2"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
+dependencies = [
+ "bincode",
+ "serde",
+ "solana-account",
+ "solana-instruction",
+ "solana-instructions-sysvar",
+ "solana-pubkey 4.0.0",
+ "solana-rent",
+ "solana-sbpf",
+ "solana-sdk-ids",
+]
+
+[[package]]
+name = "solana-transaction-context"
+version = "3.1.2"
 source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
 dependencies = [
  "bincode",
@@ -7478,7 +7769,7 @@ dependencies = [
 [[package]]
 name = "solana-transaction-metrics-tracker"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "base64 0.22.1",
  "bincode",
@@ -7494,7 +7785,7 @@ dependencies = [
 [[package]]
 name = "solana-transaction-status-client-types"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "base64 0.22.1",
  "bincode",
@@ -7505,11 +7796,11 @@ dependencies = [
  "solana-commitment-config",
  "solana-instruction",
  "solana-message",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-reward-info",
  "solana-signature",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction-error",
  "thiserror 2.0.17",
 ]
@@ -7517,7 +7808,7 @@ dependencies = [
 [[package]]
 name = "solana-udp-client"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "async-trait",
  "solana-connection-cache",
@@ -7532,10 +7823,10 @@ dependencies = [
 [[package]]
 name = "solana-unified-scheduler-logic"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "assert_matches",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-runtime-transaction",
  "solana-transaction",
  "static_assertions",
@@ -7545,9 +7836,9 @@ dependencies = [
 [[package]]
 name = "solana-version"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "rand 0.8.5",
  "semver",
  "serde",
@@ -7558,7 +7849,7 @@ dependencies = [
 [[package]]
 name = "solana-vote"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "itertools 0.12.1",
  "jupnet-signer",
@@ -7571,12 +7862,12 @@ dependencies = [
  "solana-instruction",
  "solana-keypair",
  "solana-packet",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
  "solana-serialize-utils",
  "solana-signature",
  "solana-signer",
- "solana-svm-transaction",
+ "solana-svm-transaction 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-transaction",
  "solana-vote-interface",
  "thiserror 2.0.17",
@@ -7610,9 +7901,9 @@ dependencies = [
 [[package]]
 name = "solana-vote-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "bincode",
  "log",
  "num-derive",
@@ -7626,14 +7917,14 @@ dependencies = [
  "solana-instruction",
  "solana-keypair",
  "solana-packet",
- "solana-program-runtime",
- "solana-pubkey 3.0.0",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
+ "solana-pubkey 4.0.0",
  "solana-rent",
  "solana-sdk-ids",
  "solana-signer",
  "solana-slot-hashes",
  "solana-transaction",
- "solana-transaction-context",
+ "solana-transaction-context 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-vote-interface",
  "thiserror 2.0.17",
 ]
@@ -7641,16 +7932,16 @@ dependencies = [
 [[package]]
 name = "solana-zk-elgamal-proof-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "bytemuck",
  "num-derive",
  "num-traits",
  "solana-instruction",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-sdk-ids",
- "solana-svm-log-collector",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-zk-sdk 4.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -7729,23 +8020,23 @@ dependencies = [
 [[package]]
 name = "solana-zk-token-proof-program"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
- "agave-feature-set",
+ "agave-feature-set 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "bytemuck",
  "num-derive",
  "num-traits",
  "solana-instruction",
- "solana-program-runtime",
+ "solana-program-runtime 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-sdk-ids",
- "solana-svm-log-collector",
+ "solana-svm-log-collector 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-zk-token-sdk",
 ]
 
 [[package]]
 name = "solana-zk-token-sdk"
 version = "3.1.2"
-source = "git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2#41aa3dc3fcabed266b2186d594d4cb9c28a76d9f"
+source = "git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test#b67c24e9fc1e42a6bc95ba4b679800970443766d"
 dependencies = [
  "aes-gcm-siv",
  "base64 0.22.1",
@@ -7761,10 +8052,10 @@ dependencies = [
  "serde",
  "serde_json",
  "sha3",
- "solana-curve25519 3.1.2",
+ "solana-curve25519 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=fix%2Fsdk-deps-test)",
  "solana-derivation-path",
  "solana-instruction",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.0.0",
  "solana-sdk-ids",
  "solana-seed-derivable",
  "solana-seed-phrase",
@@ -8051,7 +8342,7 @@ source = "git+https://github.com/jupnet/token-2022?branch=fix%2Fsdk-deps-test#fb
 dependencies = [
  "bytemuck",
  "solana-account-info",
- "solana-curve25519 3.1.2",
+ "solana-curve25519 3.1.2 (git+https://github.com/jupnet/jupnet-svm?branch=v3.1.2)",
  "solana-instruction",
  "solana-instructions-sysvar",
  "solana-msg",
@@ -9565,9 +9856,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize_derive"
-version = "1.4.2"
+version = "1.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce36e65b0d2999d2aafac989fb249189a141aee1f53c612c1f37d72631959f69"
+checksum = "85a5b4158499876c763cb03bc4e49185d3cccbabb15b33c627f7884f43db852e"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -9609,9 +9900,9 @@ dependencies = [
 
 [[package]]
 name = "zmij"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f4a4e8e9dc5c62d159f04fcdbe07f4c3fb710415aab4754bf11505501e3251d"
+checksum = "e9747e91771f56fd7893e1164abd78febd14a670ceec257caad15e051de35f06"
 
 [[package]]
 name = "zstd"
@@ -9640,11 +9931,6 @@ dependencies = [
  "cc",
  "pkg-config",
 ]
-
-[[patch.unused]]
-name = "mollusk-svm"
-version = "0.8.1"
-source = "git+https://github.com/jupnet/mollusk?branch=fix%2Fsdk-deps-test#e1513f1c60bac43f3c560d733b64b14d05272715"
 
 [[patch.unused]]
 name = "solana-loader-v2-interface"
