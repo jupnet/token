@@ -349,10 +349,11 @@ pub enum TokenInstruction<'a> {
         /// Expected number of base 10 digits to the right of the decimal place.
         decimals: u8,
     },
-    /// Like [`InitializeAccount`], but the owner pubkey is passed via
-    /// instruction data rather than the accounts list. This variant may be
-    /// preferable when using Cross Program Invocation from an instruction
-    /// that does not need the owner's `AccountInfo` otherwise.
+    /// Like [`TokenInstruction::InitializeAccount`], but the owner pubkey is
+    /// passed via instruction data rather than the accounts list. This
+    /// variant may be preferable when using Cross Program Invocation from
+    /// an instruction that does not need the owner's `AccountInfo`
+    /// otherwise.
     ///
     /// Accounts expected by this instruction:
     ///
@@ -371,11 +372,17 @@ pub enum TokenInstruction<'a> {
     ///
     /// Accounts expected by this instruction:
     ///
+    ///   * Using runtime Rent sysvar
     ///   0. `[writable]`  The native token account to sync with its underlying
     ///      lamports.
+    ///
+    ///   * Using Rent sysvar account
+    ///   0. `[writable]`  The native token account to sync with its underlying
+    ///      lamports.
+    ///   1. `[]` Rent sysvar.
     SyncNative,
-    /// Like [`InitializeAccount2`], but does not require the Rent sysvar to be
-    /// provided
+    /// Like [`TokenInstruction::InitializeAccount2`], but does not require the
+    /// Rent sysvar to be provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -385,8 +392,8 @@ pub enum TokenInstruction<'a> {
         /// The new account's owner/multisignature.
         owner: Pubkey,
     },
-    /// Like [`InitializeMultisig`], but does not require the Rent sysvar to be
-    /// provided
+    /// Like [`TokenInstruction::InitializeMultisig`], but does not require the
+    /// Rent sysvar to be provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -398,8 +405,8 @@ pub enum TokenInstruction<'a> {
         /// account.
         m: u8,
     },
-    /// Like [`InitializeMint`], but does not require the Rent sysvar to be
-    /// provided
+    /// Like [`TokenInstruction::InitializeMint`], but does not require the Rent
+    /// sysvar to be provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -1370,6 +1377,20 @@ pub fn sync_native(
         accounts: vec![AccountMeta::new(*account_pubkey, false)],
         data: TokenInstruction::SyncNative.pack(),
     })
+}
+
+/// Creates a `SyncNative` instruction with the Rent sysvar account
+/// added to the accounts list.
+pub fn sync_native_with_rent_sysvar(
+    token_program_id: &Pubkey,
+    account_pubkey: &Pubkey,
+) -> Result<Instruction, ProgramError> {
+    let mut instruction = sync_native(token_program_id, account_pubkey)?;
+    instruction
+        .accounts
+        .push(AccountMeta::new_readonly(sysvar::rent::id(), false));
+
+    Ok(instruction)
 }
 
 /// Creates a `GetAccountDataSize` instruction

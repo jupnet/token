@@ -7,53 +7,152 @@
  */
 
 import {
-  containsBytes,
-  getU8Encoder,
-  type Address,
-  type ReadonlyUint8Array,
+    assertIsInstructionWithAccounts,
+    containsBytes,
+    getU8Encoder,
+    SOLANA_ERROR__PROGRAM_CLIENTS__FAILED_TO_IDENTIFY_INSTRUCTION,
+    SOLANA_ERROR__PROGRAM_CLIENTS__UNRECOGNIZED_INSTRUCTION_TYPE,
+    SolanaError,
+    type Address,
+    type ClientWithPayer,
+    type ClientWithTransactionPlanning,
+    type ClientWithTransactionSending,
+    type Instruction,
+    type InstructionWithData,
+    type ReadonlyUint8Array,
 } from '@solana/kit';
+import { addSelfPlanAndSendFunctions, type SelfPlanAndSendFunctions } from '@solana/kit/program-client-core';
 import {
-  type ParsedCreateAssociatedTokenIdempotentInstruction,
-  type ParsedCreateAssociatedTokenInstruction,
-  type ParsedRecoverNestedAssociatedTokenInstruction,
+    getCreateAssociatedTokenIdempotentInstructionAsync,
+    getCreateAssociatedTokenInstructionAsync,
+    getRecoverNestedAssociatedTokenInstructionAsync,
+    parseCreateAssociatedTokenIdempotentInstruction,
+    parseCreateAssociatedTokenInstruction,
+    parseRecoverNestedAssociatedTokenInstruction,
+    type CreateAssociatedTokenAsyncInput,
+    type CreateAssociatedTokenIdempotentAsyncInput,
+    type ParsedCreateAssociatedTokenIdempotentInstruction,
+    type ParsedCreateAssociatedTokenInstruction,
+    type ParsedRecoverNestedAssociatedTokenInstruction,
+    type RecoverNestedAssociatedTokenAsyncInput,
 } from '../instructions';
 
 export const ASSOCIATED_TOKEN_PROGRAM_ADDRESS =
-  'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL' as Address<'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL'>;
+    'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL' as Address<'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL'>;
 
 export enum AssociatedTokenInstruction {
-  CreateAssociatedToken,
-  CreateAssociatedTokenIdempotent,
-  RecoverNestedAssociatedToken,
+    CreateAssociatedToken,
+    CreateAssociatedTokenIdempotent,
+    RecoverNestedAssociatedToken,
 }
 
 export function identifyAssociatedTokenInstruction(
-  instruction: { data: ReadonlyUint8Array } | ReadonlyUint8Array
+    instruction: { data: ReadonlyUint8Array } | ReadonlyUint8Array,
 ): AssociatedTokenInstruction {
-  const data = 'data' in instruction ? instruction.data : instruction;
-  if (containsBytes(data, getU8Encoder().encode(0), 0)) {
-    return AssociatedTokenInstruction.CreateAssociatedToken;
-  }
-  if (containsBytes(data, getU8Encoder().encode(1), 0)) {
-    return AssociatedTokenInstruction.CreateAssociatedTokenIdempotent;
-  }
-  if (containsBytes(data, getU8Encoder().encode(2), 0)) {
-    return AssociatedTokenInstruction.RecoverNestedAssociatedToken;
-  }
-  throw new Error(
-    'The provided instruction could not be identified as a associatedToken instruction.'
-  );
+    const data = 'data' in instruction ? instruction.data : instruction;
+    if (containsBytes(data, getU8Encoder().encode(0), 0)) {
+        return AssociatedTokenInstruction.CreateAssociatedToken;
+    }
+    if (containsBytes(data, getU8Encoder().encode(1), 0)) {
+        return AssociatedTokenInstruction.CreateAssociatedTokenIdempotent;
+    }
+    if (containsBytes(data, getU8Encoder().encode(2), 0)) {
+        return AssociatedTokenInstruction.RecoverNestedAssociatedToken;
+    }
+    throw new SolanaError(SOLANA_ERROR__PROGRAM_CLIENTS__FAILED_TO_IDENTIFY_INSTRUCTION, {
+        instructionData: data,
+        programName: 'associatedToken',
+    });
 }
 
-export type ParsedAssociatedTokenInstruction<
-  TProgram extends string = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
-> =
-  | ({
-      instructionType: AssociatedTokenInstruction.CreateAssociatedToken;
-    } & ParsedCreateAssociatedTokenInstruction<TProgram>)
-  | ({
-      instructionType: AssociatedTokenInstruction.CreateAssociatedTokenIdempotent;
-    } & ParsedCreateAssociatedTokenIdempotentInstruction<TProgram>)
-  | ({
-      instructionType: AssociatedTokenInstruction.RecoverNestedAssociatedToken;
-    } & ParsedRecoverNestedAssociatedTokenInstruction<TProgram>);
+export type ParsedAssociatedTokenInstruction<TProgram extends string = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL'> =
+    | ({
+          instructionType: AssociatedTokenInstruction.CreateAssociatedToken;
+      } & ParsedCreateAssociatedTokenInstruction<TProgram>)
+    | ({
+          instructionType: AssociatedTokenInstruction.CreateAssociatedTokenIdempotent;
+      } & ParsedCreateAssociatedTokenIdempotentInstruction<TProgram>)
+    | ({
+          instructionType: AssociatedTokenInstruction.RecoverNestedAssociatedToken;
+      } & ParsedRecoverNestedAssociatedTokenInstruction<TProgram>);
+
+export function parseAssociatedTokenInstruction<TProgram extends string>(
+    instruction: Instruction<TProgram> & InstructionWithData<ReadonlyUint8Array>,
+): ParsedAssociatedTokenInstruction<TProgram> {
+    const instructionType = identifyAssociatedTokenInstruction(instruction);
+    switch (instructionType) {
+        case AssociatedTokenInstruction.CreateAssociatedToken: {
+            assertIsInstructionWithAccounts(instruction);
+            return {
+                instructionType: AssociatedTokenInstruction.CreateAssociatedToken,
+                ...parseCreateAssociatedTokenInstruction(instruction),
+            };
+        }
+        case AssociatedTokenInstruction.CreateAssociatedTokenIdempotent: {
+            assertIsInstructionWithAccounts(instruction);
+            return {
+                instructionType: AssociatedTokenInstruction.CreateAssociatedTokenIdempotent,
+                ...parseCreateAssociatedTokenIdempotentInstruction(instruction),
+            };
+        }
+        case AssociatedTokenInstruction.RecoverNestedAssociatedToken: {
+            assertIsInstructionWithAccounts(instruction);
+            return {
+                instructionType: AssociatedTokenInstruction.RecoverNestedAssociatedToken,
+                ...parseRecoverNestedAssociatedTokenInstruction(instruction),
+            };
+        }
+        default:
+            throw new SolanaError(SOLANA_ERROR__PROGRAM_CLIENTS__UNRECOGNIZED_INSTRUCTION_TYPE, {
+                instructionType: instructionType as string,
+                programName: 'associatedToken',
+            });
+    }
+}
+
+export type AssociatedTokenPlugin = { instructions: AssociatedTokenPluginInstructions };
+
+export type AssociatedTokenPluginInstructions = {
+    createAssociatedToken: (
+        input: MakeOptional<CreateAssociatedTokenAsyncInput, 'payer'>,
+    ) => ReturnType<typeof getCreateAssociatedTokenInstructionAsync> & SelfPlanAndSendFunctions;
+    createAssociatedTokenIdempotent: (
+        input: MakeOptional<CreateAssociatedTokenIdempotentAsyncInput, 'payer'>,
+    ) => ReturnType<typeof getCreateAssociatedTokenIdempotentInstructionAsync> & SelfPlanAndSendFunctions;
+    recoverNestedAssociatedToken: (
+        input: RecoverNestedAssociatedTokenAsyncInput,
+    ) => ReturnType<typeof getRecoverNestedAssociatedTokenInstructionAsync> & SelfPlanAndSendFunctions;
+};
+
+export type AssociatedTokenPluginRequirements = ClientWithPayer &
+    ClientWithTransactionPlanning &
+    ClientWithTransactionSending;
+
+export function associatedTokenProgram() {
+    return <T extends AssociatedTokenPluginRequirements>(client: T) => {
+        return {
+            ...client,
+            associatedToken: <AssociatedTokenPlugin>{
+                instructions: {
+                    createAssociatedToken: input =>
+                        addSelfPlanAndSendFunctions(
+                            client,
+                            getCreateAssociatedTokenInstructionAsync({ ...input, payer: input.payer ?? client.payer }),
+                        ),
+                    createAssociatedTokenIdempotent: input =>
+                        addSelfPlanAndSendFunctions(
+                            client,
+                            getCreateAssociatedTokenIdempotentInstructionAsync({
+                                ...input,
+                                payer: input.payer ?? client.payer,
+                            }),
+                        ),
+                    recoverNestedAssociatedToken: input =>
+                        addSelfPlanAndSendFunctions(client, getRecoverNestedAssociatedTokenInstructionAsync(input)),
+                },
+            },
+        };
+    };
+}
+
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

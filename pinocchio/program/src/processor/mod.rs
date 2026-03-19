@@ -73,6 +73,11 @@ pub use {
 /// Number of bytes in a `u64`.
 const U64_BYTES: usize = core::mem::size_of::<u64>();
 
+/// Token-2022 program id, to allow for its multisigs to be used in p-token
+mod spl_token_2022 {
+    pinocchio_pubkey::declare_id!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+}
+
 /// Maximum number of digits in a formatted `u64`.
 ///
 /// The maximum number of digits is equal to the maximum number
@@ -111,7 +116,8 @@ unsafe fn validate_owner(
 
     if unlikely(
         owner_account_info.data_len() == Multisig::LEN
-            && owner_account_info.is_owned_by(&TOKEN_PROGRAM_ID),
+            && (owner_account_info.is_owned_by(&TOKEN_PROGRAM_ID)
+                || owner_account_info.is_owned_by(&spl_token_2022::ID)),
     ) {
         // SAFETY: the caller guarantees that there are no mutable borrows of
         // `owner_account_info` account data and the `load` validates that the
@@ -198,7 +204,7 @@ fn try_ui_amount_into_amount(ui_amount: &str, decimals: u8) -> Result<u64, Progr
 #[inline(always)]
 const fn unpack_amount(instruction_data: &[u8]) -> Result<u64, TokenError> {
     // expected u64 (8)
-    if instruction_data.len() >= U64_BYTES {
+    if likely(instruction_data.len() >= U64_BYTES) {
         // SAFETY: The minimum size of the instruction data is `U64_BYTES` bytes.
         Ok(unsafe { u64::from_le_bytes(*(instruction_data.as_ptr() as *const [u8; U64_BYTES])) })
     } else {
@@ -210,7 +216,7 @@ const fn unpack_amount(instruction_data: &[u8]) -> Result<u64, TokenError> {
 #[inline(always)]
 const fn unpack_amount_and_decimals(instruction_data: &[u8]) -> Result<(u64, u8), TokenError> {
     // expected u64 (8) + u8 (1)
-    if instruction_data.len() >= 9 {
+    if likely(instruction_data.len() >= 9) {
         let (amount, decimals) = instruction_data.split_at(U64_BYTES);
         Ok((
             // SAFETY: The size of `amount` is `U64_BYTES` bytes.

@@ -17,6 +17,7 @@ logging = []
 [dependencies]
 pinocchio = { workspace = true }
 pinocchio-log = { version = "0.5.1", default-features = false }
+pinocchio-pubkey = "0.3"
 pinocchio-token-interface = { version = "^0", path = "../interface" }
 
 [dev-dependencies]
@@ -40,8 +41,11 @@ solana-signer = "3.0.0"
 solana-transaction = "3.0.0"
 solana-transaction-error = "3.0.0"
 solana-system-interface = { workspace = true }
-spl-token-interface = "2"
+spl-token-interface = { workspace = true }
 spl-token-2022-interface = "2"
 
 [lints]
 workspace = true
+
+[package.metadata.solana]
+program-id = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
