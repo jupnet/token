@@ -1,6 +1,7 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 mod setup;
+mod spl_token_interface;
 
 use {
     assert_matches::assert_matches,
@@ -15,12 +16,13 @@ use {
     solana_system_interface::instruction::create_account,
     solana_transaction::Transaction,
     solana_transaction_error::TransactionError,
+    spl_token_2022_interface::instruction::withdraw_excess_lamports,
     std::mem::size_of,
 };
 
 #[tokio::test]
 async fn withdraw_excess_lamports_from_mint() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -84,7 +86,7 @@ async fn withdraw_excess_lamports_from_mint() {
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -115,7 +117,7 @@ async fn withdraw_excess_lamports_from_mint() {
 
 #[tokio::test]
 async fn withdraw_excess_lamports_from_account() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -191,7 +193,7 @@ async fn withdraw_excess_lamports_from_account() {
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -222,7 +224,7 @@ async fn withdraw_excess_lamports_from_account() {
 
 #[tokio::test]
 async fn withdraw_excess_lamports_from_multisig() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -289,7 +291,7 @@ async fn withdraw_excess_lamports_from_multisig() {
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &multisig.pubkey(),
         &destination,
@@ -320,7 +322,7 @@ async fn withdraw_excess_lamports_from_multisig() {
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_mint_wrong_authority() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -385,7 +387,7 @@ async fn fail_withdraw_excess_lamports_from_mint_wrong_authority() {
     let destination = Pubkey::new_unique();
     let wrong_authority = Keypair::new();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -421,7 +423,7 @@ async fn fail_withdraw_excess_lamports_from_mint_wrong_authority() {
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_account_wrong_authority() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -498,7 +500,7 @@ async fn fail_withdraw_excess_lamports_from_account_wrong_authority() {
     let destination = Pubkey::new_unique();
     let wrong_owner = Keypair::new();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -534,7 +536,7 @@ async fn fail_withdraw_excess_lamports_from_account_wrong_authority() {
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_multisig_wrong_authority() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -602,7 +604,7 @@ async fn fail_withdraw_excess_lamports_from_multisig_wrong_authority() {
     let destination = Pubkey::new_unique();
     let wrong_authority = Keypair::new();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &multisig.pubkey(),
         &destination,
@@ -638,7 +640,7 @@ async fn fail_withdraw_excess_lamports_from_multisig_wrong_authority() {
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_multisig_missing_signer() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -705,7 +707,7 @@ async fn fail_withdraw_excess_lamports_from_multisig_missing_signer() {
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &multisig.pubkey(),
         &destination,
@@ -741,7 +743,7 @@ async fn fail_withdraw_excess_lamports_from_multisig_missing_signer() {
 
 #[tokio::test]
 async fn withdraw_excess_lamports_from_mint_with_no_authority() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -838,7 +840,7 @@ async fn withdraw_excess_lamports_from_mint_with_no_authority() {
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -869,7 +871,7 @@ async fn withdraw_excess_lamports_from_mint_with_no_authority() {
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_mint_with_authority_and_mint_as_signer() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -933,7 +935,7 @@ async fn fail_withdraw_excess_lamports_from_mint_with_authority_and_mint_as_sign
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,
@@ -969,7 +971,7 @@ async fn fail_withdraw_excess_lamports_from_mint_with_authority_and_mint_as_sign
 
 #[tokio::test]
 async fn fail_withdraw_excess_lamports_from_mint_with_no_authority_and_authority_signer() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -1066,7 +1068,7 @@ async fn fail_withdraw_excess_lamports_from_mint_with_no_authority_and_authority
 
     let destination = Pubkey::new_unique();
 
-    let mut withdraw_ix = spl_token_2022_interface::instruction::withdraw_excess_lamports(
+    let mut withdraw_ix = withdraw_excess_lamports(
         &spl_token_2022_interface::ID,
         &account_pubkey,
         &destination,

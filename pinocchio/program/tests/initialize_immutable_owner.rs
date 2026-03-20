@@ -1,4 +1,5 @@
 mod setup;
+mod spl_token_interface;
 
 use {
     setup::TOKEN_PROGRAM_ID,
@@ -13,7 +14,7 @@ use {
 
 #[tokio::test]
 async fn initialize_immutable_owner() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -21,7 +22,7 @@ async fn initialize_immutable_owner() {
 
     let account = Keypair::new();
 
-    let account_size = 165;
+    let account_size = spl_token_interface::state::Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
     // When we execute the initialize_immutable_owner instruction.

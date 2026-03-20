@@ -1,6 +1,7 @@
 use {
     super::validate_owner,
-    pinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
+    ethnum::U256,
+    jinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
     pinocchio_token_interface::{
         error::TokenError,
         state::{
@@ -29,7 +30,7 @@ pub fn process_close_account(accounts: &[AccountInfo]) -> ProgramResult {
         let source_account =
             unsafe { load::<Account>(source_account_info.borrow_data_unchecked())? };
 
-        if !source_account.is_native() && source_account.amount() != 0 {
+        if !source_account.is_native() && source_account.amount() != U256::ZERO {
             return Err(TokenError::NonNativeHasBalance.into());
         }
 

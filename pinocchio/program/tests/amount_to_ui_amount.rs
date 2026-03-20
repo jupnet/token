@@ -1,6 +1,8 @@
 mod setup;
+mod spl_token_interface;
 
 use {
+    ethnum::U256,
     mollusk_svm::result::Check,
     setup::{
         mint,
@@ -15,7 +17,7 @@ use {
 
 #[tokio::test]
 async fn amount_to_ui_amount() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -36,7 +38,7 @@ async fn amount_to_ui_amount() {
     let amount_to_ui_amount_ix = spl_token_interface::instruction::amount_to_ui_amount(
         &spl_token_interface::ID,
         &mint,
-        1000,
+        U256::new(1000),
     )
     .unwrap();
 
@@ -73,9 +75,12 @@ fn amount_to_ui_amount_with_maximum_decimals() {
     // When we convert a 20 amount using the mint, the transaction should
     //  succeed and return the correct UI amount.
 
-    let instruction =
-        spl_token_interface::instruction::amount_to_ui_amount(&spl_token_interface::ID, &mint, 20)
-            .unwrap();
+    let instruction = spl_token_interface::instruction::amount_to_ui_amount(
+        &spl_token_interface::ID,
+        &mint,
+        U256::new(20),
+    )
+    .unwrap();
 
     // The expected UI amount is "0.000....002" without the trailing zeros.
     let mut ui_amount = [b'0'; u8::MAX as usize + 1];
@@ -110,7 +115,7 @@ fn amount_to_ui_amount_with_u64_max() {
     let instruction = spl_token_interface::instruction::amount_to_ui_amount(
         &spl_token_interface::ID,
         &mint,
-        u64::MAX,
+        U256::from(u64::MAX),
     )
     .unwrap();
 
@@ -136,4 +141,61 @@ fn amount_to_ui_amount_with_u64_max() {
         &[(mint, mint_account)],
         &[Check::success(), Check::return_data(&ui_amount)],
     );
+}
+
+#[test]
+fn amount_to_ui_amount_with_large_u256() {
+    // Given a mint account with 6 decimals.
+
+    let mint = Pubkey::new_unique();
+    let mint_authority = Pubkey::new_unique();
+    let freeze_authority = Pubkey::new_unique();
+
+    let mint_account =
+        create_mint_account(mint_authority, Some(freeze_authority), 6, &TOKEN_PROGRAM_ID);
+
+    // Test u64::MAX first (should work)
+    let u64_max_amount = U256::from(u64::MAX);
+    let instruction1 = spl_token_interface::instruction::amount_to_ui_amount(
+        &spl_token_interface::ID,
+        &mint,
+        u64_max_amount,
+    )
+    .unwrap();
+
+    eprintln!("\n=== u64::MAX test ===");
+    eprintln!("amount = {}", u64_max_amount);
+    eprintln!("instruction data = {:?}", instruction1.data);
+
+    let result1 = mollusk().process_instruction(&instruction1, &[(mint, mint_account.clone())]);
+
+    eprintln!(
+        "return_data = {:?}",
+        std::str::from_utf8(&result1.return_data)
+    );
+
+    // Now test u64::MAX + 1
+    let large_amount = U256::from(u64::MAX) + U256::new(1);
+    let instruction2 = spl_token_interface::instruction::amount_to_ui_amount(
+        &spl_token_interface::ID,
+        &mint,
+        large_amount,
+    )
+    .unwrap();
+
+    eprintln!("\n=== u64::MAX + 1 test ===");
+    eprintln!("amount = {}", large_amount);
+    eprintln!("instruction data = {:?}", instruction2.data);
+
+    let result2 = mollusk().process_instruction(&instruction2, &[(mint, mint_account)]);
+
+    eprintln!(
+        "return_data = {:?}",
+        std::str::from_utf8(&result2.return_data)
+    );
+
+    // The expected UI amount is "18446744073709.551616"
+    let ui_amount = b"18446744073709.551616";
+
+    assert_eq!(result2.return_data.as_slice(), ui_amount.as_slice());
 }

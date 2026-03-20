@@ -1,5 +1,5 @@
 use {
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         hint::likely,
         program_error::ProgramError,

@@ -1,4 +1,5 @@
 mod setup;
+mod spl_token_interface;
 
 use {
     crate::setup::mollusk::{create_mint_account, mollusk},
@@ -14,7 +15,7 @@ use {
 
 #[tokio::test]
 async fn ui_amount_to_amount() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 

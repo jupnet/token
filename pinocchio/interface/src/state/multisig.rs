@@ -1,6 +1,6 @@
 use {
     super::{Initializable, Transmutable},
-    pinocchio::{program_error::ProgramError, pubkey::Pubkey},
+    jinocchio::{program_error::ProgramError, pubkey::Pubkey},
 };
 
 /// Minimum number of multisignature signers (min N)

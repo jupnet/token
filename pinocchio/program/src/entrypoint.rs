@@ -4,7 +4,7 @@ use {
         mem::{size_of, transmute, MaybeUninit},
         slice::from_raw_parts,
     },
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         entrypoint::{deserialize, NON_DUP_MARKER},
         hint::likely,
@@ -41,40 +41,40 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
     const ACCOUNT1_HEADER_OFFSET: usize = 0x0008;
 
     /// Offset for the first account data length. This is
-    /// expected to be a token account (165 bytes).
+    /// expected to be a token account (213 bytes with U256 amounts).
     const ACCOUNT1_DATA_LEN: usize = 0x0058;
 
     /// Offset for the second account.
-    const ACCOUNT2_HEADER_OFFSET: usize = 0x2910;
+    const ACCOUNT2_HEADER_OFFSET: usize = 0x2940;
 
     /// Offset for the second account data length. This is
-    /// expected to be a token account for `transfer` (165 bytes)
-    /// or a mint account for `transfer_checked` (82 bytes).
-    const ACCOUNT2_DATA_LEN: usize = 0x2960;
+    /// expected to be a token account for `transfer` (213 bytes)
+    /// or a mint account for `transfer_checked` (106 bytes).
+    const ACCOUNT2_DATA_LEN: usize = 0x2990;
 
     // Constants that apply to `transfer_checked` (instruction 12).
 
     /// Offset for the third account.
-    const IX12_ACCOUNT3_HEADER_OFFSET: usize = 0x51c8;
+    const IX12_ACCOUNT3_HEADER_OFFSET: usize = 0x5210;
 
     /// Offset for the third account data length. This is
-    /// expected to be a token account (165 bytes).
-    const IX12_ACCOUNT3_DATA_LEN: usize = 0x5218;
+    /// expected to be a token account (213 bytes with U256 amounts).
+    const IX12_ACCOUNT3_DATA_LEN: usize = 0x5260;
 
     /// Offset for the fourth account.
-    const IX12_ACCOUNT4_HEADER_OFFSET: usize = 0x7ad0;
+    const IX12_ACCOUNT4_HEADER_OFFSET: usize = 0x7b48;
 
     /// Offset for the fourth account data length.
     ///
     /// This is expected to be an account with variable data
     /// length.
-    const IX12_ACCOUNT4_DATA_LEN: usize = 0x7b20;
+    const IX12_ACCOUNT4_DATA_LEN: usize = 0x7b98;
 
     /// Expected offset for the instruction data in the case the
     /// fourth (authority) account has zero data.
     ///
     /// This value is adjusted before it is used.
-    const IX12_EXPECTED_INSTRUCTION_DATA_LEN_OFFSET: usize = 0xa330;
+    const IX12_EXPECTED_INSTRUCTION_DATA_LEN_OFFSET: usize = 0xa3a8;
 
     // Constants that apply to `transfer` (instruction 3).
 
@@ -83,19 +83,19 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
     /// Note that this assumes that both first and second accounts
     /// have zero data, which is being validated before the offset
     /// is used.
-    const IX3_ACCOUNT3_HEADER_OFFSET: usize = 0x5218;
+    const IX3_ACCOUNT3_HEADER_OFFSET: usize = 0x5278;
 
     /// Offset for the third account data length.
     ///
     /// This is expected to be an account with variable data
     /// length.
-    const IX3_ACCOUNT3_DATA_LEN: usize = 0x5268;
+    const IX3_ACCOUNT3_DATA_LEN: usize = 0x52c8;
 
     /// Expected offset for the instruction data in the case the
     /// third (authority) account has zero data.
     ///
     /// This value is adjusted before it is used.
-    const IX3_INSTRUCTION_DATA_LEN_OFFSET: usize = 0x7a78;
+    const IX3_INSTRUCTION_DATA_LEN_OFFSET: usize = 0x7ad8;
 
     /// Align an address to the next multiple of 8.
     #[inline(always)]
@@ -128,14 +128,14 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
 
         // Check that we have enough instruction data.
         //
-        // Expected: instruction discriminator (u8) + amount (u64) + decimals (u8)
-        if input.add(offset).cast::<u64>().read() >= 10 {
+        // Expected: instruction discriminator (u8) + amount (U256) + decimals (u8)
+        if input.add(offset).cast::<u64>().read() >= 34 {
             let discriminator = input.add(offset + size_of::<u64>()).cast::<u8>().read();
 
             // Check for transfer discriminator.
             if likely(discriminator == TokenInstruction::TransferChecked as u8) {
                 // instruction data length (u64) + discriminator (u8)
-                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 9) };
+                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 33) };
 
                 let accounts = unsafe {
                     [
@@ -147,7 +147,7 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
                 };
 
                 #[cfg(feature = "logging")]
-                pinocchio::msg!("Instruction: TransferChecked");
+                jinocchio::msg!("Instruction: TransferChecked");
 
                 return match process_transfer_checked(&accounts, instruction_data) {
                     Ok(()) => SUCCESS,
@@ -180,13 +180,13 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
         let offset = IX3_INSTRUCTION_DATA_LEN_OFFSET + account_3_data_len_aligned;
 
         // Check that we have enough instruction data.
-        if likely(input.add(offset).cast::<u64>().read() >= 9) {
+        // Expected: instruction discriminator (u8) + amount (U256)
+        if likely(input.add(offset).cast::<u64>().read() >= 33) {
             let discriminator = input.add(offset + size_of::<u64>()).cast::<u8>().read();
 
             // Check for transfer discriminator.
             if likely(discriminator == TokenInstruction::Transfer as u8) {
-                let instruction_data =
-                    unsafe { from_raw_parts(input.add(offset + 9), size_of::<u64>()) };
+                let instruction_data = unsafe { from_raw_parts(input.add(offset + 9), 32) };
 
                 let accounts = unsafe {
                     [
@@ -197,7 +197,7 @@ pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
                 };
 
                 #[cfg(feature = "logging")]
-                pinocchio::msg!("Instruction: Transfer");
+                jinocchio::msg!("Instruction: Transfer");
 
                 return match process_transfer(&accounts, instruction_data) {
                     Ok(()) => SUCCESS,
@@ -248,7 +248,7 @@ pub fn process_instruction(accounts: &[AccountInfo], instruction_data: &[u8]) ->
     let result = if *discriminator == 255 {
         // 255 - Batch
         #[cfg(feature = "logging")]
-        pinocchio::msg!("Instruction: Batch");
+        jinocchio::msg!("Instruction: Batch");
 
         process_batch(accounts, remaining)
     } else {
@@ -291,84 +291,84 @@ pub(crate) fn inner_process_instruction(
         // 0 - InitializeMint
         0 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMint");
+            jinocchio::msg!("Instruction: InitializeMint");
 
             process_initialize_mint(accounts, instruction_data)
         }
         // 1 - InitializeAccount
         1 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount");
+            jinocchio::msg!("Instruction: InitializeAccount");
 
             process_initialize_account(accounts)
         }
         // 3 - Transfer
         3 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Transfer");
+            jinocchio::msg!("Instruction: Transfer");
 
             process_transfer(accounts, instruction_data)
         }
         // 7 - MintTo
         7 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: MintTo");
+            jinocchio::msg!("Instruction: MintTo");
 
             process_mint_to(accounts, instruction_data)
         }
         // 8 - Burn
         8 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Burn");
+            jinocchio::msg!("Instruction: Burn");
 
             process_burn(accounts, instruction_data)
         }
         // 9 - CloseAccount
         9 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: CloseAccount");
+            jinocchio::msg!("Instruction: CloseAccount");
 
             process_close_account(accounts)
         }
         // 12 - TransferChecked
         12 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: TransferChecked");
+            jinocchio::msg!("Instruction: TransferChecked");
 
             process_transfer_checked(accounts, instruction_data)
         }
         // 15 - BurnChecked
         15 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: BurnChecked");
+            jinocchio::msg!("Instruction: BurnChecked");
 
             process_burn_checked(accounts, instruction_data)
         }
         // 17 - SyncNative
         17 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: SyncNative");
+            jinocchio::msg!("Instruction: SyncNative");
 
             process_sync_native(accounts)
         }
         // 18 - InitializeAccount3
         18 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount3");
+            jinocchio::msg!("Instruction: InitializeAccount3");
 
             process_initialize_account3(accounts, instruction_data)
         }
         // 20 - InitializeMint2
         20 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMint2");
+            jinocchio::msg!("Instruction: InitializeMint2");
 
             process_initialize_mint2(accounts, instruction_data)
         }
         // 22 - InitializeImmutableOwner
         22 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeImmutableOwner");
+            jinocchio::msg!("Instruction: InitializeImmutableOwner");
 
             process_initialize_immutable_owner(accounts)
         }
@@ -391,105 +391,105 @@ fn inner_process_remaining_instruction(
         // 2 - InitializeMultisig
         2 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMultisig");
+            jinocchio::msg!("Instruction: InitializeMultisig");
 
             process_initialize_multisig(accounts, instruction_data)
         }
         // 4 - Approve
         4 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Approve");
+            jinocchio::msg!("Instruction: Approve");
 
             process_approve(accounts, instruction_data)
         }
         // 5 - Revoke
         5 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: Revoke");
+            jinocchio::msg!("Instruction: Revoke");
 
             process_revoke(accounts)
         }
         // 6 - SetAuthority
         6 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: SetAuthority");
+            jinocchio::msg!("Instruction: SetAuthority");
 
             process_set_authority(accounts, instruction_data)
         }
         // 10 - FreezeAccount
         10 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: FreezeAccount");
+            jinocchio::msg!("Instruction: FreezeAccount");
 
             process_freeze_account(accounts)
         }
         // 11 - ThawAccount
         11 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: ThawAccount");
+            jinocchio::msg!("Instruction: ThawAccount");
 
             process_thaw_account(accounts)
         }
         // 13 - ApproveChecked
         13 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: ApproveChecked");
+            jinocchio::msg!("Instruction: ApproveChecked");
 
             process_approve_checked(accounts, instruction_data)
         }
         // 14 - MintToChecked
         14 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: MintToChecked");
+            jinocchio::msg!("Instruction: MintToChecked");
 
             process_mint_to_checked(accounts, instruction_data)
         }
         // 16 - InitializeAccount2
         16 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeAccount2");
+            jinocchio::msg!("Instruction: InitializeAccount2");
 
             process_initialize_account2(accounts, instruction_data)
         }
         // 19 - InitializeMultisig2
         19 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: InitializeMultisig2");
+            jinocchio::msg!("Instruction: InitializeMultisig2");
 
             process_initialize_multisig2(accounts, instruction_data)
         }
         // 21 - GetAccountDataSize
         21 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: GetAccountDataSize");
+            jinocchio::msg!("Instruction: GetAccountDataSize");
 
             process_get_account_data_size(accounts)
         }
         // 23 - AmountToUiAmount
         23 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: AmountToUiAmount");
+            jinocchio::msg!("Instruction: AmountToUiAmount");
 
             process_amount_to_ui_amount(accounts, instruction_data)
         }
         // 24 - UiAmountToAmount
         24 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: UiAmountToAmount");
+            jinocchio::msg!("Instruction: UiAmountToAmount");
 
             process_ui_amount_to_amount(accounts, instruction_data)
         }
         // 38 - WithdrawExcessLamports
         38 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: WithdrawExcessLamports");
+            jinocchio::msg!("Instruction: WithdrawExcessLamports");
 
             process_withdraw_excess_lamports(accounts)
         }
         // 45 - UnwrapLamports
         45 => {
             #[cfg(feature = "logging")]
-            pinocchio::msg!("Instruction: UnwrapLamports");
+            jinocchio::msg!("Instruction: UnwrapLamports");
 
             process_unwrap_lamports(accounts, instruction_data)
         }

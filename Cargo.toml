@@ -24,14 +24,134 @@ tag-message = "Publish {{crate_name}} v{{version}}"
 consolidate-commits = false
 
 [workspace.dependencies]
-mollusk-svm = "0.6.3"
-mollusk-svm-fuzz-fixture = "0.6.3"
+ethnum = "1.5.2"
+mollusk-svm = { git = "ssh://git@github.com/jupnet/mollusk.git", branch = "v3.1-apex" }
+mollusk-svm-fuzz-fixture = { git = "ssh://git@github.com/jupnet/mollusk.git", branch = "v3.1-apex" }
+jinocchio = { git = "ssh://git@github.com/jupnet/jinocchio.git", branch = "main" }
+jinocchio-log = { git = "ssh://git@github.com/jupnet/jinocchio.git", branch = "main", default-features = false }
+jinocchio-pubkey = { git = "ssh://git@github.com/jupnet/jinocchio.git", branch = "main" }
 num-traits = "0.2"
 pinocchio = "0.9.3"
-solana-instruction = "3.0.0"
-solana-program-error = "3.0.0"
-solana-program-option = "3.0.0"
-solana-program-pack = "3.0.0"
-solana-pubkey = "3.0.0"
-solana-system-interface = { version = "2.0", features = ["bincode"] }
+agave-feature-set = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-account = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-account-info = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-clock = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-cpi = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-instruction = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-keypair = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-msg = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-native-token = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-entrypoint = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-memory = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-option = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-pack = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-test = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-pubkey = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-rent = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sdk-ids = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-signature = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-signer = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-system-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9", features = ["bincode"] }
+solana-sysvar = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9", features = ["bincode"] }
+solana-transaction = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-transaction-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
 spl-token-interface = { path = "interface" }
+
+[patch.crates-io]
+agave-upgradeable-loader-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-account = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-account-info = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-address = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-address-lookup-table-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-atomic-u64 = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-big-mod-exp = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-bincode = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-blake3-hasher = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-borsh = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-clock = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-cluster-type = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-commitment-config = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-compute-budget-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-cpi = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-derivation-path = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-epoch-info = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-epoch-rewards = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-epoch-schedule = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-epoch-stake = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-example-mocks = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-feature-gate-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-fee-calculator = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-genesis-config = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-hard-forks = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-hash = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-inflation = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-instruction = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-instruction-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-instructions-sysvar = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-keccak-hasher = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-keypair = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-last-restart-slot = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-loader-v2-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-loader-v3-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-loader-v4-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-message = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-msg = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-native-token = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-nonce = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-nonce-account = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-offchain-message = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-packet = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-poh-config = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-precompile-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-presigner = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-entrypoint = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-memory = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-option = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-program-pack = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-pubkey = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-quic-definitions = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-rent = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sanitize = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sdk-ids = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sdk-macro = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-secp256k1-recover = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-seed-derivable = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-seed-phrase = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-serde-varint = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-serialize-utils = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sha256-hasher = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-short-vec = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-shred-version = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-signature = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-signer = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-slot-hashes = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-slot-history = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-stable-layout = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-system-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-system-transaction = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sysvar = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-sysvar-id = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-time-utils = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-transaction = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-transaction-error = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+solana-vote-interface = { git = "ssh://git@github.com/jupnet/jupnet-sdk.git", branch = "nixxholas/v3.1.9" }
+agave-feature-set = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+agave-syscalls = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-bpf-loader-program = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-compute-budget = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-program-runtime = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-program-test = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-callback = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-feature-set = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-log-collector = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-measure = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-timings = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-transaction = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-svm-type-overrides = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-system-program = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }
+solana-transaction-context = { git = "ssh://git@github.com/jupnet/apex-agave.git", branch = "v3.1" }

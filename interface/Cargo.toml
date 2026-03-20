@@ -15,12 +15,12 @@ bytemuck = "1.20.0"
 num-derive = "0.4"
 num_enum = "0.7.4"
 num-traits = "0.2"
-solana-instruction = "3.0.0"
-solana-program-error = "3.0.0"
-solana-program-option = "3.0.0"
-solana-program-pack = "3.0.0"
-solana-pubkey = { version = "3.0.0", features = ["bytemuck"] }
-solana-sdk-ids = "3.0.0"
+solana-instruction = { workspace = true }
+solana-program-error = { workspace = true }
+solana-program-option = { workspace = true }
+solana-program-pack = { workspace = true }
+solana-pubkey = { workspace = true, features = ["bytemuck"] }
+solana-sdk-ids = { workspace = true }
 thiserror = "2.0"
 
 [dev-dependencies]

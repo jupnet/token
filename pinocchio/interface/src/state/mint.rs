@@ -1,6 +1,7 @@
 use {
     super::{COption, Initializable, Transmutable},
-    pinocchio::{program_error::ProgramError, pubkey::Pubkey},
+    ethnum::U256,
+    jinocchio::{program_error::ProgramError, pubkey::Pubkey},
 };
 
 /// Internal representation of a mint data.
@@ -12,8 +13,8 @@ pub struct Mint {
     /// minted.
     mint_authority: COption<Pubkey>,
 
-    /// Total supply of tokens.
-    supply: [u8; 8],
+    /// Total supply of tokens (U256 - 32 bytes).
+    supply: [u8; 32],
 
     /// Number of base 10 digits to the right of the decimal place.
     pub decimals: u8,
@@ -29,13 +30,13 @@ pub struct Mint {
 
 impl Mint {
     #[inline(always)]
-    pub fn set_supply(&mut self, supply: u64) {
+    pub fn set_supply(&mut self, supply: U256) {
         self.supply = supply.to_le_bytes();
     }
 
     #[inline(always)]
-    pub fn supply(&self) -> u64 {
-        u64::from_le_bytes(self.supply)
+    pub fn supply(&self) -> U256 {
+        U256::from_le_bytes(self.supply)
     }
 
     #[inline(always)]

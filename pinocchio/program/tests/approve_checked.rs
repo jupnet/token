@@ -1,6 +1,8 @@
 mod setup;
+mod spl_token_interface;
 
 use {
+    ethnum::U256,
     setup::{account, mint, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
@@ -12,7 +14,7 @@ use {
 
 #[tokio::test]
 async fn approve_checked() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -42,7 +44,7 @@ async fn approve_checked() {
         &mint,
         &account,
         &mint_authority,
-        100,
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -59,7 +61,7 @@ async fn approve_checked() {
         &delegate,
         &owner.pubkey(),
         &[],
-        50,
+        U256::new(50),
         4,
     )
     .unwrap();
@@ -83,5 +85,5 @@ async fn approve_checked() {
 
     assert!(account.delegate.is_some());
     assert!(account.delegate.unwrap() == delegate);
-    assert!(account.delegated_amount == 50);
+    assert!(account.delegated_amount == U256::new(50));
 }

@@ -1,6 +1,6 @@
 //! Instruction types.
 
-use {crate::error::TokenError, pinocchio::program_error::ProgramError};
+use {crate::error::TokenError, jinocchio::program_error::ProgramError};
 
 /// Instructions supported by the token program.
 #[repr(u8)]
@@ -34,11 +34,11 @@ pub enum TokenInstruction {
     /// associated with another mint, that mint must be initialized before this
     /// command can succeed.
     ///
-    /// The [`TokenInstruction::InitializeAccount`] instruction requires no
-    /// signers and MUST be included within the same Transaction as the
-    /// system program's `CreateAccount` instruction that creates the
-    /// account being initialized. Otherwise another party can acquire
-    /// ownership of the uninitialized account.
+    /// The [`InitializeAccount`] instruction requires no signers and MUST be
+    /// included within the same Transaction as the system program's
+    /// `CreateAccount` instruction that creates the account being initialized.
+    /// Otherwise another party can acquire ownership of the uninitialized
+    /// account.
     ///
     /// Accounts expected by this instruction:
     ///
@@ -55,11 +55,11 @@ pub enum TokenInstruction {
     /// present.  The variant field represents the number of signers (M)
     /// required to validate this multisignature account.
     ///
-    /// The [`TokenInstruction::InitializeMultisig`] instruction requires no
-    /// signers and MUST be included within the same Transaction as the
-    /// system program's `CreateAccount` instruction that creates the
-    /// account being initialized. Otherwise another party can acquire
-    /// ownership of the uninitialized account.
+    /// The [`InitializeMultisig`] instruction requires no signers and MUST be
+    /// included within the same Transaction as the system program's
+    /// `CreateAccount` instruction that creates the account being initialized.
+    /// Otherwise another party can acquire ownership of the uninitialized
+    /// account.
     ///
     /// Accounts expected by this instruction:
     ///
@@ -124,11 +124,11 @@ pub enum TokenInstruction {
     ///
     ///   * Single owner
     ///   0. `[writable]` The source account.
-    ///   1. `[signer]` The source account's owner/delegate.
+    ///   1. `[signer]` The source account owner.
     ///
-    ///   * Multisignature owner/delegate
+    ///   * Multisignature owner
     ///   0. `[writable]` The source account.
-    ///   1. `[]` The source account's multisignature owner/delegate.
+    ///   1. `[]` The source account's multisignature owner.
     ///   2. `..+M` `[signer]` M signer accounts.
     Revoke,
 
@@ -210,7 +210,7 @@ pub enum TokenInstruction {
     ///   3. `..+M` `[signer]` M signer accounts.
     CloseAccount,
 
-    /// Freeze an Initialized account using the Mint's `freeze_authority` (if
+    /// Freeze an Initialized account using the Mint's [`freeze_authority`] (if
     /// set).
     ///
     /// Accounts expected by this instruction:
@@ -227,7 +227,7 @@ pub enum TokenInstruction {
     ///   3. `..+M` `[signer]` M signer accounts.
     FreezeAccount,
 
-    /// Thaw a Frozen account using the Mint's `freeze_authority` (if set).
+    /// Thaw a Frozen account using the Mint's [`freeze_authority`] (if set).
     ///
     /// Accounts expected by this instruction:
     ///
@@ -306,9 +306,9 @@ pub enum TokenInstruction {
     /// Mints new tokens to an account.  The native mint does not support
     /// minting.
     ///
-    /// This instruction differs from [`TokenInstruction::MintTo`] in that the
-    /// decimals value is checked by the caller.  This may be useful when
-    /// creating transactions offline or within a hardware wallet.
+    /// This instruction differs from [`MintTo`] in that the decimals value is
+    /// checked by the caller.  This may be useful when creating transactions
+    /// offline or within a hardware wallet.
     ///
     /// Accounts expected by this instruction:
     ///
@@ -330,9 +330,9 @@ pub enum TokenInstruction {
     ///     place.
     MintToChecked,
 
-    /// Burns tokens by removing them from an account.
-    /// [`TokenInstruction::BurnChecked`] does not support accounts
-    /// associated with the native mint, use `CloseAccount` instead.
+    /// Burns tokens by removing them from an account.  [`BurnChecked`] does not
+    /// support accounts associated with the native mint, use `CloseAccount`
+    /// instead.
     ///
     /// This instruction differs from Burn in that the decimals value is checked
     /// by the caller. This may be useful when creating transactions offline or
@@ -358,11 +358,10 @@ pub enum TokenInstruction {
     ///     place.
     BurnChecked,
 
-    /// Like [`TokenInstruction::InitializeAccount`], but the owner pubkey is
-    /// passed via instruction data rather than the accounts list. This
-    /// variant may be preferable when using Cross Program Invocation from
-    /// an instruction that does not need the owner's `AccountInfo`
-    /// otherwise.
+    /// Like [`InitializeAccount`], but the owner pubkey is passed via
+    /// instruction data rather than the accounts list. This variant may be
+    /// preferable when using Cross Program Invocation from an instruction
+    /// that does not need the owner's `AccountInfo` otherwise.
     ///
     /// Accounts expected by this instruction:
     ///
@@ -383,18 +382,12 @@ pub enum TokenInstruction {
     ///
     /// Accounts expected by this instruction:
     ///
-    ///   * Using runtime Rent sysvar
     ///   0. `[writable]`  The native token account to sync with its underlying
     ///      lamports.
-    ///
-    ///   * Using Rent sysvar account
-    ///   0. `[writable]`  The native token account to sync with its underlying
-    ///      lamports.
-    ///   1. `[]` Rent sysvar.
     SyncNative,
 
-    /// Like [`TokenInstruction::InitializeAccount2`], but does not require the
-    /// Rent sysvar to be provided
+    /// Like [`InitializeAccount2`], but does not require the Rent sysvar to be
+    /// provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -406,8 +399,8 @@ pub enum TokenInstruction {
     /// - `Pubkey` The new account's owner/multisignature.
     InitializeAccount3,
 
-    /// Like [`TokenInstruction::InitializeMultisig`], but does not require the
-    /// Rent sysvar to be provided
+    /// Like [`InitializeMultisig`], but does not require the Rent sysvar to be
+    /// provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -421,8 +414,8 @@ pub enum TokenInstruction {
     ///     multisignature account.
     InitializeMultisig2,
 
-    /// Like [`TokenInstruction::InitializeMint`], but does not require the Rent
-    /// sysvar to be provided
+    /// Like [`InitializeMint`], but does not require the Rent sysvar to be
+    /// provided
     ///
     /// Accounts expected by this instruction:
     ///
@@ -449,7 +442,7 @@ pub enum TokenInstruction {
     /// Initialize the Immutable Owner extension for the given token account
     ///
     /// Fails if the account has already been initialized, so must be called
-    /// before [`TokenInstruction::InitializeAccount`].
+    /// before [`InitializeAccount`].
     ///
     /// No-ops in this version of the program, but is included for compatibility
     /// with the Associated Token Account program.
@@ -511,16 +504,9 @@ pub enum TokenInstruction {
     ///
     /// Accounts expected by this instruction:
     ///
-    ///   * Single owner/delegate
     ///   0. `[writable]` The source account.
     ///   1. `[writable]` The destination account.
     ///   2. `[signer]` The source account's owner/delegate.
-    ///
-    ///   * Multisignature owner/delegate
-    ///   0. `[writable]` The source account.
-    ///   1. `[writable]` The destination account.
-    ///   2. `[]` The source account's multisignature owner/delegate.
-    ///   3. `..+M` `[signer]` M signer accounts.
     ///
     /// Data expected by this instruction:
     ///

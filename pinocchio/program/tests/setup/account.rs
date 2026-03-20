@@ -1,6 +1,11 @@
 use {
-    solana_keypair::Keypair, solana_program_test::ProgramTestContext, solana_pubkey::Pubkey,
-    solana_signer::Signer, solana_system_interface::instruction::create_account,
+    ethnum::U256,
+    pinocchio_token_interface::state::{account::Account, Transmutable},
+    solana_keypair::Keypair,
+    solana_program_test::ProgramTestContext,
+    solana_pubkey::Pubkey,
+    solana_signer::Signer,
+    solana_system_interface::instruction::create_account,
     solana_transaction::Transaction,
 };
 
@@ -12,11 +17,11 @@ pub async fn initialize(
 ) -> Pubkey {
     let account = Keypair::new();
 
-    let account_size = 165;
+    let account_size = Account::LEN;
     let rent = context.banks_client.get_rent().await.unwrap();
 
-    let mut initialize_ix = spl_token_interface::instruction::initialize_account(
-        &spl_token_interface::ID,
+    let mut initialize_ix = crate::spl_token_interface::instruction::initialize_account(
+        &crate::spl_token_interface::ID,
         &account.pubkey(),
         mint,
         owner,
@@ -54,13 +59,13 @@ pub async fn approve(
     amount: u64,
     program_id: &Pubkey,
 ) {
-    let mut approve_ix = spl_token_interface::instruction::approve(
-        &spl_token_interface::ID,
+    let mut approve_ix = crate::spl_token_interface::instruction::approve(
+        &crate::spl_token_interface::ID,
         account,
         delegate,
         &owner.pubkey(),
         &[],
-        amount,
+        U256::from(amount),
     )
     .unwrap();
     approve_ix.program_id = *program_id;
@@ -81,8 +86,8 @@ pub async fn freeze(
     freeze_authority: &Keypair,
     program_id: &Pubkey,
 ) {
-    let mut freeze_account_ix = spl_token_interface::instruction::freeze_account(
-        &spl_token_interface::ID,
+    let mut freeze_account_ix = crate::spl_token_interface::instruction::freeze_account(
+        &crate::spl_token_interface::ID,
         account,
         mint,
         &freeze_authority.pubkey(),

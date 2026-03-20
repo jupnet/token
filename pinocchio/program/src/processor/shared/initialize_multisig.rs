@@ -1,5 +1,5 @@
 use {
-    pinocchio::{
+    jinocchio::{
         account_info::AccountInfo,
         program_error::ProgramError,
         sysvars::{rent::Rent, Sysvar},
@@ -66,9 +66,8 @@ pub fn process_initialize_multisig(
         return Err(TokenError::InvalidNumberOfRequiredSigners.into());
     }
 
-    #[expect(clippy::needless_range_loop)] // CU use is better with index-based loop
-    for i in 0..remaining.len() {
-        multisig.signers[i] = *remaining[i].key();
+    for (i, signer_info) in remaining.iter().enumerate() {
+        multisig.signers[i] = *signer_info.key();
     }
 
     multisig.set_initialized(true);

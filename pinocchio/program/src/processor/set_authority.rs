@@ -1,6 +1,7 @@
 use {
     super::validate_owner,
-    pinocchio::{
+    ethnum::U256,
+    jinocchio::{
         account_info::AccountInfo, hint::likely, program_error::ProgramError, pubkey::Pubkey,
         ProgramResult,
     },
@@ -63,7 +64,7 @@ pub fn process_set_authority(accounts: &[AccountInfo], instruction_data: &[u8]) 
                 }
 
                 account.clear_delegate();
-                account.set_delegated_amount(0);
+                account.set_delegated_amount(U256::ZERO);
 
                 if account.is_native() {
                     account.clear_close_authority();

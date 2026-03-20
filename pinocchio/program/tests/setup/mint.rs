@@ -1,4 +1,5 @@
 use {
+    ethnum::U256,
     pinocchio_token_interface::state::mint::Mint,
     solana_keypair::Keypair,
     solana_program_error::ProgramError,
@@ -32,8 +33,8 @@ pub async fn initialize_with_decimals(
     let account_size = size_of::<Mint>();
     let rent = context.banks_client.get_rent().await.unwrap();
 
-    let mut initialize_ix = spl_token_interface::instruction::initialize_mint(
-        &spl_token_interface::ID,
+    let mut initialize_ix = crate::spl_token_interface::instruction::initialize_mint(
+        &crate::spl_token_interface::ID,
         &account.pubkey(),
         &mint_authority,
         freeze_authority.as_ref(),
@@ -72,11 +73,11 @@ pub async fn mint(
     mint: &Pubkey,
     account: &Pubkey,
     mint_authority: &Keypair,
-    amount: u64,
+    amount: U256,
     program_id: &Pubkey,
 ) -> Result<(), BanksClientError> {
-    let mut mint_ix = spl_token_interface::instruction::mint_to(
-        &spl_token_interface::ID,
+    let mut mint_ix = crate::spl_token_interface::instruction::mint_to(
+        &crate::spl_token_interface::ID,
         mint,
         account,
         &mint_authority.pubkey(),

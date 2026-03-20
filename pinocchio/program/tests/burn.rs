@@ -1,6 +1,8 @@
 mod setup;
+mod spl_token_interface;
 
 use {
+    ethnum::U256,
     setup::{account, mint, TOKEN_PROGRAM_ID},
     solana_keypair::Keypair,
     solana_program_pack::Pack,
@@ -12,7 +14,7 @@ use {
 
 #[tokio::test]
 async fn burn() {
-    let mut context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let mut context = setup::program_test()
         .start_with_context()
         .await;
 
@@ -42,7 +44,7 @@ async fn burn() {
         &mint,
         &account,
         &mint_authority,
-        100,
+        U256::new(100),
         &TOKEN_PROGRAM_ID,
     )
     .await
@@ -56,7 +58,7 @@ async fn burn() {
         &mint,
         &owner.pubkey(),
         &[],
-        50,
+        U256::new(50),
     )
     .unwrap();
 
@@ -77,5 +79,5 @@ async fn burn() {
     let account = account.unwrap();
     let account = spl_token_interface::state::Account::unpack(&account.data).unwrap();
 
-    assert!(account.amount == 50);
+    assert!(account.amount == U256::new(50));
 }

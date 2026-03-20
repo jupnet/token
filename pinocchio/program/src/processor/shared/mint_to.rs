@@ -1,8 +1,8 @@
 use {
     crate::processor::{check_account_owner, validate_owner},
-    pinocchio::{
-        account_info::AccountInfo, hint::unlikely, program_error::ProgramError, pubkey::pubkey_eq,
-        ProgramResult,
+    ethnum::U256,
+    jinocchio::{
+        account_info::AccountInfo, program_error::ProgramError, pubkey::pubkey_eq, ProgramResult,
     },
     pinocchio_token_interface::{
         error::TokenError,
@@ -14,7 +14,7 @@ use {
 #[allow(clippy::arithmetic_side_effects)]
 pub fn process_mint_to(
     accounts: &[AccountInfo],
-    amount: u64,
+    amount: U256,
     expected_decimals: Option<u8>,
 ) -> ProgramResult {
     let [mint_info, destination_account_info, owner_info, remaining @ ..] = accounts else {
@@ -28,15 +28,15 @@ pub fn process_mint_to(
     let destination_account =
         unsafe { load_mut::<Account>(destination_account_info.borrow_mut_data_unchecked())? };
 
-    if unlikely(destination_account.is_frozen()?) {
+    if destination_account.is_frozen()? {
         return Err(TokenError::AccountFrozen.into());
     }
 
-    if unlikely(destination_account.is_native()) {
+    if destination_account.is_native() {
         return Err(TokenError::NativeNotSupported.into());
     }
 
-    if unlikely(!pubkey_eq(mint_info.key(), &destination_account.mint)) {
+    if !pubkey_eq(mint_info.key(), &destination_account.mint) {
         return Err(TokenError::MintMismatch.into());
     }
 
@@ -56,7 +56,7 @@ pub fn process_mint_to(
         None => return Err(TokenError::FixedSupply.into()),
     }
 
-    if amount == 0 {
+    if amount == U256::ZERO {
         // Validates the accounts' owner since we are not writing
         // to these account.
         check_account_owner(mint_info)?;

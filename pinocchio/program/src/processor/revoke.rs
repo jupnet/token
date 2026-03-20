@@ -1,8 +1,7 @@
 use {
     super::validate_owner,
-    pinocchio::{
-        account_info::AccountInfo, hint::unlikely, program_error::ProgramError, ProgramResult,
-    },
+    ethnum::U256,
+    jinocchio::{account_info::AccountInfo, program_error::ProgramError, ProgramResult},
     pinocchio_token_interface::{
         error::TokenError,
         state::{account::Account, load_mut},
@@ -20,35 +19,21 @@ pub fn process_revoke(accounts: &[AccountInfo]) -> ProgramResult {
     let source_account =
         unsafe { load_mut::<Account>(source_account_info.borrow_mut_data_unchecked())? };
 
-    // Unpacking the remaining accounts to get the authority account at this point
+    // Unpacking the remaining accounts to get the owner account at this point
     // to maintain the same order as SPL Token.
-    let [authority_info, remaining @ ..] = remaining else {
+    let [owner_info, remaining @ ..] = remaining else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    if unlikely(source_account.is_frozen()?) {
+    if source_account.is_frozen()? {
         return Err(TokenError::AccountFrozen.into());
     }
 
-    // Validates the owner or delegate.
-
-    // SAFETY: `authority_info` is not currently borrowed; in the case
-    // `authority_info` is the same as `source_account_info`, then it cannot be
-    // a multisig.
-    unsafe {
-        validate_owner(
-            if source_account.delegate() == Some(authority_info.key()) {
-                authority_info.key()
-            } else {
-                &source_account.owner
-            },
-            authority_info,
-            remaining,
-        )?
-    };
+    // SAFETY: `owner_info` is not currently borrowed.
+    unsafe { validate_owner(&source_account.owner, owner_info, remaining)? }
 
     source_account.clear_delegate();
-    source_account.set_delegated_amount(0);
+    source_account.set_delegated_amount(U256::ZERO);
 
     Ok(())
 }

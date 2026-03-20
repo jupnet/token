@@ -1,4 +1,5 @@
 mod setup;
+mod spl_token_interface;
 
 use {
     setup::TOKEN_PROGRAM_ID,
@@ -14,7 +15,7 @@ use {
 
 #[tokio::test]
 async fn initialize_multisig2() {
-    let context = ProgramTest::new("pinocchio_token_program", TOKEN_PROGRAM_ID, None)
+    let context = setup::program_test()
         .start_with_context()
         .await;
 

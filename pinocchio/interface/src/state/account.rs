@@ -1,6 +1,7 @@
 use {
     super::{account_state::AccountState, COption, Initializable, Transmutable},
-    pinocchio::{
+    ethnum::U256,
+    jinocchio::{
         hint::likely,
         program_error::ProgramError,
         pubkey::{pubkey_eq, Pubkey},
@@ -9,10 +10,10 @@ use {
 
 /// Incinerator address.
 pub const INCINERATOR_ID: Pubkey =
-    pinocchio_pubkey::pubkey!("1nc1nerator11111111111111111111111111111111");
+    jinocchio_pubkey::pubkey!("1nc1nerator11111111111111111111111111111111");
 
 /// System program id.
-const SYSTEM_PROGRAM_ID: Pubkey = pinocchio_pubkey::pubkey!("11111111111111111111111111111111");
+const SYSTEM_PROGRAM_ID: Pubkey = jinocchio_pubkey::pubkey!("11111111111111111111111111111111");
 
 /// Internal representation of a token account data.
 #[repr(C)]
@@ -23,8 +24,8 @@ pub struct Account {
     /// The owner of this account.
     pub owner: Pubkey,
 
-    /// The amount of tokens this account holds.
-    amount: [u8; 8],
+    /// The amount of tokens this account holds (U256 - 32 bytes).
+    amount: [u8; 32],
 
     /// If `delegate` is `Some` then `delegated_amount` represents
     /// the amount authorized by the delegate.
@@ -42,8 +43,8 @@ pub struct Account {
     /// accounts do not drop below this threshold.
     native_amount: [u8; 8],
 
-    /// The amount delegated.
-    delegated_amount: [u8; 8],
+    /// The amount delegated (U256 - 32 bytes).
+    delegated_amount: [u8; 32],
 
     /// Optional authority to close the account.
     close_authority: COption<Pubkey>,
@@ -61,13 +62,13 @@ impl Account {
     }
 
     #[inline(always)]
-    pub fn set_amount(&mut self, amount: u64) {
+    pub fn set_amount(&mut self, amount: U256) {
         self.amount = amount.to_le_bytes();
     }
 
     #[inline(always)]
-    pub fn amount(&self) -> u64 {
-        u64::from_le_bytes(self.amount)
+    pub fn amount(&self) -> U256 {
+        U256::from_le_bytes(self.amount)
     }
 
     #[inline(always)]
@@ -115,13 +116,13 @@ impl Account {
     }
 
     #[inline(always)]
-    pub fn set_delegated_amount(&mut self, amount: u64) {
+    pub fn set_delegated_amount(&mut self, amount: U256) {
         self.delegated_amount = amount.to_le_bytes();
     }
 
     #[inline(always)]
-    pub fn delegated_amount(&self) -> u64 {
-        u64::from_le_bytes(self.delegated_amount)
+    pub fn delegated_amount(&self) -> U256 {
+        U256::from_le_bytes(self.delegated_amount)
     }
 
     #[inline(always)]
